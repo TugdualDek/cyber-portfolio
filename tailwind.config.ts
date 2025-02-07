@@ -85,16 +85,6 @@ export default {
           from: { width: "0" },
           to: { width: "100%" },
         },
-        'tooltip-deploy': {
-          '0%': { 
-            opacity: '0',
-            transform: 'scale(0.6) perspective(500px) rotateX(-30deg)',
-          },
-          '100%': { 
-            opacity: '1',
-            transform: 'scale(1) perspective(500px) rotateX(0)',
-          }
-        }
       },
     },
   },

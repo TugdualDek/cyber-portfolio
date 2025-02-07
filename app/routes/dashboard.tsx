@@ -5,6 +5,7 @@ import { ArsenalSection } from "~/components/dashboard/ArsenalSection";
 import { useState } from "react";
 import { Biography } from "~/components/dashboard/Biography";
 import { Navbar } from "~/components/navbar/Navbar";
+import { TimelineSection } from "~/components/dashboard/TimelineSection";
 
 export default function Dashboard() {
   const [activeCategory, setActiveCategory] = useState("skills");
@@ -30,6 +31,7 @@ export default function Dashboard() {
                 activeCategory={activeCategory}
                 onCategoryChange={setActiveCategory}
               />
+              <TimelineSection />
             </div>
           </div>
         </main>

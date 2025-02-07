@@ -51,3 +51,19 @@ export const NAV_ITEMS = [
   { text: "Projects", href: "/projects" },
   { text: "Contact", href: "/contact" },
 ];
+
+export const TIMELINE_EVENTS = [
+  {
+    title: "Master Cybersécurité",
+    description: "Spécialisation en sécurité offensive et défensive",
+    date: "2022 - 2024",
+    type: "education"
+  },
+  {
+    title: "OSCP Certification",
+    description: "Offensive Security Certified Professional",
+    date: "2023",
+    type: "certification"
+  },
+  // Ajoutez vos événements ici dans l'ordre chronologique
+];
