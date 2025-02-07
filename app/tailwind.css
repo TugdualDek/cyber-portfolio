@@ -10,3 +10,212 @@ body {
     color-scheme: dark;
   }
 }
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+    font-family: "Exo 2", system-ui, sans-serif;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Sur desktop : curseur normal */
+@media (min-width: 769px) {
+  * {
+    cursor: none;
+  }
+}
+
+/* Sur mobile : pas de curseur */
+@media (max-width: 768px) {
+  * {
+    cursor: auto;
+  }
+}
+
+.cyber-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(0, 255, 187, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 255, 187, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  background-attachment: fixed;
+}
+
+.bg-gradient-radial {
+  background: radial-gradient(
+    circle at center,
+    transparent 0%,
+    rgba(10, 15, 31, 0.8) 100%
+  );
+  background-attachment: fixed;
+}
+
+.cursor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.cursor-line {
+  position: fixed;
+  background-color: rgba(100, 255, 218, 0.1);
+  transition: all 0.05s ease;
+}
+
+.cursor-line.vertical {
+  width: 3px;
+  height: 100vh;
+  top: 0;
+}
+
+.cursor-line.horizontal {
+  width: 100vw;
+  height: 3px;
+  left: 0;
+}
+
+.cursor-center {
+  position: fixed;
+  width: 40px;
+  height: 40px;
+  transform: translate(-50%, -50%);
+  transition: all 0.05s ease;
+}
+
+.cursor-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(100, 255, 218, 0.3);
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
+
+.ring-1 {
+  width: 40px;
+  height: 40px;
+  animation: ringPulse 2s ease-out infinite;
+}
+
+.ring-2 {
+  width: 30px;
+  height: 30px;
+  animation: ringRotate 4s linear infinite;
+}
+
+.ring-3 {
+  width: 20px;
+  height: 20px;
+  animation: ringPulse 3s ease-out infinite reverse;
+}
+
+.cursor-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: rgb(100, 255, 218);
+  border-radius: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-center.clicking {
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.cursor-line.clicking {
+  background-color: rgba(0, 255, 136, 0.3);
+}
+
+@keyframes ringPulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.5;
+  }
+}
+
+@keyframes ringRotate {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+a:hover ~ .cursor-container .cursor-center,
+button:hover ~ .cursor-container .cursor-center {
+  transform: translate(-50%, -50%) scale(1.2);
+}

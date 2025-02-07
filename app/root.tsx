@@ -7,19 +7,23 @@ import {
 } from "@remix-run/react";
 import type { LinksFunction } from "@remix-run/node";
 
-import "./tailwind.css";
+import styles from "./tailwind.css?url";
+import { Cursor } from "./components/Cursor";
+import { DynamicBackground } from "./components/DynamicBackground";
 
 export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  { rel: "stylesheet", href: styles },
+  { rel: "preconnect", href: "https://api.fonts.coollabs.io" },
   {
     rel: "preconnect",
-    href: "https://fonts.gstatic.com",
+    href: "https://api.fonts.coollabs.io",
     crossOrigin: "anonymous",
   },
   {
     rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
+    href: "https://api.fonts.coollabs.io/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap",
   },
+  { rel: "prefetch", as: "image", href: "/tugdual.webp" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -31,8 +35,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="min-h-screen flex flex-col relative">
+  <DynamicBackground />
+  <div className="relative z-10 flex-grow">
+        <Cursor />
         {children}
+        </div>
         <ScrollRestoration />
         <Scripts />
       </body>
