@@ -77,9 +77,14 @@ export default {
         },
       },
       animation: {
-        typing: 'typing 3s steps(24)',
         blink: 'blink 1s step-end infinite',
         scan: 'scan 8s ease-in-out infinite',
+        matrixRain: 'matrixRain 2s linear infinite',
+        dataStream: 'dataStream 3s linear infinite',
+        interference: 'interference 0.2s ease-in-out infinite',
+        terminalType: 'terminalType 3s steps(40, end)',
+        gridFlash: 'gridFlash 5s linear infinite',
+        typewriter: 'typewriter 2s steps(40, end)',
       },
       keyframes: {
         'cursor-blink': {
@@ -95,7 +100,20 @@ export default {
             transform: 'translateY(200%)',
             '--scan-direction': 'to top'
           }
-        }
+        },
+        typewriter: {
+          '0%': { 
+            width: '0%',
+            opacity: '0'
+          },
+          '1%': { 
+            opacity: '1'
+          },
+          '100%': { 
+            width: '100%',
+            opacity: '1'
+          }
+        },
       },
     },
   },

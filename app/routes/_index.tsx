@@ -1,100 +1,100 @@
-// app/routes/_index.tsx
 import { useState, useEffect } from 'react';
 import { useNavigate } from '@remix-run/react';
-import { Progress } from "../components/ui/progress"
-import { Card, CardHeader, CardContent } from "../components/ui/card"
-import { Badge } from "../components/ui/badge"
-import { Alert, AlertDescription } from "../components/ui/alert"
 
-const SECURITY_CHECKS = [
-  "SYSTEM INITIALIZATION",
-  "ACCESS VERIFICATION",
-  "LOADING OF THE CONTROL CENTER",
+const BOOT_SEQUENCE = [
+  { text: "INITIALIZING SYSTEM KERNEL", delay: 400 },
+  { text: "LOADING SECURITY PROTOCOLS", delay: 500 },
+  { text: "ESTABLISHING SECURE CONNECTION", delay: 600 },
+  { text: "AUTHENTICATING USER CREDENTIALS", delay: 700 },
+  { text: "ACCESSING CONTROL CENTER", delay: 800 },
 ];
 
 export default function CommandCenter() {
-  const [currentStep, setCurrentStep] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [bootStep, setBootStep] = useState(-1);
+  const [matrixText, setMatrixText] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
+  // Séquence de démarrage
+useEffect(() => {
+  if (bootStep < BOOT_SEQUENCE.length - 1) {
     const timer = setTimeout(() => {
-      if (currentStep < SECURITY_CHECKS.length) {
-        setCurrentStep(prev => prev + 1);
-        setProgress((currentStep + 1) * (100 / SECURITY_CHECKS.length));
-      } else {
-        navigate('/dashboard');
-      }
-    }, 1000); // Augmenté pour mieux voir les transitions
+      setBootStep(prev => prev + 1);
+    }, BOOT_SEQUENCE[bootStep]?.delay || 800);
 
     return () => clearTimeout(timer);
-  }, [currentStep]);
+  } else if (bootStep === BOOT_SEQUENCE.length - 1) {
+    setTimeout(() => navigate('/dashboard'), 800);
+  }
+}, [bootStep]);
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Card className="w-full max-w-lg bg-navy-800/50 border-cyber-primary">
-        <CardHeader className="space-y-6">
-          <div className="text-center space-y-4">
-            <h1 className="text-4xl font-sans text-cyber-primary font-bold tracking-wider">
-              CONTROL CENTER
-            </h1>
-            <Badge 
-              variant="outline" 
-              className="bg-transparent border-cyber-primary"
-            >
-              <div className="flex items-center space-x-2">
-                <div className="h-2 w-2 bg-cyber-primary rounded-full animate-pulse" />
-                <span className="text-cyber-primary">SYSTEM ACCESS</span>
-              </div>
-            </Badge>
-          </div>
-        </CardHeader>
-
-        <CardContent className="space-y-8">
-          {/* Barre de progression */}
-          <div className="space-y-2">
-            <Progress 
-              value={progress} 
-              className="h-2 bg-cyber-primary"
-            />
-            <div className="flex justify-between font-sans text-sm">
-              <span className="text-cyber-primary">{Math.round(progress)}%</span>
-              <span className="text-cyber-accent animate-pulse">
-                {currentStep > 0 ? "PROCESSING" : "INITIALIZING"}
-              </span>
-            </div>
-          </div>
-
-          {/* Message actuel uniquement */}
-          <Alert 
-            className="border-2 border-cyber-primary bg-navy-900/50"
+    <div className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+      {/* Effet Matrix en arrière-plan */}
+      <div className="absolute inset-0 text-cyber-primary/5 font-mono text-sm overflow-hidden">
+        {Array(20).fill(0).map((_, i) => (
+          <div 
+            key={i}
+            className="whitespace-nowrap animate-slideDown"
+            style={{ animationDelay: `${i * 0.1}s` }}
           >
-            <AlertDescription className="font-sans text-lg">
-              <div className="flex items-center space-x-3">
-                <div className="flex-shrink-0">
-                  <div className="h-3 w-3 bg-cyber-primary animate-pulse rounded-full" />
-                </div>
-                <span className="text-cyber-primary">
-                  {SECURITY_CHECKS[currentStep - 1] || "INITIATING SEQUENCE"}
-                </span>
-              </div>
-            </AlertDescription>
-          </Alert>
+            {matrixText}
+          </div>
+        ))}
+      </div>
 
-          {/* Terminal-like output */}
-          <div className="font-sans text-sm text-cyber-primary/60 space-y-1">
-            {Array(3).fill(0).map((_, i) => (
-              <div key={i} className="h-4 overflow-hidden">
-                {i < currentStep && (
-                  <div className="animate-typing">
-                    &gt; {Math.random().toString(36).substring(2, 15)}
-                  </div>
-                )}
-              </div>
+      <div className="w-full max-w-2xl space-y-8 relative z-10">
+        {/* Terminal Header */}
+        <div className="border border-cyber-primary/20 bg-navy-800/30 rounded-t-lg">
+          <div className="px-4 py-2 border-b border-cyber-primary/20 flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-red-500/50" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+            <div className="w-3 h-3 rounded-full bg-green-500/50" />
+            <span className="ml-2 text-cyber-primary/60 text-sm font-mono">
+              terminal@tugdual
+            </span>
+          </div>
+
+          {/* Terminal Content */}
+          <div className="p-6 font-mono text-sm space-y-2">
+            {BOOT_SEQUENCE.map((step, index) => (
+              index <= bootStep && (
+                <div 
+                  key={index}
+                  className="text-cyber-primary/80 animate-typewriter"
+                  style={{ animationDelay: `${index * 0.5}s` }}
+                >
+                  <span className="text-cyber-primary/40">{">_ "}</span>
+                  {step.text}
+                  {index === bootStep && (
+                    <span className="inline-block w-2 h-4 bg-cyber-primary/60 animate-blink ml-1" />
+                  )}
+                </div>
+              )
             ))}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+
+        {/* Progress Bar */}
+        {bootStep >= 0 && (
+          <div className="space-y-2">
+            <div className="h-1 bg-navy-800 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-cyber-primary transition-all duration-500"
+                style={{ 
+                  width: `${Math.min(
+                    ((bootStep + 1) / BOOT_SEQUENCE.length) * 100,
+                    100
+                  )}%` 
+                }}
+              />
+            </div>
+            <div className="flex justify-between text-xs font-mono text-cyber-primary/60">
+              <span>BOOT SEQUENCE: {Math.round(((bootStep + 1) / BOOT_SEQUENCE.length) * 100)}%</span>
+              <span className="animate-blink">{">_"}</span>
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

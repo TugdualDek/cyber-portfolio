@@ -1,9 +1,9 @@
 
+import { ContactSection } from "~/components/contact/ContactSection";
 import { CommanderProfile } from "~/components/dashboard/CommanderProfile";
 import { Footer } from "~/components/footer/Footer";
 import { Navbar } from "~/components/navbar/Navbar";
-import ProjectsSection from "~/components/projects/ProjectsSection";
-import { COMMANDER_INFO } from "~/constants/constants";
+import { COMMANDER_INFO, ARSENAL_CATEGORIES } from "~/constants/constants";
 
 export default function Dashboard() {
 
@@ -21,7 +21,7 @@ export default function Dashboard() {
             </div>
 
             <div className="w-full lg:col-span-9 space-y-6">
-              <ProjectsSection />
+              <ContactSection />
             </div>
           </div>
         </main>
