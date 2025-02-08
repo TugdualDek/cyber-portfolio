@@ -1,4 +1,4 @@
-import { GraduationCap, Trophy, Briefcase } from "lucide-react";
+import { GraduationCap, Trophy, Briefcase, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import React from "react";
 import { TIMELINE_EVENTS } from "~/constants/profile";
@@ -7,7 +7,7 @@ interface TimelineEvent {
   title: string;
   description: string;
   date: string;
-  type: "education" | "certification" | "experience";
+  type: "education" | "certification" | "experience" | "association";
 }
 
 type TimelineType = TimelineEvent["type"];
@@ -26,22 +26,29 @@ const typeConfig: Record<
     icon: GraduationCap,
     color: "text-cyan-400",
     border: "border-cyan-400",
-    glow: "shadow-[0_0_15px_rgba(34,211,238,0.3)]", // Glow cyan plus prononcé
+    glow: "shadow-[0_0_15px_rgba(34,211,238,0.3)]",
     bg: "bg-cyan-400",
   },
   certification: {
     icon: Trophy,
     color: "text-green-400",
     border: "border-green-400",
-    glow: "shadow-[0_0_15px_rgba(74,222,128,0.3)]", // Glow vert plus prononcé
+    glow: "shadow-[0_0_15px_rgba(74,222,128,0.3)]",
     bg: "bg-green-400",
   },
   experience: {
     icon: Briefcase,
     color: "text-purple-400",
     border: "border-purple-400",
-    glow: "shadow-[0_0_15px_rgba(192,132,252,0.3)]", // Glow violet plus prononcé
+    glow: "shadow-[0_0_15px_rgba(192,132,252,0.3)]",
     bg: "bg-purple-400",
+  },
+  association: {
+    icon: Users,
+    color: "text-orange-400",
+    border: "border-orange-400",
+    glow: "shadow-[0_0_15px_rgba(251,146,60,0.3)]",
+    bg: "bg-orange-400",
   },
 };
 
@@ -50,8 +57,9 @@ export function TimelineSection() {
     <div className="bg-navy-800/30 rounded-lg p-6 border border-cyber-primary/20 backdrop-blur-sm">
       <div className="flex items-center gap-2 mb-8">
         <div className="h-2 w-2 bg-cyber-primary rounded-full" />
-        <h2 className="text-xl font-mono text-cyber-primary">
-          TIMELINE::SYSTEM_LOG
+        <h2 className="text-xl font-mono text-cyber-primary flex items-center">
+          <span>TIMELINE::SYSTEM_LOG</span>
+          <span className="inline-block w-[3px] h-5 ml-1 bg-cyber-primary animate-[cursor-blink_1.1s_steps(2)_infinite]" />
         </h2>
       </div>
 
@@ -101,33 +109,38 @@ export function TimelineSection() {
     before:bg-navy-900/30
   `}
               >
-                <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2">
-                      {/* Remplacer le span de l'emoji par le composant icône */}
-                      {React.createElement(
-                        typeConfig[event.type as TimelineType].icon,
-                        {
-                          className: `w-5 h-5 ${
-                            typeConfig[event.type as TimelineType].color
-                          }`,
-                        }
-                      )}
+                <div className="space-y-2">
+                  {/* En-tête : titre et date */}
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="flex-shrink-0 flex items-center justify-center w-6 h-6 md:w-8 md:h-8">
+                        {React.createElement(
+                          typeConfig[event.type as TimelineType].icon,
+                          {
+                            className: `w-full h-full ${
+                              typeConfig[event.type as TimelineType].color
+                            }`,
+                            strokeWidth: 1.5,
+                          }
+                        )}
+                      </div>
                       <h3
-                        className={`font-mono ${
+                        className={`font-mono text-sm md:text-base lg:text-lg ${
                           typeConfig[event.type as TimelineType].color
-                        }`}
+                        } break-words`}
                       >
                         {event.title}
                       </h3>
                     </div>
-                    <p className="text-cyber-primary/80 text-sm">
-                      {event.description}
-                    </p>
+                    <span className="text-cyber-primary/60 text-sm font-mono whitespace-nowrap flex-shrink-0 pl-8 md:pl-0">
+                      {event.date}
+                    </span>
                   </div>
-                  <span className="text-cyber-primary/60 text-sm font-mono whitespace-nowrap">
-                    {event.date}
-                  </span>
+
+                  {/* Description */}
+                  <p className="text-cyber-primary/80 text-sm pl-8 md:pl-10">
+                    {event.description}
+                  </p>
                 </div>
               </div>
             </div>

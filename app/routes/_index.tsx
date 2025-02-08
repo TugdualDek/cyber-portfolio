@@ -31,7 +31,7 @@ export default function CommandCenter() {
   }, [currentStep]);
 
   return (
-    <div className="min-h-screen bg-navy-900 flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
       <Card className="w-full max-w-lg bg-navy-800/50 border-cyber-primary">
         <CardHeader className="space-y-6">
           <div className="text-center space-y-4">

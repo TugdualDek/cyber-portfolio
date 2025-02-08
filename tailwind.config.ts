@@ -77,13 +77,13 @@ export default {
         },
       },
       animation: {
-        typing: "typing 2s steps(20, end)",
-        'tooltip-deploy': 'tooltip-deploy 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+        typing: 'typing 3s steps(24)',
+        blink: 'blink 1s step-end infinite'
       },
       keyframes: {
-        typing: {
-          from: { width: "0" },
-          to: { width: "100%" },
+        'cursor-blink': {
+          '0%, 100%': { opacity: "1" },
+          '50%': { opacity: "0" },
         },
       },
     },
