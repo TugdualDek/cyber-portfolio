@@ -23,13 +23,4 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'lucide-react': ['lucide-react']
-        }
-      }
-    }
-  }
 });

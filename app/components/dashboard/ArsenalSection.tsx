@@ -1,8 +1,14 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs";
 import { Card, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
-import * as LucideIcons from "lucide-react";
-import React from "react";
+import {
+  Languages,
+  Cpu,
+  SatelliteDish,
+  Computer,
+  TicketCheck,
+  Antenna,
+} from "lucide-react";
 
 interface Skill {
   name: string;
@@ -15,6 +21,16 @@ interface ArsenalSectionProps {
   activeCategory: string;
   onCategoryChange: (category: string) => void;
 }
+
+// Créer un objet de mapping des icônes
+const ICON_MAP = {
+  Languages,
+  Cpu,
+  SatelliteDish,
+  Computer,
+  TicketCheck,
+  Antenna,
+} as const;
 
 export function ArsenalSection({
   categories,
@@ -51,9 +67,9 @@ export function ArsenalSection({
           <TabsList className="grid grid-cols-2 gap-4 bg-transparent p-0 mb-6">
             {Object.keys(categories).map((category) => (
               <TabsTrigger
-              key={category}
-              value={category}
-              className="font-sans text-sm px-5 py-2 rounded-lg 
+                key={category}
+                value={category}
+                className="font-sans text-sm px-5 py-2 rounded-lg 
                          text-cyber-primary/70
                          data-[state=active]:bg-cyber-primary/20 
                          data-[state=active]:border-cyber-primary/40
@@ -61,8 +77,8 @@ export function ArsenalSection({
                          data-[state=active]:text-cyber-primary
                          hover:text-cyber-primary
                          transition-all duration-300"
-            >
-              {category.toUpperCase()}
+              >
+                {category.toUpperCase()}
               </TabsTrigger>
             ))}
           </TabsList>
@@ -72,23 +88,20 @@ export function ArsenalSection({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {skills.map((skill) => (
                   <Card
-                  key={skill.name}
-                  className="bg-navy-800/50 border border-cyber-primary/30
+                    key={skill.name}
+                    className="bg-navy-800/50 border border-cyber-primary/30
                              hover:border-cyber-primary/60 transition-all duration-300
                              transform hover:scale-[1.02]"
-                >
+                  >
                     <CardContent className="p-4">
                       <div className="flex items-center space-x-3 mb-3">
                         <span className="text-2xl text-cyber-primary">
-                          {/* @ts-expect-error - Les icônes Lucide sont dynamiques */}
-                          {LucideIcons[skill.icon] &&
-                            React.createElement(
-                              (LucideIcons as any)[skill.icon],
-                              {
-                                size: 24,
-                                className: "text-cyber-primary",
-                              }
-                            )}
+                          {/* Utiliser l'icône dynamiquement */}
+                          {(() => {
+                            const Icon =
+                              ICON_MAP[skill.icon as keyof typeof ICON_MAP];
+                            return Icon ? <Icon /> : null;
+                          })()}
                         </span>
                         <span className="font-sans text-sm text-cyber-primary">
                           {skill.name}
