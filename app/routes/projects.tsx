@@ -1,13 +1,10 @@
-import { COMMANDER_INFO, ARSENAL_CATEGORIES } from "~/constants/constants";
+
 import { CommanderProfile } from "~/components/dashboard/CommanderProfile";
-import { ArsenalSection } from "~/components/dashboard/ArsenalSection";
-import { useState } from "react";
-import { Biography } from "~/components/dashboard/Biography";
 import { Navbar } from "~/components/navbar/Navbar";
-import { TimelineSection } from "~/components/dashboard/TimelineSection";
+import ProjectsSection from "~/components/projects/ProjectsSection";
+import { COMMANDER_INFO, ARSENAL_CATEGORIES } from "~/constants/constants";
 
 export default function Dashboard() {
-  const [activeCategory, setActiveCategory] = useState("skills");
 
   return (
     <div className="min-h-screen  text-cyber-primary">
@@ -22,15 +19,8 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Arsenal Section */}
             <div className="w-full lg:col-span-9 space-y-6">
-              <Biography biography={COMMANDER_INFO.biography} />
-              <ArsenalSection
-                categories={ARSENAL_CATEGORIES}
-                activeCategory={activeCategory}
-                onCategoryChange={setActiveCategory}
-              />
-              <TimelineSection />
+              <ProjectsSection />
             </div>
           </div>
         </main>

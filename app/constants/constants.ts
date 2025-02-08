@@ -43,6 +43,16 @@ export const ARSENAL_CATEGORIES = {
       icon: "TicketCheck",
       tools: ["697 points", "December 2021"],
     },
+    {
+      name: "ARRIS SSTV Award",
+      icon: "TicketCheck",
+      tools: ["Lunar exploration Commemoration", "December 2021"],
+    },
+    {
+      name: "ARRIS SSTV Award",
+      icon: "TicketCheck",
+      tools: ["20 years of ARISS", "December 2020"],
+    },
   ],
 };
 
@@ -66,13 +76,13 @@ export const TIMELINE_EVENTS = [
     type: "association"
   },
   {
-    title: "Toeic 965/990",
+    title: "Toeic - 965/990",
     description: "English language certification",
     date: "2023",
     type: "certification"
   },
   {
-    title: "Developper at IseInvest",
+    title: "Developper at IsepInvest",
     description: "Web and DIscord bot development",
     date: "October 2021 - July 2024",
     type: "association"
@@ -96,13 +106,19 @@ export const TIMELINE_EVENTS = [
     type: "certification"
   },
   {
+    title: "Voltaire Certificate - 697/1000",
+    description: "Certification in French language",
+    date: "December 2021",
+    type: "certification"
+  },
+  {
     title: "Internship at Adamantia",
     description: "Information system audit, IT awareness and process optimization",
     date: "June 2021 - July 2021",
     type: "experience"
   },
   {
-    title: "Toeic 895/990",
+    title: "Toeic - 895/990",
     description: "English language certification",
     date: "2021",
     type: "certification"
@@ -110,7 +126,7 @@ export const TIMELINE_EVENTS = [
   {
     title: "ARISS SSTV Award",
     description: "Received images on the occasion of the 20 years of amateur radio on the ISS using Software Defined Radio",
-    date: "December 2021",
+    date: "December 2020",
     type: "certification"
   },
   {
@@ -126,4 +142,81 @@ export const TIMELINE_EVENTS = [
     type: "education"
   },
   // Ajoutez vos événements ici dans l'ordre chronologique
+];
+
+export const PROJECTS = [
+  {
+    id: "project-1",
+    title: "PDF Chorale SGP",
+    description: `Web application dedicated to managing and organising songs and programmes for the SGP choir.
+    Songs can be added with sheet music.
+    Programs can be created and pdfs generated automatically.
+    - Front-end and back-end made in NextJs
+    - Database made with Prisma and PostgreSql`,
+    date: "September 2024",
+    technologies: ["NextJS", "Prisma", "PostgreSQL", "Docker"],
+    image: "https://tugdual.com/assets/choralesgp.png",
+    links: {
+    },
+    status: "completed" // Assurez-vous d'utiliser une des trois valeurs autorisées
+  },
+  {
+    id: "project-2",
+    title: "Trade Invest",
+    description: `Creation of a fictitious trading platform for the InvestDay contest organized by the IsepInvest association.
+    It is possible to buy and sell stocks and cryptocurrencies with the real rates of the US market.
+    - Front-end and back-end made in NextJs
+    - Database made with Prisma and PostgreSql`,
+    date: "2023",
+    technologies: ["Next.js", "Prisma", "PostgreSQL", "Docker"],
+    image: "https://tugdual.com/assets/trade.webp",
+    links: {
+      github: "https://github.com/TugdualDek/InvestDay",
+    },
+    status: "completed" // "completed" | "in-progress" | "planned"
+  },
+  {
+    id: "project-3",
+    title: "Carmen",
+    description: `Project during the first year of the engineering cycle at ISEP with the aim of acquiring skills in different fields (computer science, telecom, signal, electronics).
+    Creation of a project to help hospitals.
+    - creation of a complete website linking the different parts of the project
+    - Learning the basics of telecom (communication between different sensors and gateways)`,
+    date: "2023",
+    technologies: ["HTML", "CSS", "JavaScript", "PHP", "SQL"],
+    image: "https://tugdual.com/assets/carmen.webp",
+    links: {
+      github: "https://github.com/naro92/Carmen",
+    },
+    status: "completed"
+  },
+  {
+    id: "project-4",
+    title: "Weather APP",
+    description: `Creation of a device allowing to display on an application the temperature measured by a sensor connected to a server and an API thanks to an http request.
+    - Creation of the front-end in Flutter
+    - Creation of the back-end from Python and a DHT11 sensor`,
+    date: "2022",
+    technologies: ["Flutter", "Python", "Arduino", "RaspberryPi"],
+    image: "https://tugdual.com/assets/weather.webp",
+    links: {
+      github: "https://github.com/Sh0lf/IT-Project-Weather-App"
+    },
+    status: "completed"
+  },
+  {
+    id: "project-5",
+    title: "Book where you are the hero",
+    description: `Development of a game in python of the type "Book of which you are the hero"
+    - Possibility for the user to create his own story, to save it and to share it
+    - Possibility for the user to play a story.`,
+    date: "2021",
+    technologies: ["Python"],
+    image: "https://tugdual.com/assets/hero.webp",
+    links: {
+      github: "https://github.com/arcreane/jeu-de-role-rasputin"
+    },
+    status: "completed"
+  },
+  // ... autres projets
 ];

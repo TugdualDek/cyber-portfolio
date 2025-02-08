@@ -1,4 +1,4 @@
-import { COMMANDER_INFO } from "~/constants/profile";
+import { COMMANDER_INFO } from "~/constants/constants";
 import { StatusCard } from "../ui/StatusCard";
 
 export function CommanderProfile({ info }: { info: typeof COMMANDER_INFO }) {

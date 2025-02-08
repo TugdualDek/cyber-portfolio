@@ -1,7 +1,7 @@
 import { GraduationCap, Trophy, Briefcase, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import React from "react";
-import { TIMELINE_EVENTS } from "~/constants/profile";
+import { TIMELINE_EVENTS } from "~/constants/constants";
 
 interface TimelineEvent {
   title: string;

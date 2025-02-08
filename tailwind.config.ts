@@ -78,13 +78,24 @@ export default {
       },
       animation: {
         typing: 'typing 3s steps(24)',
-        blink: 'blink 1s step-end infinite'
+        blink: 'blink 1s step-end infinite',
+        scan: 'scan 8s ease-in-out infinite',
       },
       keyframes: {
         'cursor-blink': {
           '0%, 100%': { opacity: "1" },
           '50%': { opacity: "0" },
         },
+        scan: {
+          '0%, 100%': { 
+            transform: 'translateY(-25%)',
+            '--scan-direction': 'to bottom'
+          },
+          '50%': { 
+            transform: 'translateY(200%)',
+            '--scan-direction': 'to top'
+          }
+        }
       },
     },
   },

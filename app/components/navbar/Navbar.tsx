@@ -1,6 +1,6 @@
 import { Link, useLocation } from "@remix-run/react";
 import { Button } from "../ui/button"
-import { NAV_ITEMS } from "../../constants/profile"
+import { NAV_ITEMS } from "../../constants/constants"
 
 export function Navbar() {
   const location = useLocation();
