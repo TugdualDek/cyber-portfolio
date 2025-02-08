@@ -89,7 +89,7 @@ export const TIMELINE_EVENTS = [
   {
     title: "Student at ISEP - School of engineering",
     description: "International Integrated Cycle, Last year of Engineering Cycle with a specialization in Cybersecurity and Networks",
-    date: "September 2020 - September 2025",
+    date: "2020 - 2025",
     type: "education"
   },
   {
