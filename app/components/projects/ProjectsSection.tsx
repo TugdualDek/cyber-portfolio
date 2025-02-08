@@ -32,24 +32,23 @@ export default function ProjectsSection() {
           <span className="text-cyber-primary/60">
             TIME: {new Date().toUTCString()}
           </span>
-          <span className="text-cyber-primary animate-pulse">●</span>
         </div>
       </div>
 
       {/* Container avec padding pour éviter le rognage */}
-      <div className="px-6 py-8 relative">
+      <div className="px-6 py-4 relative">
         {/* Effet de scan */}
         <div className="absolute inset-0 overflow-hidden flex justify-center">
           <div
-            className="absolute w-[90%] h-[300px] animate-scan"
+            className="absolute w-[92%] h-[300px] animate-scan"
             style={{
               background: `
           linear-gradient(
             var(--scan-direction, to bottom),
             transparent 10%,
             rgba(0, 255, 136, 0.04) 45%,
-            rgba(0, 255, 136, 0.06) 50%,
-            rgba(0, 255, 136, 0.04) 55%,
+            rgba(0, 255, 136, 0.08) 50%,
+            rgba(0, 255, 136, 0.06) 55%,
             transparent 100%
           )
         `,

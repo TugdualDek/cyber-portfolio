@@ -35,7 +35,6 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
               <span className="text-cyber-primary/60 font-mono text-xs">
                 MISSION_{(index + 1).toString().padStart(2, '0')}
               </span>
-              <div className="h-1.5 w-1.5 bg-cyber-primary rounded-full animate-pulse" />
             </div>
             <Badge 
               variant="outline" 

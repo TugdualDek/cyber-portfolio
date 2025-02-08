@@ -77,7 +77,7 @@ export function TimelineSection() {
               {/* Point sur la timeline */}
               <div
                 className={`
-    absolute left-[14px] md:left-[17px] top-1/2 -translate-y-1/2
+    absolute left-[9px] md:left-[17px] top-1/2 -translate-y-1/2
     w-4 h-4 rounded-full 
     ${typeConfig[event.type as TimelineType].bg}
     border-2 border-navy-900

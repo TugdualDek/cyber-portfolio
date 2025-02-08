@@ -34,7 +34,7 @@ export function Navbar() {
       </nav>
 
       {/* Version mobile - en bas */}
-      <nav className="fixed bottom-4 left-1/2 transform -translate-x-1/2 
+      <nav className="fixed bottom-10 left-1/2 transform -translate-x-1/2 
                       md:hidden
                       max-w-[90%] w-fit
                       bg-navy-800/80 backdrop-blur-md 

@@ -45,12 +45,12 @@ export const ARSENAL_CATEGORIES = {
     },
     {
       name: "ARRIS SSTV Award",
-      icon: "TicketCheck",
-      tools: ["Lunar exploration Commemoration", "December 2021"],
+      icon: "Antenna",
+      tools: ["Lunar Exploration Commemoration", "December 2021"],
     },
     {
       name: "ARRIS SSTV Award",
-      icon: "TicketCheck",
+      icon: "Antenna",
       tools: ["20 years of ARISS", "December 2020"],
     },
   ],
@@ -146,6 +146,20 @@ export const TIMELINE_EVENTS = [
 
 export const PROJECTS = [
   {
+    id: "project-6",
+    title: "Web Application Attacks Tester",
+    description: `Application that was created to test the security of Web Application with different attacks scenarios.
+    Scenarios are made with configurable human readable YAML files.
+    - Front-end made in NextJs and Backend in Python to laucnh the attacks
+    - Database with PostgreSql`,
+    date: "October 2024 - January 2025",
+    technologies: ["NextJS", "Python", "PostgreSQL", "Docker", "YAML", "OWASP"],
+    links: {
+      github: "https://github.com/TugdualDek/projet-secu-logicielle",
+    },
+    status: "completed" // Assurez-vous d'utiliser une des trois valeurs autorisées
+  },
+  {
     id: "project-1",
     title: "PDF Chorale SGP",
     description: `Web application dedicated to managing and organising songs and programmes for the SGP choir.
@@ -218,5 +232,27 @@ export const PROJECTS = [
     },
     status: "completed"
   },
-  // ... autres projets
 ];
+
+export const SOCIAL_LINKS = {
+  GITHUB: {
+    url: "https://github.com/TugdualDek",
+    label: "GITHUB",
+    status: "ONLINE"
+  },
+  LINKEDIN: {
+    url: "https://linkedin.com/in/tugdual-de-kerdrel",
+    label: "LINKEDIN",
+    status: "ONLINE"
+  },
+  EMAIL: {
+    url: "mailto:tugdualk@hotmail.com",
+    label: "EMAIL",
+    status: "ACTIVE"
+  },
+  EMAIL_2: {
+    url: "mailto:contact@tugdual.com",
+    label: "EMAIL",
+    status: "ACTIVE"
+  },
+};

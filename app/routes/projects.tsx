@@ -1,5 +1,6 @@
 
 import { CommanderProfile } from "~/components/dashboard/CommanderProfile";
+import { Footer } from "~/components/footer/Footer";
 import { Navbar } from "~/components/navbar/Navbar";
 import ProjectsSection from "~/components/projects/ProjectsSection";
 import { COMMANDER_INFO, ARSENAL_CATEGORIES } from "~/constants/constants";
@@ -24,6 +25,7 @@ export default function Dashboard() {
             </div>
           </div>
         </main>
+        <Footer />
       </div>
     </div>
   );

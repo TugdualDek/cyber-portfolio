@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Biography } from "~/components/dashboard/Biography";
 import { Navbar } from "~/components/navbar/Navbar";
 import { TimelineSection } from "~/components/dashboard/TimelineSection";
+import { Footer } from "~/components/footer/Footer";
 
 export default function Dashboard() {
   const [activeCategory, setActiveCategory] = useState("skills");
@@ -34,6 +35,7 @@ export default function Dashboard() {
             </div>
           </div>
         </main>
+        <Footer />
       </div>
     </div>
   );
