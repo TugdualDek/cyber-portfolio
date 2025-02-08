@@ -85,7 +85,7 @@ const INITIALIZATION_STEPS = [
   
 
   return (
-    <Card className="bg-navy-800/30 border-cyber-primary/20 animate-fadeIn">
+    <Card className="bg-navy-800/40 border-cyber-primary/20 animate-fadeIn">
       <CardHeader className="space-y-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -162,7 +162,7 @@ const INITIALIZATION_STEPS = [
                      hover:border-cyber-primary transition-all duration-300"
             asChild
           >
-            <a href="/path-to-cv.pdf" download>
+            <a href="/assets/cv.pdf" download>
               <Download className="mr-2 h-4 w-4 group-hover:-translate-y-1 transition-transform" />
               DOWNLOAD_CV.pdf
             </a>

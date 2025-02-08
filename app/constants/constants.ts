@@ -3,7 +3,6 @@ export const COMMANDER_INFO = {
   rank: "SYSTEM ADMINISTRATOR AT BILENDI",
   status: "ONLINE",
   experience: "2 YEARS",
-  specialization: "CYBERSECURITY & NETWORKS",
   clearanceLevel: "LEVEL 5",
   biography:
     "I'm a final-year engineering student at ISEP, specializing in cybersecurity and networks. Passionate about information systems security, I combine technical expertise and curiosity to meet the challenges of cybersecurity. Experience in web development and a strong interest in artificial intelligence.",
@@ -141,7 +140,6 @@ export const TIMELINE_EVENTS = [
     date: "July 2019",
     type: "education"
   },
-  // Ajoutez vos événements ici dans l'ordre chronologique
 ];
 
 export const PROJECTS = [
@@ -154,6 +152,7 @@ export const PROJECTS = [
     - Database with PostgreSql`,
     date: "October 2024 - January 2025",
     technologies: ["NextJS", "Python", "PostgreSQL", "Docker", "YAML", "OWASP"],
+    image: "/assets/scanner.webp",
     links: {
       github: "https://github.com/TugdualDek/projet-secu-logicielle",
     },
@@ -169,7 +168,7 @@ export const PROJECTS = [
     - Database made with Prisma and PostgreSql`,
     date: "September 2024",
     technologies: ["NextJS", "Prisma", "PostgreSQL", "Docker"],
-    image: "https://tugdual.com/assets/choralesgp.png",
+    image: "/assets/choralesgp.webp",
     links: {
     },
     status: "completed" // Assurez-vous d'utiliser une des trois valeurs autorisées
@@ -183,7 +182,7 @@ export const PROJECTS = [
     - Database made with Prisma and PostgreSql`,
     date: "2023",
     technologies: ["Next.js", "Prisma", "PostgreSQL", "Docker"],
-    image: "https://tugdual.com/assets/trade.webp",
+    image: "/assets/trade.webp",
     links: {
       github: "https://github.com/TugdualDek/InvestDay",
     },
@@ -198,7 +197,7 @@ export const PROJECTS = [
     - Learning the basics of telecom (communication between different sensors and gateways)`,
     date: "2023",
     technologies: ["HTML", "CSS", "JavaScript", "PHP", "SQL"],
-    image: "https://tugdual.com/assets/carmen.webp",
+    image: "/assets/carmen.webp",
     links: {
       github: "https://github.com/naro92/Carmen",
     },
@@ -212,7 +211,7 @@ export const PROJECTS = [
     - Creation of the back-end from Python and a DHT11 sensor`,
     date: "2022",
     technologies: ["Flutter", "Python", "Arduino", "RaspberryPi"],
-    image: "https://tugdual.com/assets/weather.webp",
+    image: "/assets/weather.webp",
     links: {
       github: "https://github.com/Sh0lf/IT-Project-Weather-App"
     },
@@ -226,7 +225,7 @@ export const PROJECTS = [
     - Possibility for the user to play a story.`,
     date: "2021",
     technologies: ["Python"],
-    image: "https://tugdual.com/assets/hero.webp",
+    image: "/assets/hero.webp",
     links: {
       github: "https://github.com/arcreane/jeu-de-role-rasputin"
     },
@@ -256,3 +255,13 @@ export const SOCIAL_LINKS = {
     status: "ACTIVE"
   },
 };
+
+export const PROJECT_IMAGES = [
+  '/assets/hero.webp',
+  '/assets/carmen.webp',
+  '/assets/choralesgp.webp',
+  '/assets/carmen.webp',
+  '/assets/trade.webp',
+  '/assets/weather.webp',
+  '/assets/scanner.webp',
+];

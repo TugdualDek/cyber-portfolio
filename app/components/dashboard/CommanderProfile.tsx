@@ -19,7 +19,7 @@ export function CommanderProfile({ info }: { info: typeof COMMANDER_INFO }) {
           />
           <div className="absolute inset-2 rounded-full overflow-hidden">
             <img
-              src="/tugdual.webp"
+              src="/assets/tugdual.webp"
               alt="Profile"
               className="w-full h-full object-cover"
             />

@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SOCIAL_LINKS } from "~/constants/constants";
+import { ServerTime } from "../ui/ServerTime";
 
 export function Footer() {
   const [systemStatus, setSystemStatus] = useState({
@@ -157,7 +158,7 @@ export function Footer() {
               </div>
               <div className="flex justify-between text-cyber-primary/60">
                 <span>UPTIME:</span>
-                <span>{new Date().toISOString()}</span>
+                <ServerTime />
               </div>
             </div>
           </div>

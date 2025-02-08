@@ -23,7 +23,14 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://api.fonts.coollabs.io/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap",
   },
-  { rel: "prefetch", as: "image", href: "/tugdual.webp" },
+  { rel: "prefetch", as: "image", href: "/assets/tugdual.webp" },
+  { rel: "me", href: "https://mastodon.social/@ThugDrk" },
+  { rel: "manifest", href: "/manifest.json" },
+  {
+    rel: "icon",
+    type: "image/svg+xml",
+    href: "/favicon.svg",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -36,10 +43,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body className="min-h-screen flex flex-col relative">
-  <DynamicBackground />
-  <div className="relative z-10 flex-grow">
-        <Cursor />
-        {children}
+        <DynamicBackground />
+        <div className="relative z-10 flex-grow">
+          <Cursor />
+          {children}
         </div>
         <ScrollRestoration />
         <Scripts />

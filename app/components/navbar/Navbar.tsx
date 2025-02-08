@@ -1,9 +1,25 @@
 import { Link, useLocation } from "@remix-run/react";
 import { Button } from "../ui/button"
-import { NAV_ITEMS } from "../../constants/constants"
+import { NAV_ITEMS, PROJECT_IMAGES } from "../../constants/constants"
+import { useEffect } from "react";
+
+export function useClientEffect(effect: () => void | (() => void), deps?: any[]) {
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      return effect();
+    }
+  }, deps);
+}
 
 export function Navbar() {
   const location = useLocation();
+
+  useClientEffect(() => {
+    PROJECT_IMAGES.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
 
   return (
     <>
