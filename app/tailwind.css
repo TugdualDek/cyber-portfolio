@@ -115,114 +115,20 @@ body {
   background-attachment: fixed;
 }
 
-.cursor-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 9999;
+/* Style de base pour le curseur personnalisé */
+* {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v20M2 12h20'/%3E%3C/svg%3E") 12 12, crosshair !important;
+}
+
+/* Effets de survol pour les boutons et liens */
+button, a, [role="button"] {
+  position: relative;
+  transition: all 0.3s ease;
   overflow: hidden;
 }
 
-.cursor-line {
-  position: fixed;
-  background-color: rgba(100, 255, 218, 0.1);
-  transition: all 0.05s ease;
-}
-
-.cursor-line.vertical {
-  width: 3px;
-  height: 100vh;
-  top: 0;
-}
-
-.cursor-line.horizontal {
-  width: 100vw;
-  height: 3px;
-  left: 0;
-}
-
-.cursor-center {
-  position: fixed;
-  width: 40px;
-  height: 40px;
-  transform: translate(-50%, -50%);
-  transition: all 0.05s ease;
-}
-
-.cursor-ring {
-  position: absolute;
-  border-radius: 50%;
-  border: 1px solid rgba(100, 255, 218, 0.3);
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
-}
-
-.ring-1 {
-  width: 40px;
-  height: 40px;
-  animation: ringPulse 2s ease-out infinite;
-}
-
-.ring-2 {
-  width: 30px;
-  height: 30px;
-  animation: ringRotate 4s linear infinite;
-}
-
-.ring-3 {
-  width: 20px;
-  height: 20px;
-  animation: ringPulse 3s ease-out infinite reverse;
-}
-
-.cursor-dot {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background-color: rgb(100, 255, 218);
-  border-radius: 50%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-center.clicking {
-  transform: translate(-50%, -50%) scale(0.8);
-}
-
-.cursor-line.clicking {
-  background-color: rgba(0, 255, 136, 0.3);
-}
-
-@keyframes ringPulse {
-  0% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.5;
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(0.8);
-    opacity: 0.5;
-  }
-}
-
-@keyframes ringRotate {
-  from {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
-
-a:hover ~ .cursor-container .cursor-center,
-button:hover ~ .cursor-container .cursor-center {
-  transform: translate(-50%, -50%) scale(1.2);
+/* Effet de bordure luminescente */
+button:hover, a:hover, [role="button"]:hover {
+  box-shadow: 0 0 3px rgba(0, 255, 136, 0.5);
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='6'/%3E%3Cpath d='M12 2v20M2 12h20'/%3E%3C/svg%3E") 16 16, pointer !important;
 }

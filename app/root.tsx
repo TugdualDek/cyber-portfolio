@@ -10,6 +10,7 @@ import type { LinksFunction } from "@remix-run/node";
 import styles from "./tailwind.css?url";
 import { Cursor } from "./components/Cursor";
 import { DynamicBackground } from "./components/DynamicBackground";
+import { useEffect } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
