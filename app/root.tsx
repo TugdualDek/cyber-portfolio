@@ -22,7 +22,7 @@ export const links: LinksFunction = () => [
     rel: "stylesheet",
     href: "https://api.fonts.coollabs.io/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap",
   },
-  { rel: "prefetch", as: "image", href: "/assets/tugdual.webp" },
+  { rel: "preload", as: "image", href: "/assets/tugdual.webp", fetchpriority: "high"  },
   { rel: "me", href: "https://mastodon.social/@ThugDrk" },
   { rel: "manifest", href: "/manifest.json" },
   {
