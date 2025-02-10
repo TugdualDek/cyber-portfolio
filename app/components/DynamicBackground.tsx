@@ -1,92 +1,126 @@
-import { useEffect, useRef } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 
-export function DynamicBackground() {
+interface Detection {
+  col: number;
+  row: number;
+  life: number;
+}
+
+// Configuration constante
+const GRID_SIZE = 30;
+const DETECTION_CHANCE = 0.01;
+const LIFE_DECREASE = 0.02;
+const DETECTION_ALPHA = 0.3;
+
+const DynamicBackground = memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const detectionsRef = useRef<Detection[]>([]);
   const animationFrameRef = useRef<number>();
-
-  useEffect(() => {
+  const contextRef = useRef<CanvasRenderingContext2D | null>(null);
+  
+  // Initialisation du canvas
+  const setupCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const context = canvas.getContext('2d');
-    if (!context) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    contextRef.current = canvas.getContext('2d');
+    if (!contextRef.current) return;
+  }, []);
 
-    // Configuration initiale
-    const updateCanvasSize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    updateCanvasSize();
+  // Dessin de la grille
+  const drawGrid = useCallback(() => {
+    const context = contextRef.current;
+    const canvas = canvasRef.current;
+    if (!context || !canvas) return;
+
+    // Nettoyage et fond
+    context.fillStyle = '#0A192F';
+    context.fillRect(0, 0, canvas.width, canvas.height);
 
     // Configuration de la grille
-    const gridSize = 30; // Petits carrés
-    const cols = Math.ceil(canvas.width / gridSize);
-    const rows = Math.ceil(canvas.height / gridSize);
-    
-    // État des détections
-    const detections: Array<{ col: number; row: number; life: number }> = [];
+    context.strokeStyle = 'rgba(0, 255, 136, 0.05)';
+    context.lineWidth = 1;
+    context.beginPath();
 
-    const drawGrid = () => {
-      // Fond
-      context.fillStyle = '#0A192F';
-      context.fillRect(0, 0, canvas.width, canvas.height);
+    // Optimisation du rendu de la grille
+    const cols = Math.ceil(canvas.width / GRID_SIZE);
+    const rows = Math.ceil(canvas.height / GRID_SIZE);
 
-      // Grille subtile
-      context.strokeStyle = 'rgba(0, 255, 136, 0.05)';
-      context.lineWidth = 1;
-      context.beginPath();
+    // Lignes verticales et horizontales
+    for (let x = 0; x <= cols; x++) {
+      context.moveTo(x * GRID_SIZE, 0);
+      context.lineTo(x * GRID_SIZE, canvas.height);
+    }
+    for (let y = 0; y <= rows; y++) {
+      context.moveTo(0, y * GRID_SIZE);
+      context.lineTo(canvas.width, y * GRID_SIZE);
+    }
+    context.stroke();
 
-      // Lignes verticales
-      for (let x = 0; x <= canvas.width; x += gridSize) {
-        context.moveTo(x, 0);
-        context.lineTo(x, canvas.height);
-      }
+    return { cols, rows };
+  }, []);
 
-      // Lignes horizontales
-      for (let y = 0; y <= canvas.height; y += gridSize) {
-        context.moveTo(0, y);
-        context.lineTo(canvas.width, y);
-      }
+  // Gestion des détections
+  const updateDetections = useCallback((cols: number, rows: number) => {
+    const context = contextRef.current;
+    if (!context) return;
 
-      context.stroke();
-
-      // Ajouter une nouvelle détection aléatoire (rarement)
-      if (Math.random() < 0.01) {
-        detections.push({
-          col: Math.floor(Math.random() * cols),
-          row: Math.floor(Math.random() * rows),
-          life: 1
-        });
-      }
-
-      // Dessiner les détections
-      detections.forEach((detection, index) => {
-        detection.life -= 0.02;
-        if (detection.life <= 0) {
-          detections.splice(index, 1);
-        } else {
-          context.fillStyle = '#00ff88';
-          context.globalAlpha = detection.life * 0.3; // Plus subtil
-          const x = detection.col * gridSize;
-          const y = detection.row * gridSize;
-          context.fillRect(x, y, gridSize, gridSize);
-        }
+    // Ajout aléatoire de détections
+    if (Math.random() < DETECTION_CHANCE) {
+      detectionsRef.current.push({
+        col: Math.floor(Math.random() * cols),
+        row: Math.floor(Math.random() * rows),
+        life: 1
       });
+    }
 
-      animationFrameRef.current = requestAnimationFrame(drawGrid);
+    // Mise à jour et rendu des détections
+    detectionsRef.current = detectionsRef.current.filter(detection => {
+      detection.life -= LIFE_DECREASE;
+      if (detection.life <= 0) return false;
+
+      context.fillStyle = '#00ff88';
+      context.globalAlpha = detection.life * DETECTION_ALPHA;
+      context.fillRect(
+        detection.col * GRID_SIZE,
+        detection.row * GRID_SIZE,
+        GRID_SIZE,
+        GRID_SIZE
+      );
+      context.globalAlpha = 1;
+      return true;
+    });
+  }, []);
+
+  // Boucle d'animation
+  const animate = useCallback(() => {
+    const dimensions = drawGrid();
+    if (dimensions) {
+      updateDetections(dimensions.cols, dimensions.rows);
+    }
+    animationFrameRef.current = requestAnimationFrame(animate);
+  }, [drawGrid, updateDetections]);
+
+  useEffect(() => {
+    setupCanvas();
+    animate();
+
+    const handleResize = () => {
+      setupCanvas();
     };
 
-    drawGrid();
-
-    window.addEventListener('resize', updateCanvasSize);
-
+    window.addEventListener('resize', handleResize);
+    
     return () => {
-      window.removeEventListener('resize', updateCanvasSize);
+      window.removeEventListener('resize', handleResize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, []);
+  }, [setupCanvas, animate]);
 
   return (
     <canvas
@@ -95,4 +129,8 @@ export function DynamicBackground() {
       style={{ zIndex: 0 }}
     />
   );
-}
+});
+
+DynamicBackground.displayName = 'DynamicBackground';
+
+export { DynamicBackground };

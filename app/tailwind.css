@@ -38,9 +38,11 @@ body {
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+    --cyber-primary: 157 100% 50%;
+    --cyber-primary-alpha: 157 100% 50%;
   }
   .dark {
-    --background: 0 0% 3.9%;
+    --background: 0 0% 100%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
     --card-foreground: 0 0% 98%;
@@ -64,71 +66,82 @@ body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    --cyber-primary: 157 100% 50%;
+    --cyber-primary-alpha: 157 100% 50%;
   }
-}
 
-@layer base {
-  * {
-    @apply border-border;
-    font-family: "Exo 2", system-ui, sans-serif;
-  }
   body {
     @apply bg-background text-foreground;
+    color-scheme: light dark;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    font-family: "Exo 2", system-ui, sans-serif;
   }
 }
 
+@layer components {
+  .cyber-pattern {
+    @apply fixed inset-0 pointer-events-none;
+    background-image: linear-gradient(
+      to right,
+      hsl(var(--cyber-primary-alpha) / 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      hsl(var(--cyber-primary-alpha) / 0.1) 1px,
+      transparent 1px
+    );
+    background-size: 20px 20px;
+  }
+}
+
+
 @layer utilities {
+
+  .bg-gradient-radial {
+    background: radial-gradient(
+      circle at center,
+      transparent 0%,
+      hsl(var(--background) / 0.8) 100%
+    );
+  }
+
   .perspective-1000 {
     perspective: 1000px;
     transform-style: preserve-3d;
   }
 }
 
-/* Sur desktop : curseur normal */
 @media (min-width: 769px) {
+  /* Style de base pour le curseur personnalisé */
   * {
-    cursor: none;
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v20M2 12h20'/%3E%3C/svg%3E")
+        12 12,
+      crosshair !important;
   }
-}
 
-/* Sur mobile : pas de curseur */
-@media (max-width: 768px) {
-  * {
-    cursor: auto;
+  /* Effets de survol pour les boutons et liens */
+  button,
+  a,
+  [role="button"] {
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
   }
-}
 
-.cyber-pattern {
-  background-image: 
-    linear-gradient(to right, rgba(0, 255, 187, 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 255, 187, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-  background-attachment: fixed;
-}
-
-.bg-gradient-radial {
-  background: radial-gradient(
-    circle at center,
-    transparent 0%,
-    rgba(10, 15, 31, 0.8) 100%
-  );
-  background-attachment: fixed;
-}
-
-/* Style de base pour le curseur personnalisé */
-* {
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='4'/%3E%3Cpath d='M12 2v20M2 12h20'/%3E%3C/svg%3E") 12 12, crosshair !important;
-}
-
-/* Effets de survol pour les boutons et liens */
-button, a, [role="button"] {
-  position: relative;
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-/* Effet de bordure luminescente */
-button:hover, a:hover, [role="button"]:hover {
-  box-shadow: 0 0 3px rgba(0, 255, 136, 0.5);
-  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='6'/%3E%3Cpath d='M12 2v20M2 12h20'/%3E%3C/svg%3E") 16 16, pointer !important;
+  /* Effet de bordure luminescente */
+  button:hover,
+  a:hover,
+  [role="button"]:hover {
+    box-shadow: 0 0 3px rgba(0, 255, 136, 0.5);
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 24 24' fill='none' stroke='%2300ff88' stroke-width='2'%3E%3Ccircle cx='12' cy='12' r='6'/%3E%3Cpath d='M12 2v20M2 12h20'/%3E%3C/svg%3E")
+        16 16,
+      pointer !important;
+  }
 }

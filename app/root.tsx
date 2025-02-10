@@ -5,12 +5,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
-import type { LinksFunction } from "@remix-run/node";
+import type { HeadersFunction, LinksFunction } from "@remix-run/node";
 
 import styles from "./tailwind.css?url";
-import { Cursor } from "./components/Cursor";
 import { DynamicBackground } from "./components/DynamicBackground";
-import { useEffect } from "react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: styles },
@@ -34,6 +32,15 @@ export const links: LinksFunction = () => [
   },
 ];
 
+export const headers: HeadersFunction = ({
+  actionHeaders,
+  errorHeaders,
+  loaderHeaders,
+  parentHeaders,
+}) => ({
+  "Cache-Control": "public, max-age=3600",
+});
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -46,7 +53,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <body className="min-h-screen flex flex-col relative">
         <DynamicBackground />
         <div className="relative z-10 flex-grow">
-          <Cursor />
           {children}
         </div>
         <ScrollRestoration />

@@ -32,7 +32,7 @@ const ICON_MAP = {
   Antenna,
 } as const;
 
-export function ArsenalSection({
+export default function ArsenalSection({
   categories,
   activeCategory,
   onCategoryChange,

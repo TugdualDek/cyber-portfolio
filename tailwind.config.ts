@@ -79,11 +79,6 @@ export default {
       animation: {
         blink: 'blink 1s step-end infinite',
         scan: 'scan 8s ease-in-out infinite',
-        matrixRain: 'matrixRain 2s linear infinite',
-        dataStream: 'dataStream 3s linear infinite',
-        interference: 'interference 0.2s ease-in-out infinite',
-        terminalType: 'terminalType 3s steps(40, end)',
-        gridFlash: 'gridFlash 5s linear infinite',
         typewriter: 'typewriter 2s steps(40, end)',
       },
       keyframes: {
@@ -116,6 +111,12 @@ export default {
         },
       },
     },
+  },
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
+  experimental: {
+    optimizeUniversalDefaults: true,
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;

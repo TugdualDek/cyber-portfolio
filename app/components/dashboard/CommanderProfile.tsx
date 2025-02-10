@@ -21,6 +21,9 @@ export function CommanderProfile({ info }: { info: typeof COMMANDER_INFO }) {
             <img
               src="/assets/tugdual.webp"
               alt="Profile"
+              width="160"
+              height="160"
+              loading="eager"
               className="w-full h-full object-cover"
             />
           </div>

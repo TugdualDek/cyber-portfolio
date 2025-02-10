@@ -5,7 +5,7 @@ interface BiographyProps {
   biography: string;
 }
 
-export function Biography({ biography }: BiographyProps) {
+export default function Biography({ biography }: BiographyProps) {
   return (
     <Card className="bg-navy-800/30 backdrop-blur-sm border-0 relative overflow-hidden group shadow-[0_0_20px_rgba(0,255,136,0.15)]">
         
