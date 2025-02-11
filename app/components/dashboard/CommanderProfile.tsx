@@ -1,5 +1,6 @@
 import { COMMANDER_INFO } from "~/constants/constants";
 import { StatusCard } from "../ui/StatusCard";
+import { Link } from "@remix-run/react";
 
 export function CommanderProfile({ info }: { info: typeof COMMANDER_INFO }) {
   return (
@@ -41,8 +42,8 @@ export function CommanderProfile({ info }: { info: typeof COMMANDER_INFO }) {
           <div className="flex items-center justify-center space-x-2">
             <div className="h-2 w-2 bg-cyber-primary rounded-full animate-pulse" />
             <span className="text-cyber-primary/80 text-sm">{info.status}</span>
-            <a
-              href="/contact"
+            <Link
+              to="/contact"
               className="ml-4 group flex items-center gap-2 text-sm font-mono
               text-cyber-primary/60 hover:text-cyber-primary
               transition-colors duration-300"
@@ -61,7 +62,7 @@ export function CommanderProfile({ info }: { info: typeof COMMANDER_INFO }) {
               >
                 →
               </span>
-            </a>
+            </Link>
           </div>
         </div>
 
