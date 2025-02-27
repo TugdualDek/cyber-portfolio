@@ -80,6 +80,7 @@ export default {
         blink: 'blink 1s step-end infinite',
         scan: 'scan 8s ease-in-out infinite',
         typewriter: 'typewriter 2s steps(40, end)',
+        cursor: 'cursor 1s step-end infinite',
       },
       keyframes: {
         'cursor-blink': {
@@ -108,6 +109,10 @@ export default {
             width: '100%',
             opacity: '1'
           }
+        },
+        cursor: {
+          '0%, 100%': { opacity: "1" },
+          '50%': { opacity: "0.3" },
         },
       },
     },
