@@ -1,9 +1,9 @@
 // app/utils/terminal/commandExecutor.tsx
 import { commands, CommandContext, CommandResult } from "../../constants/commands";
-import { initializeCommandFunctions } from "./commandFunctions";
+//import { initializeCommandFunctions } from "./commandFunctions";
 
 // Initialiser les fonctions d'exécution des commandes
-initializeCommandFunctions();
+//initializeCommandFunctions();
 
 // Fonction principale pour exécuter une commande
 export function executeCommand(
