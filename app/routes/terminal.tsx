@@ -207,7 +207,6 @@ Welcome to my interactive portfolio terminal!
 You have been granted limited visitor access.
 To discover my skills and projects, you'll need to explore the system...
 
-Explore this terminal with Linux commands 
 Find hidden secrets if you're curious
 Or simply visit my classic website by typing 'exit'
 
