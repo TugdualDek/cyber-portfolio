@@ -1034,7 +1034,7 @@ export function executeGREP(
   // Fonction récursive pour chercher dans un dossier
   const searchInDirectory = (dirPath: string, basePath: string = "") => {
     // Obtenir tous les fichiers et dossiers dans ce répertoire
-    const contents = getDirectoryContents(dirPath, fileSystem, true);
+    const contents = getDirectoryContents(dirPath, fileSystem, false);
 
     for (const itemPath of contents) {
       const itemInfo = getFileInfo(itemPath, fileSystem);
