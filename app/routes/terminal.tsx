@@ -190,14 +190,12 @@ export default function Terminal() {
 
   // Add initial welcome message
   useEffect(() => {
-    const welcomeMessage = `
-Debian GNU/Linux 12 (Bookworm)
+    const welcomeMessage = `Debian GNU/Linux 12 (Bookworm)
 tugdual-portfolio: SSH-2.0-OpenSSH_8.4p1 Debian-5+deb11u1
 
   ████████╗██╗   ██╗ ██████╗ ██████╗ ██╗   ██╗ █████╗ ██╗     
   ╚══██╔══╝██║   ██║██╔════╝ ██╔══██╗██║   ██║██╔══██║██║     
-     ██║   ██║   ██║██║  ███╗██║  ██║██║   ██║███████║██║     
-     ██║   ██║   ██║██║   ██║██║  ██║██║   ██║██╔══██║██║     
+     ██║   ██║   ██║██║  ███╗██║  ██║██║   ██║███████║██║         
      ██║   ╚██████╔╝╚██████╔╝██████╔╝╚██████╔╝██║  ██║███████╗
      ╚═╝    ╚═════╝  ╚═════╝ ╚═════╝  ╚═════╝ ╚═╝  ╚═╝╚══════╝
                                                                
@@ -210,7 +208,6 @@ You have been granted limited visitor access.
 To discover my skills and projects, you'll need to explore the system...
 
 Explore this terminal with Linux commands 
-Search the folders to discover my projects and skills
 Find hidden secrets if you're curious
 Or simply visit my classic website by typing 'exit'
 
