@@ -13,6 +13,8 @@ import {
   getFileInfo,
 } from "../../constants/filesystem";
 
+export let isRootUser = false;
+
 // Implémentation de la commande ls
 export function executeLS(
   args: string[],
@@ -42,7 +44,7 @@ export function executeLS(
   // Vérifier si c'est un répertoire
   if (!isDirectory(targetPath, fileSystem)) {
     return {
-      output: <span>{targetPath} id not a directory</span>,
+      output: <span>{targetPath} is not a directory</span>,
       isError: true,
     };
   }
@@ -250,6 +252,9 @@ export function executeHELP(
         <div className="font-bold text-green-500 mb-2">Available commands:</div>
         {Object.values(commands)
           .filter((cmd) => !cmd.hidden)
+          .sort((a, b) => {
+            return a.name.localeCompare(b.name);
+          })
           .map((cmd) => (
             <div key={cmd.name} className="grid grid-cols-12 gap-2">
               <span className="col-span-2 text-green-500 font-bold">
@@ -299,7 +304,7 @@ export function executePING(
 
   if (args.length === 0) {
     return {
-      output: <span>Usage: ping [options] &lt;destination&gt;</span>,
+      output: <span>Usage: ping [options] &lt;target&gt;</span>,
       isError: true,
     };
   }
@@ -317,8 +322,7 @@ export function executePING(
         return {
           output: (
             <span>
-              ping: option invalide -- c: '{args[i + 1]}' n'est pas un nombre
-              valide
+              ping: invalid option -- c: '{args[i + 1]}' is not a valid number
             </span>
           ),
           isError: true,
@@ -329,7 +333,7 @@ export function executePING(
       // Autre option non reconnue
       if (args[i] !== "-c") {
         return {
-          output: <span>ping: option non reconnue: {args[i]}</span>,
+          output: <span>ping: unknown option: {args[i]}</span>,
           isError: true,
         };
       }
@@ -342,7 +346,7 @@ export function executePING(
   // Vérifier si une destination a été spécifiée
   if (!destination) {
     return {
-      output: <span>ping: aucune destination spécifiée</span>,
+      output: <span>ping: no target specified</span>,
       isError: true,
     };
   }
@@ -353,7 +357,7 @@ export function executePING(
 
   if (!ipRegex.test(destination)) {
     return {
-      output: <span>ping: nom ou service inconnu: {destination}</span>,
+      output: <span>ping: unknown name or service: {destination}</span>,
       isError: true,
     };
   }
@@ -373,7 +377,7 @@ export function executePING(
 
     pingResults.push(
       <div key={i}>
-        64 octets de {destination}: icmp_seq={i + 1} ttl=64 temps={time} ms
+        64 bytes from {destination}: icmp_seq={i + 1} ttl=64 time={time} ms
       </div>
     );
   }
@@ -383,11 +387,11 @@ export function executePING(
   return {
     output: (
       <div>
-        <div>PING {destination} 56(84) octets de données.</div>
+        <div>PING {destination} 56(84) bytes of data.</div>
         {pingResults}
-        <div>--- {destination} statistiques ping ---</div>
+        <div>--- {destination} ping statistics ---</div>
         <div>
-          {count} paquets transmis, {count} reçus, 0% packet loss, time{" "}
+          {count} transmitted packets, {count} received, 0% packet loss, time{" "}
           {count * 1000}ms
         </div>
         <div>
@@ -410,12 +414,12 @@ export function executeNMAP(
     return {
       output: (
         <div>
-          <div>Usage: nmap [options] &lt;cible&gt;</div>
-          <div>Options principales:</div>
+          <div>Usage: nmap [options] &lt;target&gt;</div>
+          <div>Options available:</div>
           <div>-sS: Scan TCP SYN (furtif)</div>
-          <div>-sV: Détection de version</div>
-          <div>-p: Spécifier les ports à scanner (ex: -p 1-100)</div>
-          <div>-A: Détection agressive (OS, version, scripts, traceroute)</div>
+          <div>-sV: Version detection</div>
+          <div>-p: Ports to scan (ex: -p 1-100)</div>
+          <div>-A: Aggressive detection (OS, version, scripts, traceroute)</div>
         </div>
       ),
       isError: true,
@@ -449,7 +453,7 @@ export function executeNMAP(
   // Vérifier si une cible a été spécifiée
   if (!target) {
     return {
-      output: <span>nmap: aucune cible spécifiée</span>,
+      output: <span>nmap: no target specified</span>,
       isError: true,
     };
   }
@@ -462,7 +466,7 @@ export function executeNMAP(
     return {
       output: (
         <span>
-          nmap: Impossible de résoudre "{target}": Nom ou service inconnu
+          nmap: Unable to solve "{target}": unknown name or service
         </span>
       ),
       isError: true,
@@ -501,9 +505,12 @@ export function executeNMAP(
   const services = {
     21: { name: "ftp", version: "vsftpd 3.0.3" },
     22: { name: "ssh", version: "OpenSSH 8.2p1 Ubuntu 4ubuntu0.5" },
+    53: { name: "domain", version: "dnsmasq 2.82" },
     80: { name: "http", version: "Apache httpd 2.4.41" },
+    110: { name: "pop3", version: "Dovecot pop3d" },
     443: { name: "https", version: "nginx 1.18.0" },
     3306: { name: "mysql", version: "MySQL 8.0.27-0ubuntu0.20.04.1" },
+    5432: { name: "postgresql", version: "PostgreSQL DB 13.4" },
     8080: { name: "http-proxy", version: "Apache Tomcat" },
     8443: { name: "https-alt", version: "Jetty 9.4.39.v20210325" },
   };
@@ -572,9 +579,9 @@ export function executeHASH(
     return {
       output: (
         <div>
-          <div>Usage: hash &lt;algorithme&gt; &lt;texte&gt;</div>
-          <div>Algorithmes disponibles: md5, sha1, sha256, sha512</div>
-          <div>Exemple: hash md5 "Hello World"</div>
+          <div>Usage: hash &lt;algorithm&gt; &lt;string&gt;</div>
+          <div>Available algorithms: md5, sha1, sha256, sha512</div>
+          <div>Example: hash md5 "Hello World"</div>
         </div>
       ),
       isError: true,
@@ -588,7 +595,7 @@ export function executeHASH(
   const supportedAlgorithms = ["md5", "sha1", "sha256", "sha512"];
   if (!supportedAlgorithms.includes(algorithm)) {
     return {
-      output: <span>Algorithme non supporté: {algorithm}</span>,
+      output: <span>Unsuported algorithm: {algorithm}</span>,
       isError: true,
     };
   }
@@ -637,8 +644,8 @@ export function executeHASH(
   return {
     output: (
       <div>
-        <div>Texte: {text}</div>
-        <div>Algorithme: {algorithm}</div>
+        <div>String: {text}</div>
+        <div>Algorithm: {algorithm}</div>
         <div>Hash: {hash}</div>
       </div>
     ),
@@ -665,24 +672,11 @@ export function executeFIND(
     return {
       output: (
         <div>
-          <div>Usage: find [chemin] [options]</div>
+          <div>Usage: find [path] [options]</div>
           <div>Options:</div>
-          <div>
-            {" "}
-            -name PATTERN Recherche les fichiers dont le nom correspond au motif
-          </div>
-          <div>
-            {" "}
-            -type TYPE Recherche les fichiers d'un certain type (f: fichier, d:
-            répertoire)
-          </div>
-          <div>
-            {" "}
-            -size [+/-]N Recherche les fichiers de taille N (+ pour plus grand,
-            - pour plus petit)
-          </div>
-          <div> -maxdepth N Limite la profondeur de recherche à N niveaux</div>
-          <div>Exemple: find /home -name "*.txt" -type f</div>
+          <div> -name PATTERN - Search for files whose name matches the pattern</div>
+          <div> -type TYPE - Search for files of a certain type (f: file, d: directory)</div>
+          <div>Example: find /home -name "*.txt" -type f</div>
         </div>
       ),
       isError: true,
@@ -691,40 +685,25 @@ export function executeFIND(
 
   const { currentPath, fileSystem } = context;
 
-  // Analyser les arguments
+  // Déterminer le chemin de départ
   let startPath = args[0];
-  let options: { [key: string]: string } = {};
-
-  // Si le premier argument ne commence pas par un tiret, c'est le chemin de départ
-  // Sinon, utiliser le chemin courant
-  if (!startPath.startsWith("-")) {
+  let options: Record<string, string> = {};
+  
+  // Si le premier argument commence par un tiret, c'est une option
+  if (startPath.startsWith("-")) {
+    startPath = currentPath;
+    parseOptions(args, options);
+  } else {
     // Normaliser le chemin de départ
     startPath = normalizePath(startPath, currentPath);
-
-    // Extraire les options (paires clé-valeur)
-    for (let i = 1; i < args.length; i += 2) {
-      if (args[i].startsWith("-") && i + 1 < args.length) {
-        options[args[i].substring(1)] = args[i + 1];
-      }
-    }
-  } else {
-    // Si le premier argument est une option, utiliser le chemin courant
-    startPath = currentPath;
-
-    // Extraire les options (paires clé-valeur)
-    for (let i = 0; i < args.length; i += 2) {
-      if (args[i].startsWith("-") && i + 1 < args.length) {
-        options[args[i].substring(1)] = args[i + 1];
-      }
-    }
+    // Extraire les options à partir du deuxième argument
+    parseOptions(args.slice(1), options);
   }
 
   // Vérifier si le chemin de départ existe
   if (!pathExists(startPath, fileSystem)) {
     return {
-      output: (
-        <span>find: '{startPath}': Aucun fichier ou dossier de ce type</span>
-      ),
+      output: <span>find: '{startPath}': No such file or directory</span>,
       isError: true,
     };
   }
@@ -732,85 +711,54 @@ export function executeFIND(
   // Vérifier si le chemin de départ est un répertoire
   if (!isDirectory(startPath, fileSystem)) {
     return {
-      output: <span>find: '{startPath}' n'est pas un répertoire</span>,
+      output: <span>find: '{startPath}' is not a directory</span>,
       isError: true,
     };
   }
 
-  // Fonction pour vérifier si un fichier correspond aux critères de recherche
-  const matchesCriteria = (path: string): boolean => {
-    // Vérifier le type de fichier
-    if (options.type) {
+  // Collecter tous les chemins dans le système de fichiers
+  const allPaths = Object.keys(fileSystem);
+  
+  // Filtrer les chemins qui commencent par le chemin de départ
+  const pathsInStartDir = allPaths.filter(path => 
+    path === startPath || path.startsWith(startPath + "/")
+  );
+  
+  // Appliquer les filtres basés sur les options
+  const filteredPaths = pathsInStartDir.filter(path => {
+    // Filtre par type
+    if ('type' in options) {
       const isDir = isDirectory(path, fileSystem);
       if (options.type === "f" && isDir) return false;
       if (options.type === "d" && !isDir) return false;
     }
-
-    // Vérifier le nom du fichier
-    if (options.name) {
+    
+    // Filtre par nom
+    if ('name' in options) {
       const fileName = path.split("/").pop() || "";
-      const pattern = options.name.replace(/\*/g, ".*").replace(/\?/g, ".");
+      
+      // Convertir le motif en expression régulière
+      let pattern = options.name;
+      
+      // Échapper les caractères spéciaux de regex sauf * et ?
+      pattern = pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&');
+      
+      // Remplacer les jokers par leurs équivalents regex
+      pattern = pattern.replace(/\*/g, '.*').replace(/\?/g, '.');
+      
+      // Créer la regex avec ancres pour correspondre exactement
       const regex = new RegExp(`^${pattern}$`);
+      
       if (!regex.test(fileName)) return false;
     }
-
-    // Vérifier la taille du fichier (simulation)
-    if (options.size) {
-      // Dans un vrai système, on vérifierait la taille réelle du fichier
-      // Ici, on simule simplement en fonction du nom du fichier
-      const fileName = path.split("/").pop() || "";
-      const fileSize = fileName.length * 100; // Taille simulée en octets
-
-      const sizeValue = options.size;
-      if (sizeValue.startsWith("+")) {
-        const minSize = parseInt(sizeValue.substring(1));
-        if (fileSize <= minSize) return false;
-      } else if (sizeValue.startsWith("-")) {
-        const maxSize = parseInt(sizeValue.substring(1));
-        if (fileSize >= maxSize) return false;
-      } else {
-        const exactSize = parseInt(sizeValue);
-        if (fileSize !== exactSize) return false;
-      }
-    }
-
+    
     return true;
-  };
-
-  // Fonction récursive pour parcourir l'arborescence
-  const findFiles = (dir: string, depth: number = 0): string[] => {
-    // Vérifier la profondeur maximale
-    const maxDepth = options.maxdepth ? parseInt(options.maxdepth) : Infinity;
-    if (depth > maxDepth) return [];
-
-    const results: string[] = [];
-
-    // Ajouter le répertoire courant s'il correspond aux critères
-    if (matchesCriteria(dir)) {
-      results.push(dir);
-    }
-
-    // Si c'est un répertoire, parcourir son contenu
-    if (isDirectory(dir, fileSystem)) {
-      const contents = getDirectoryContents(dir, fileSystem);
-
-      for (const item of contents) {
-        // Récursivement trouver les fichiers dans les sous-répertoires
-        const itemResults = findFiles(item, depth + 1);
-        results.push(...itemResults);
-      }
-    }
-
-    return results;
-  };
-
-  // Exécuter la recherche
-  const foundFiles = findFiles(startPath);
+  });
 
   // Formater les résultats
-  if (foundFiles.length === 0) {
+  if (filteredPaths.length === 0) {
     return {
-      output: <span>Aucun résultat trouvé.</span>,
+      output: <span>No results found</span>,
       isError: false,
     };
   }
@@ -818,8 +766,8 @@ export function executeFIND(
   return {
     output: (
       <div>
-        {foundFiles.map((file, index) => (
-          <div key={index}>{file}</div>
+        {filteredPaths.map((path, index) => (
+          <div key={index}>{path}</div>
         ))}
       </div>
     ),
@@ -827,16 +775,53 @@ export function executeFIND(
   };
 }
 
+// Fonction utilitaire pour extraire les options
+function parseOptions(args: string[], options: Record<string, string>): void {
+  for (let i = 0; i < args.length; i += 2) {
+    if (args[i].startsWith("-") && i + 1 < args.length) {
+      const optionName = args[i].substring(1);
+      options[optionName] = args[i + 1];
+    }
+  }
+}
+
+
+
 export function executeEXIT(
   args: string[],
   context: CommandContext
 ): CommandResult {
   // cette commande te fais revenir ala page / de mon site
-  window.location.href = "/";
-  return {
-    output: <span>You are leaving the terminal. Goodbye!</span>,
-    isError: false,
-  };
+  if (isRootUser) {
+    isRootUser = false;
+    return {
+      output: (
+        <div className="space-y-2">
+          <div className="text-red-500 font-bold text-lg">
+            Goodbye, root user.
+          </div>
+          <div className="text-yellow-500 italic animate-pulse">
+            <span className="font-semibold">May the Force be with you...</span>
+          </div>
+          <div className="text-green-500/70 text-xs mt-2">
+            Terminating privileged session. All actions have been logged.
+          </div>
+        </div>
+      ),
+      isError: false,
+    };
+  } else {
+    window.location.href = "/";
+    return {
+      output: (
+        <div className="space-y-1">
+          <div className="text-green-500">Thank you for visiting my portfolio terminal!</div>
+          <div className="text-green-500/70">Redirecting to homepage...</div>
+        </div>
+      ),
+      isError: false,
+    };
+  }
 }
 
 export function executeCONTACT(
@@ -848,8 +833,11 @@ export function executeCONTACT(
     output: (
       <div>
         <div>
-          <span className="text-green-500 font-bold">Email: <a href="mailto:tugdualk@hotmail.com" >tugdualk@hotmail.com</a></span>
-          <br/>
+          <span className="text-green-500 font-bold">
+            Email:{" "}
+            <a href="mailto:tugdualk@hotmail.com">tugdualk@hotmail.com</a>
+          </span>
+          <br />
           <span className="text-green-500 font-bold">LinkedIn: </span>
           <a
             href="https://www.linkedin.com/in/tugdual-de-kerdrel/"
@@ -859,7 +847,7 @@ export function executeCONTACT(
           >
             Tugdual de Kerdrel
           </a>
-          <br/>
+          <br />
           <span className="text-green-500 font-bold">CV: </span>
           <a
             href="https://tugdual.com/assets/cv.pdf"
@@ -885,25 +873,28 @@ export function executeSKILLS(
     output: (
       <div>
         <div>
-          <span className="text-green-500 font-bold">🈸 Languages: </span> HTML, JavaScript,
-          TypeScript, Python, Java, SQL, PHP
+          <span className="text-green-500 font-bold">🈸 Languages: </span> HTML,
+          JavaScript, TypeScript, Python, Java, SQL, PHP
         </div>
         <div>
-          <span className="text-green-500 font-bold">📺 Frontend: </span> React, Next.js,
-          Remix.js, Tailwind CSS, HTML, CSS
+          <span className="text-green-500 font-bold">📺 Frontend: </span> React,
+          Next.js, Remix.js, Tailwind CSS, HTML, CSS
         </div>
         <div>
-          <span className="text-green-500 font-bold">⚙ Backend: </span> Node.js, Next.js,
-          Flask, Spring Boot, Nest.js
+          <span className="text-green-500 font-bold">⚙ Backend: </span> Node.js,
+          Next.js, Flask, Spring Boot, Nest.js
         </div>
         <div>
-          <span className="text-green-500 font-bold">💾 Databases: </span> MySQL, PostgreSQL
+          <span className="text-green-500 font-bold">💾 Databases: </span>{" "}
+          MySQL, PostgreSQL
         </div>
         <div>
-          <span className="text-green-500 font-bold">🖥 DevOps: </span> Docker, LXC, GitLab CI
+          <span className="text-green-500 font-bold">🖥 DevOps: </span> Docker,
+          LXC, GitLab CI
         </div>
         <div>
-          <span className="text-green-500 font-bold">🛠 Tools: </span> Raspberry-pi, Arduino, SDR, ZimaBoard
+          <span className="text-green-500 font-bold">🛠 Tools: </span>{" "}
+          Raspberry-pi, Arduino, SDR, ZimaBoard
         </div>
       </div>
     ),
@@ -920,15 +911,21 @@ export function executeABOUTME(
     output: (
       <div>
         <div>
-          <span className="text-green-500 font-bold">About me</span> 
-          <br/><span className="text-green-500">Name: </span> Tugdual AUDREN de KERDREL
-          <br/><span className="text-green-500">Role: </span> System Administrator at Bilendi
-          <br/>I'm a final-year
-          engineering student at ISEP 👋, specializing in cybersecurity and
-          networks📡. <br/>Passionate about information systems security, I combine
-          technical expertise and curiosity to meet the challenges of
-          cybersecurity. <br/>Experience in web development and a strong interest in
-          artificial intelligence🤖.
+          <span className="text-green-500 font-bold">About me</span>
+          <br />
+          <span className="text-green-500">Name: </span> Tugdual AUDREN de
+          KERDREL
+          <br />
+          <span className="text-green-500">Role: </span> System Administrator at
+          Bilendi
+          <br />
+          I'm a final-year engineering student at ISEP 👋, specializing in
+          cybersecurity and networks📡. <br />
+          Passionate about information systems security, I combine technical
+          expertise and curiosity to meet the challenges of cybersecurity.{" "}
+          <br />
+          Experience in web development and a strong interest in artificial
+          intelligence🤖.
         </div>
       </div>
     ),
@@ -963,7 +960,7 @@ export function executeGREP(
   }
 
   const { currentPath, fileSystem } = context;
-  
+
   // Analyser les options
   let pattern = "";
   let files: string[] = [];
@@ -971,7 +968,7 @@ export function executeGREP(
   let showLineNumbers = false;
   let invertMatch = false;
   let recursive = false;
-  
+
   // Parcourir les arguments pour extraire les options et le motif
   let i = 0;
   while (i < args.length) {
@@ -989,10 +986,10 @@ export function executeGREP(
       break;
     }
   }
-  
+
   // Les arguments restants sont les fichiers ou dossiers
   files = args.slice(i);
-  
+
   // Si aucun fichier n'est spécifié, utiliser le répertoire courant pour la recherche récursive
   // ou afficher une erreur pour la recherche non récursive
   if (files.length === 0) {
@@ -1005,7 +1002,7 @@ export function executeGREP(
       };
     }
   }
-  
+
   // Créer l'expression régulière pour la recherche
   let regex: RegExp;
   try {
@@ -1016,33 +1013,33 @@ export function executeGREP(
       isError: true,
     };
   }
-  
+
   // Résultats de la recherche
   const results: React.ReactNode[] = [];
-  
+
   // Fonction récursive pour chercher dans un dossier
   const searchInDirectory = (dirPath: string, basePath: string = "") => {
     // Obtenir tous les fichiers et dossiers dans ce répertoire
     const contents = getDirectoryContents(dirPath, fileSystem, true);
-    
+
     for (const itemPath of contents) {
       const itemInfo = getFileInfo(itemPath, fileSystem);
       if (!itemInfo) continue;
-      
+
       // Si c'est un dossier et que la recherche est récursive, explorer ce dossier
       if (itemInfo.type === "directory" && recursive) {
         searchInDirectory(itemPath, basePath || dirPath);
-      } 
+      }
       // Si c'est un fichier, chercher le motif dans son contenu
       else if (itemInfo.type === "file") {
         const fileContent = itemInfo.content || "";
         const lines = fileContent.split("\n");
-        
+
         // Rechercher le motif dans chaque ligne
         lines.forEach((line, lineIndex) => {
           const matches = regex.test(line);
           const shouldDisplay = invertMatch ? !matches : matches;
-          
+
           if (shouldDisplay) {
             // Déterminer le nom à afficher (relatif au chemin de base pour la recherche récursive)
             let displayPath = itemPath;
@@ -1052,13 +1049,12 @@ export function executeGREP(
                 displayPath = displayPath.substring(1);
               }
             }
-            
+
             if (showLineNumbers) {
               results.push(
                 <div key={`${itemPath}-${lineIndex}`}>
                   <span className="text-blue-400">{displayPath}</span>:
-                  <span className="text-green-400">{lineIndex + 1}</span>:
-                  {line}
+                  <span className="text-green-400">{lineIndex + 1}</span>:{line}
                 </div>
               );
             } else {
@@ -1073,11 +1069,11 @@ export function executeGREP(
       }
     }
   };
-  
+
   // Parcourir chaque fichier ou dossier spécifié
   for (const file of files) {
     const filePath = normalizePath(file, currentPath);
-    
+
     // Vérifier si le chemin existe
     if (!pathExists(filePath, fileSystem)) {
       results.push(
@@ -1087,7 +1083,7 @@ export function executeGREP(
       );
       continue;
     }
-    
+
     // Si c'est un dossier
     if (isDirectory(filePath, fileSystem)) {
       if (recursive) {
@@ -1102,19 +1098,19 @@ export function executeGREP(
       }
       continue;
     }
-    
+
     // Si c'est un fichier, chercher le motif dans son contenu
     const fileInfo = getFileInfo(filePath, fileSystem);
     if (!fileInfo) continue;
-    
+
     const fileContent = fileInfo.content || "";
     const lines = fileContent.split("\n");
-    
+
     // Rechercher le motif dans chaque ligne
     lines.forEach((line, lineIndex) => {
       const matches = regex.test(line);
       const shouldDisplay = invertMatch ? !matches : matches;
-      
+
       if (shouldDisplay) {
         if (files.length > 1 || recursive) {
           // Si plusieurs fichiers ou recherche récursive, afficher le nom du fichier
@@ -1122,8 +1118,7 @@ export function executeGREP(
             results.push(
               <div key={`${filePath}-${lineIndex}`}>
                 <span className="text-blue-400">{file}</span>:
-                <span className="text-green-400">{lineIndex + 1}</span>:
-                {line}
+                <span className="text-green-400">{lineIndex + 1}</span>:{line}
               </div>
             );
           } else {
@@ -1148,7 +1143,7 @@ export function executeGREP(
       }
     });
   }
-  
+
   // Si aucun résultat n'a été trouvé
   if (results.length === 0) {
     return {
@@ -1156,13 +1151,515 @@ export function executeGREP(
       isError: false,
     };
   }
-  
+
   return {
     output: <div>{results}</div>,
     isError: false,
   };
 }
 
+export function executeCOWSAY(
+  args: string[],
+  context: CommandContext
+): CommandResult {
+  if (args.length === 0) {
+    return {
+      output: <span>Usage: cowsay &lt;message&gt;</span>,
+      isError: true,
+    };
+  }
+
+  const message = args.join(" ");
+  const messageLines =
+    message.length > 40 ? splitTextIntoLines(message, 40) : [message];
+
+  const topBorder = " " + "_".repeat(messageLines[0].length + 2);
+  const bottomBorder = " " + "-".repeat(messageLines[0].length + 2);
+
+  const textLines = messageLines.map((line, index) => {
+    if (messageLines.length === 1) {
+      return `< ${line} >`;
+    } else if (index === 0) {
+      return `/ ${line} \\`;
+    } else if (index === messageLines.length - 1) {
+      return `\\ ${line} /`;
+    } else {
+      return `| ${line} |`;
+    }
+  });
+
+  const cow = `
+        \\   ^__^
+         \\  (oo)\\_______
+            (__)\\       )\\/\\
+                ||----w |
+                ||     ||
+  `;
+
+  return {
+    output: (
+      <pre className="whitespace-pre">
+        {topBorder}
+        {textLines.map((line, i) => (
+          <div key={i}>{line}</div>
+        ))}
+        {bottomBorder}
+        {cow}
+      </pre>
+    ),
+    isError: false,
+  };
+}
+
+// Fonction utilitaire pour diviser le texte en lignes
+function splitTextIntoLines(text: string, maxLength: number): string[] {
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let currentLine = "";
+
+  words.forEach((word) => {
+    if ((currentLine + word).length <= maxLength) {
+      currentLine += (currentLine ? " " : "") + word;
+    } else {
+      lines.push(currentLine);
+      currentLine = word;
+    }
+  });
+
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+}
+
+export function executeL33T(
+  args: string[],
+  context: CommandContext
+): CommandResult {
+  if (args.length === 0) {
+    return {
+      output: <span>Usage: l33t &lt;text&gt;</span>,
+      isError: true,
+    };
+  }
+
+  const text = args.join(" ");
+  const l33tMap: Record<string, string> = {
+    a: "4",
+    A: "4",
+    e: "3",
+    E: "3",
+    i: "1",
+    I: "1",
+    o: "0",
+    O: "0",
+    s: "5",
+    S: "5",
+    t: "7",
+    T: "7",
+    l: "1",
+    L: "1",
+    z: "2",
+    Z: "2",
+  };
+
+  const l33tText = text
+    .split("")
+    .map((char) => l33tMap[char] || char)
+    .join("");
+
+  return {
+    output: (
+      <div>
+        <div>Original: {text}</div>
+        <div>L33t: {l33tText}</div>
+      </div>
+    ),
+    isError: false,
+  };
+}
+
+export function executeBACKDOOR(
+  args: string[],
+  context: CommandContext
+): CommandResult {
+  const { currentPath, setCurrentPath, fileSystem, setFileSystem } = context;
+
+  // Si aucun argument n'est fourni, afficher l'aide
+  if (args.length === 0) {
+    return {
+      output: (
+        <div className="space-y-2">
+          <div className="text-yellow-500">
+            <div>Backdoor access detected. Authentication required.</div>
+            <div>Usage: backdoor [password] [command]</div>
+          </div>
+          <div className="text-gray-400">
+            This is a hidden command that provides privileged access to the
+            system. You need to provide the correct password to use it.
+          </div>
+        </div>
+      ),
+      isError: false,
+    };
+  }
+
+  // Le premier argument est le mot de passe
+  const password = args[0];
+  const correctPassword = "h4ck3r"; // Mot de passe simple pour l'exemple
+
+  // Vérifier le mot de passe
+  if (password !== correctPassword) {
+    return {
+      output: (
+        <div className="text-red-500">
+          <div>Access denied: Invalid authentication credentials.</div>
+          <div>This attempt has been logged.</div>
+        </div>
+      ),
+      isError: true,
+    };
+  }
+
+  // Si le mot de passe est correct mais qu'il n'y a pas de sous-commande
+  if (args.length === 1) {
+    return {
+      output: (
+        <div className="space-y-2">
+          <div className="text-green-500 font-bold">
+            Backdoor access granted. Welcome, Administrator.
+          </div>
+          <div className="text-yellow-500">Available backdoor commands:</div>
+          <div className="grid grid-cols-12 gap-2">
+            <span className="col-span-3 text-green-500 font-bold">
+              backdoor h4ck3r root
+            </span>
+            <span className="col-span-9">Elevate privileges to root user</span>
+          </div>
+          <div className="grid grid-cols-12 gap-2">
+            <span className="col-span-3 text-green-500 font-bold">
+              backdoor h4ck3r reveal
+            </span>
+            <span className="col-span-9">
+              Reveal hidden files and directories
+            </span>
+          </div>
+          <div className="grid grid-cols-12 gap-2">
+            <span className="col-span-3 text-green-500 font-bold">
+              backdoor h4ck3r secret
+            </span>
+            <span className="col-span-9">
+              Access secret project information
+            </span>
+          </div>
+          <div className="grid grid-cols-12 gap-2">
+            <span className="col-span-3 text-green-500 font-bold">
+              backdoor h4ck3r projects
+            </span>
+            <span className="col-span-9">View my confidential projects</span>
+          </div>
+          <div className="grid grid-cols-12 gap-2">
+            <span className="col-span-3 text-green-500 font-bold">
+              backdoor h4ck3r experience
+            </span>
+            <span className="col-span-9">
+              View my detailed professional experience
+            </span>
+          </div>
+        </div>
+      ),
+      isError: false,
+    };
+  }
+
+  // Si le mot de passe est correct et qu'il y a une sous-commande
+  const subcommand = args[1].toLowerCase();
+
+  // Traiter les différentes sous-commandes
+  switch (subcommand) {
+    case "root":
+      // Changer l'utilisateur en root
+      isRootUser = true;
+      return {
+        output: (
+          <div>
+            <div className="text-green-500">
+              Privileges elevated. You are now operating as root user.
+            </div>
+            <div className="text-yellow-500">
+              With great power comes great responsibility.
+            </div>
+          </div>
+        ),
+        isError: false,
+      };
+
+    case "reveal":
+      // Révéler les fichiers cachés dans le système
+      const hiddenFiles = Object.keys(fileSystem).filter(
+        (path) => fileSystem[path].hidden
+      );
+
+      return {
+        output: (
+          <div>
+            <div className="text-green-500 font-bold">
+              Hidden files and directories revealed:
+            </div>
+            <div className="space-y-1 mt-2">
+              {hiddenFiles.length > 0 ? (
+                hiddenFiles.map((path, index) => (
+                  <div key={index} className="text-yellow-500">
+                    {path} ({fileSystem[path].type})
+                  </div>
+                ))
+              ) : (
+                <div className="text-gray-500">No hidden files found.</div>
+              )}
+            </div>
+          </div>
+        ),
+        isError: false,
+      };
+
+    case "secret":
+      // Accéder à des informations secrètes sur les projets
+      return {
+        output: (
+          <div className="space-y-2">
+            <div className="text-green-500 font-bold">
+              SECRET PROJECT INFORMATION
+            </div>
+            <div className="text-yellow-500">Project Codename: PHOENIX</div>
+            <div>
+              A cutting-edge cybersecurity framework designed to detect and
+              neutralize advanced persistent threats in real-time.
+            </div>
+            <div className="text-yellow-500 mt-2">Project Codename: NEBULA</div>
+            <div>
+              Distributed cloud infrastructure with zero-trust architecture and
+              quantum-resistant encryption.
+            </div>
+            <div className="text-yellow-500 mt-2">
+              Project Codename: CHIMERA
+            </div>
+            <div>
+              AI-powered threat intelligence platform that combines multiple
+              data sources to predict and prevent cyber attacks.
+            </div>
+            <div className="text-red-500 mt-4">
+              WARNING: This information is classified. Unauthorized access is
+              strictly prohibited.
+            </div>
+          </div>
+        ),
+        isError: false,
+      };
+
+    case "projects":
+      // Afficher des projets confidentiels
+      return {
+        output: (
+          <div className="space-y-3">
+            <div className="text-green-500 font-bold">
+              CONFIDENTIAL PROJECTS
+            </div>
+
+            <div className="border border-green-500/30 p-3 rounded">
+              <div className="text-yellow-500 font-bold">
+                Secure Cloud Migration (2023)
+              </div>
+              <div className="text-gray-300">
+                Led the migration of critical infrastructure to a secure cloud
+                environment with zero-trust architecture. Implemented advanced
+                encryption and access controls. Reduced security incidents by
+                78% while improving system performance.
+              </div>
+              <div className="text-green-500/70 mt-1">
+                Technologies: AWS, Terraform, Vault, Kubernetes
+              </div>
+            </div>
+
+            <div className="border border-green-500/30 p-3 rounded">
+              <div className="text-yellow-500 font-bold">
+                Threat Intelligence Platform (2022)
+              </div>
+              <div className="text-gray-300">
+                Developed a custom threat intelligence platform that aggregates
+                data from multiple sources and uses machine learning to identify
+                potential threats. Deployed to multiple Fortune 500 clients.
+              </div>
+              <div className="text-green-500/70 mt-1">
+                Technologies: Python, ElasticSearch, TensorFlow, React
+              </div>
+            </div>
+
+            <div className="border border-green-500/30 p-3 rounded">
+              <div className="text-yellow-500 font-bold">
+                Secure Communication System (2021)
+              </div>
+              <div className="text-gray-300">
+                Designed and implemented an end-to-end encrypted communication
+                system for sensitive corporate communications. Features include
+                ephemeral messaging, secure file transfer, and multi-factor
+                authentication.
+              </div>
+              <div className="text-green-500/70 mt-1">
+                Technologies: Signal Protocol, WebRTC, Rust, WebAssembly
+              </div>
+            </div>
+          </div>
+        ),
+        isError: false,
+      };
+
+    case "experience":
+      // Afficher une expérience professionnelle détaillée
+      return {
+        output: (
+          <div className="space-y-3">
+            <div className="text-green-500 font-bold">
+              DETAILED PROFESSIONAL EXPERIENCE
+            </div>
+
+            <div className="border border-green-500/30 p-3 rounded">
+              <div className="text-yellow-500 font-bold">
+                System Administrator - Bilendi (2023-Present)
+              </div>
+              <div className="text-gray-300">
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>
+                    Managing and optimizing cloud infrastructure across multiple
+                    regions
+                  </li>
+                  <li>
+                    Implementing security best practices and compliance
+                    standards
+                  </li>
+                  <li>Automating deployment processes with CI/CD pipelines</li>
+                  <li>
+                    Monitoring system performance and responding to incidents
+                  </li>
+                  <li>
+                    Collaborating with development teams to improve system
+                    reliability
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border border-green-500/30 p-3 rounded">
+              <div className="text-yellow-500 font-bold">
+                Cybersecurity Intern - Thales (2022)
+              </div>
+              <div className="text-gray-300">
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>
+                    Conducted vulnerability assessments and penetration testing
+                  </li>
+                  <li>Developed security monitoring tools using Python</li>
+                  <li>
+                    Assisted in implementing security controls for critical
+                    systems
+                  </li>
+                  <li>Participated in incident response exercises</li>
+                </ul>
+              </div>
+            </div>
+
+            <div className="border border-green-500/30 p-3 rounded">
+              <div className="text-yellow-500 font-bold">Technical Skills</div>
+              <div className="text-gray-300">
+                <ul className="list-disc pl-5 space-y-1">
+                  <li>
+                    <span className="text-green-500">Languages:</span> Python,
+                    JavaScript, TypeScript, Bash, SQL
+                  </li>
+                  <li>
+                    <span className="text-green-500">Security:</span> OWASP,
+                    Penetration Testing, Vulnerability Assessment
+                  </li>
+                  <li>
+                    <span className="text-green-500">Infrastructure:</span> AWS,
+                    Docker, Kubernetes, Terraform
+                  </li>
+                  <li>
+                    <span className="text-green-500">Monitoring:</span> ELK
+                    Stack, Prometheus, Grafana
+                  </li>
+                  <li>
+                    <span className="text-green-500">Networking:</span> TCP/IP,
+                    DNS, VPN, Firewalls
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        ),
+        isError: false,
+      };
+
+    default:
+      return {
+        output: (
+          <div className="text-red-500">
+            Unknown backdoor subcommand: {subcommand}
+          </div>
+        ),
+        isError: true,
+      };
+  }
+}
+
+// Modifiez la fonction getPrompt dans terminal.tsx pour utiliser isRootUser
+export function getPrompt(path: string) {
+  // Extraire le nom d'utilisateur et le nom d'hôte
+  const username = isRootUser ? "root" : "visitor";
+  const hostname = "tugdual-server";
+
+  // Obtenir le nom du répertoire courant complet
+  let currentDir = path;
+
+  // Si nous sommes à la racine, utiliser '/' comme nom de répertoire
+  if (path === "/") {
+    currentDir = "/";
+  }
+
+  // Retourner le prompt formaté
+  return `${username}@${hostname}:${currentDir}$`;
+}
+
+export function executeQUIT(
+  args: string[],
+  context: CommandContext
+): CommandResult {
+  // qtopper la session root si l'utilisateur est root. SInon ne rien faire
+  if (isRootUser) {
+    isRootUser = false;
+    return {
+      output: (
+        <div className="space-y-2">
+          <div className="text-red-500 font-bold text-lg">
+            Goodbye, root user.
+          </div>
+          <div className="text-yellow-500 italic animate-pulse">
+            <span className="font-semibold">May the Force be with you...</span>
+          </div>
+          <div className="text-green-500/70 text-xs mt-2">
+            Terminating privileged session. All actions have been logged.
+          </div>
+        </div>
+      ),
+      isError: false,
+    };
+  } else {
+    return {
+      output: null,
+      isError: false,
+    };
+  }
+}
 
 // Initialiser les fonctions d'exécution des commandes
 export function initializeCommandFunctions() {
@@ -1182,4 +1679,7 @@ export function initializeCommandFunctions() {
   commands.skills.execute = executeSKILLS;
   commands.aboutme.execute = executeABOUTME;
   commands.grep.execute = executeGREP;
+  commands.cowsay.execute = executeCOWSAY;
+  commands.l33t.execute = executeL33T;
+  commands.backdoor.execute = executeBACKDOOR;
 }

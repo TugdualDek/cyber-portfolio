@@ -15,6 +15,7 @@ export interface CommandContext {
   currentPath: string;
   setCurrentPath: React.Dispatch<React.SetStateAction<string>>;
   fileSystem: FileSystem;
+  setFileSystem: React.Dispatch<React.SetStateAction<FileSystem>>;
 }
 
 export interface CommandResult {
@@ -179,5 +180,33 @@ export const commands: Record<string, CommandDefinition> = {
       // Cette fonction sera implémentée dans le fichier commandFunctions.tsx
       return { output: null, isError: false };
     },
+  },
+  cowsay: {
+    name: "cowsay",
+    description: "Display a message from a cow",
+    usage: "cowsay <message>",
+    execute: (args, context) => {
+      return { output: null, isError: false };
+    },
+    hidden: true,
+  },
+  l33t: {
+    name: "l33t",
+    description: "Convert text to l33t speak",
+    usage: "l33t <text>",
+    execute: (args, context) => {
+      return { output: null, isError: false };
+    },
+    hidden: true,
+  },
+  backdoor: {
+    name: "backdoor",
+    description: "Privileged access to the system",
+    usage: "backdoor [password]",
+    execute: (args, context) => {
+      // Cette fonction sera implémentée dans le fichier commandFunctions.tsx
+      return { output: null, isError: false };
+    },
+    hidden: true, // Cette commande ne sera pas listée dans l'aide
   },
 };

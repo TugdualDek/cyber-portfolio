@@ -51,10 +51,10 @@ export const initialFileSystem: FileSystem = {
 This terminal allows you to explore my professional profile as if you were on a real Linux system.
 
 Useful commands:
-- ls: List files
+- ls: List files in your current directory
 - cd: Change directory
 - cat: Display file contents
-- help: Show help
+- help: Show help menu
   
 Explore the system to learn more about my profile and skills.
   
@@ -340,15 +340,15 @@ visitor:x:1001:1001:Visitor,,,:/home/visitor:/bin/bash`,
   },
   "/etc/motd": {
     type: "file",
-    content: `Système Portfolio v1.0
+    content: `Portfolio System v1.0
 ----------------------
 
-Bienvenue sur mon portfolio interactif!
+Welcome to the interactive portfolio terminal!
 
-Ce système contient des informations sur mes projets et compétences.
-Explorez librement pour en découvrir davantage.
+This system is designed to showcase my professional profile and projects in a unique and interactive way.
+Explore the system to learn more about my skills and experience.
 
-AVERTISSEMENT: Ce système est régulièrement surveillé. Toute tentative d'intrusion sera enregistrée.
+WARNING: this system is regularly monitored and audited for security purposes.
 `,
     permissions: "-rw-r--r--",
     owner: "root",
@@ -372,10 +372,10 @@ AVERTISSEMENT: Ce système est régulièrement surveillé. Toute tentative d'int
   },
   "/tmp/.backdoor": {
     type: "file",
-    content: `Bien joué pour avoir trouvé cette backdoor!
-Si tu as trouvé ce fichier, tu as démontré de bonnes compétences en exploration.
+    content: `Well done! You found the hidden backdoor file.
+If you found this, you might be a skilled explorer or hacker.
 
-Essaie la commande 'backdoor' pour voir ce qui se passe.`,
+Try the 'backdoor' command to see what it does.`,
     permissions: "-rw-r--r--",
     owner: "root",
     group: "root",

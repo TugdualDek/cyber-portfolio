@@ -12,7 +12,7 @@ import {
 } from "../constants/filesystem";
 import { commands } from "../constants/commands";
 import { executeCommand } from "~/utils/terminal/commandExecutor";
-import { initializeCommandFunctions } from "~/utils/terminal/commandFunctions";
+import { initializeCommandFunctions, isRootUser } from "~/utils/terminal/commandFunctions";
 
 // Fonction loader pour récupérer l'adresse IP du client
 export const loader: LoaderFunction = async ({ request }) => {
@@ -84,7 +84,7 @@ export default function Terminal() {
   // Fonction pour obtenir le prompt du terminal basé sur le chemin
   const getPrompt = (path: string) => {
     // Extraire le nom d'utilisateur et le nom d'hôte
-    const username = "visitor";
+    const username = isRootUser ? "root" : "visitor";
     const hostname = "tugdual-server";
 
     // Obtenir le nom du répertoire courant complet
