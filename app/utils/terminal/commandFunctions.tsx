@@ -465,9 +465,7 @@ export function executeNMAP(
   if (!ipRegex.test(target)) {
     return {
       output: (
-        <span>
-          nmap: Unable to solve "{target}": unknown name or service
-        </span>
+        <span>nmap: Unable to solve "{target}": unknown name or service</span>
       ),
       isError: true,
     };
@@ -674,8 +672,15 @@ export function executeFIND(
         <div>
           <div>Usage: find [path] [options]</div>
           <div>Options:</div>
-          <div> -name PATTERN - Search for files whose name matches the pattern</div>
-          <div> -type TYPE - Search for files of a certain type (f: file, d: directory)</div>
+          <div>
+            {" "}
+            -name PATTERN - Search for files whose name matches the pattern
+          </div>
+          <div>
+            {" "}
+            -type TYPE - Search for files of a certain type (f: file, d:
+            directory)
+          </div>
           <div>Example: find /home -name "*.txt" -type f</div>
         </div>
       ),
@@ -688,7 +693,7 @@ export function executeFIND(
   // Déterminer le chemin de départ
   let startPath = args[0];
   let options: Record<string, string> = {};
-  
+
   // Si le premier argument commence par un tiret, c'est une option
   if (startPath.startsWith("-")) {
     startPath = currentPath;
@@ -718,40 +723,40 @@ export function executeFIND(
 
   // Collecter tous les chemins dans le système de fichiers
   const allPaths = Object.keys(fileSystem);
-  
+
   // Filtrer les chemins qui commencent par le chemin de départ
-  const pathsInStartDir = allPaths.filter(path => 
-    path === startPath || path.startsWith(startPath + "/")
+  const pathsInStartDir = allPaths.filter(
+    (path) => path === startPath || path.startsWith(startPath + "/")
   );
-  
+
   // Appliquer les filtres basés sur les options
-  const filteredPaths = pathsInStartDir.filter(path => {
+  const filteredPaths = pathsInStartDir.filter((path) => {
     // Filtre par type
-    if ('type' in options) {
+    if ("type" in options) {
       const isDir = isDirectory(path, fileSystem);
       if (options.type === "f" && isDir) return false;
       if (options.type === "d" && !isDir) return false;
     }
-    
+
     // Filtre par nom
-    if ('name' in options) {
+    if ("name" in options) {
       const fileName = path.split("/").pop() || "";
-      
+
       // Convertir le motif en expression régulière
       let pattern = options.name;
-      
+
       // Échapper les caractères spéciaux de regex sauf * et ?
-      pattern = pattern.replace(/[.+^${}()|[\]\\]/g, '\\$&');
-      
+      pattern = pattern.replace(/[.+^${}()|[\]\\]/g, "\\$&");
+
       // Remplacer les jokers par leurs équivalents regex
-      pattern = pattern.replace(/\*/g, '.*').replace(/\?/g, '.');
-      
+      pattern = pattern.replace(/\*/g, ".*").replace(/\?/g, ".");
+
       // Créer la regex avec ancres pour correspondre exactement
       const regex = new RegExp(`^${pattern}$`);
-      
+
       if (!regex.test(fileName)) return false;
     }
-    
+
     return true;
   });
 
@@ -785,8 +790,6 @@ function parseOptions(args: string[], options: Record<string, string>): void {
   }
 }
 
-
-
 export function executeEXIT(
   args: string[],
   context: CommandContext
@@ -815,7 +818,9 @@ export function executeEXIT(
     return {
       output: (
         <div className="space-y-1">
-          <div className="text-green-500">Thank you for visiting my portfolio terminal!</div>
+          <div className="text-green-500">
+            Thank you for visiting my portfolio terminal!
+          </div>
           <div className="text-green-500/70">Redirecting to homepage...</div>
         </div>
       ),
@@ -858,6 +863,9 @@ export function executeCONTACT(
             Download it
           </a>
         </div>
+        <div className="text-red-500 font-bold">
+          To get more information about me, find the backdoor.
+        </div>
       </div>
     ),
     isError: false,
@@ -896,6 +904,9 @@ export function executeSKILLS(
           <span className="text-green-500 font-bold">🛠 Tools: </span>{" "}
           Raspberry-pi, Arduino, SDR, ZimaBoard
         </div>
+        <div className="text-red-500 font-bold">
+          To get more information about my skills, find the backdoor.
+        </div>
       </div>
     ),
     isError: false,
@@ -926,6 +937,9 @@ export function executeABOUTME(
           <br />
           Experience in web development and a strong interest in artificial
           intelligence🤖.
+        </div>
+        <div className="text-red-500 font-bold">
+          To get more information about me, find the backdoor.
         </div>
       </div>
     ),
@@ -1468,45 +1482,44 @@ export function executeBACKDOOR(
 
             <div className="border border-green-500/30 p-3 rounded">
               <div className="text-yellow-500 font-bold">
-                Secure Cloud Migration (2023)
+                Web Application VUlnerability Scanner (September 2024 - January
+                2025)
               </div>
               <div className="text-gray-300">
-                Led the migration of critical infrastructure to a secure cloud
-                environment with zero-trust architecture. Implemented advanced
-                encryption and access controls. Reduced security incidents by
-                78% while improving system performance.
+                Development of a web vulnerability scanning with distributed
+                architecture architecture (Python/Next.js/Redis) and
+                configurable configurable YAML workflow system. Lead of a
+                development team.
               </div>
               <div className="text-green-500/70 mt-1">
-                Technologies: AWS, Terraform, Vault, Kubernetes
+                Technologies: Python, Flask, Next.js, Redis, PostgreSQL, Docker,
+                YAML
               </div>
             </div>
 
             <div className="border border-green-500/30 p-3 rounded">
               <div className="text-yellow-500 font-bold">
-                Threat Intelligence Platform (2022)
+                Trade Invest (2023)
               </div>
               <div className="text-gray-300">
-                Developed a custom threat intelligence platform that aggregates
-                data from multiple sources and uses machine learning to identify
-                potential threats. Deployed to multiple Fortune 500 clients.
+              Creation of a fictitious trading platform for the InvestDay contest organized by the IsepInvest association.
+              It was possible to buy and sell stocks and cryptocurrencies with the real rates of the US market.
               </div>
               <div className="text-green-500/70 mt-1">
-                Technologies: Python, ElasticSearch, TensorFlow, React
+                Technologies: Next.js, PostgreSQL, Docker
               </div>
             </div>
 
             <div className="border border-green-500/30 p-3 rounded">
               <div className="text-yellow-500 font-bold">
-                Secure Communication System (2021)
+                Carmen (2023)
               </div>
               <div className="text-gray-300">
-                Designed and implemented an end-to-end encrypted communication
-                system for sensitive corporate communications. Features include
-                ephemeral messaging, secure file transfer, and multi-factor
-                authentication.
+              Project during the first year of the engineering cycle at ISEP with the aim of acquiring skills in different fields (computer science, telecom, signal, electronics).
+              Creation of a project to help hospitals.
               </div>
               <div className="text-green-500/70 mt-1">
-                Technologies: Signal Protocol, WebRTC, Rust, WebAssembly
+                Technologies: HTML, CSS, Javascript, PHP, SQL, MySQL
               </div>
             </div>
           </div>
@@ -1525,45 +1538,41 @@ export function executeBACKDOOR(
 
             <div className="border border-green-500/30 p-3 rounded">
               <div className="text-yellow-500 font-bold">
-                System Administrator - Bilendi (2023-Present)
+                System, Network and Security Administrator - Bilendi
+                (2023-Present)
               </div>
               <div className="text-gray-300">
                 <ul className="list-disc pl-5 space-y-1">
                   <li>
-                    Managing and optimizing cloud infrastructure across multiple
-                    regions
+                    Contribute to Bilendi's growth by ensuring the stability of
+                    the information system
                   </li>
                   <li>
-                    Implementing security best practices and compliance
-                    standards
+                    Help secure information systems in a context of
+                    international expansion
                   </li>
-                  <li>Automating deployment processes with CI/CD pipelines</li>
+                  <li>Help improve IS supervision and maintenance processes</li>
                   <li>
-                    Monitoring system performance and responding to incidents
+                    Contribute to technical documentation and the implementation
+                    of internal procedures
                   </li>
-                  <li>
-                    Collaborating with development teams to improve system
-                    reliability
-                  </li>
+                  <li>Provide IT support to employees</li>
                 </ul>
               </div>
             </div>
 
             <div className="border border-green-500/30 p-3 rounded">
               <div className="text-yellow-500 font-bold">
-                Cybersecurity Intern - Thales (2022)
+                Intern - Adamantia (June - July 2021)
               </div>
               <div className="text-gray-300">
                 <ul className="list-disc pl-5 space-y-1">
+                  <li>Perform an information system audit</li>
                   <li>
-                    Conducted vulnerability assessments and penetration testing
+                    Organize a computer security awareness activity for
+                    employees
                   </li>
-                  <li>Developed security monitoring tools using Python</li>
-                  <li>
-                    Assisted in implementing security controls for critical
-                    systems
-                  </li>
-                  <li>Participated in incident response exercises</li>
+                  <li>Internal process automation</li>
                 </ul>
               </div>
             </div>
@@ -1573,24 +1582,24 @@ export function executeBACKDOOR(
               <div className="text-gray-300">
                 <ul className="list-disc pl-5 space-y-1">
                   <li>
-                    <span className="text-green-500">Languages:</span> Python,
-                    JavaScript, TypeScript, Bash, SQL
+                    <span className="text-green-500">Languages:</span> HTML,
+                    PHP, Python, JavaScript, TypeScript, Bash, SQL, Java
                   </li>
                   <li>
                     <span className="text-green-500">Security:</span> OWASP,
-                    Penetration Testing, Vulnerability Assessment
+                    Penetration Testing
                   </li>
                   <li>
-                    <span className="text-green-500">Infrastructure:</span> AWS,
-                    Docker, Kubernetes, Terraform
+                    <span className="text-green-500">Infrastructure: </span>
+                    Docker, LXC, Ansible
                   </li>
                   <li>
-                    <span className="text-green-500">Monitoring:</span> ELK
-                    Stack, Prometheus, Grafana
+                    <span className="text-green-500">Monitoring:</span>{" "}
+                    Prometheus, Grafana, Zabbix
                   </li>
                   <li>
                     <span className="text-green-500">Networking:</span> TCP/IP,
-                    DNS, VPN, Firewalls
+                    DNS, VPN, Firewalls, IDPS, Reverse proxy
                   </li>
                 </ul>
               </div>

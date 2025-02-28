@@ -311,7 +311,7 @@ Press Tab for autocompletion.`;
       onClick={focusInput}
     >
       {/* Terminal window */}
-      <div className="w-full max-w-4xl mx-auto border border-green-500/30 rounded-md overflow-hidden">
+      <div className="w-full max-w-5xl mx-auto border border-green-500/30 rounded-md overflow-hidden">
         {/* Terminal header */}
         <div className="px-2 sm:px-4 py-2 bg-gray-900 border-b border-green-500/30 flex items-center justify-between">
           <div className="flex items-center gap-2">

@@ -75,6 +75,7 @@ ls
 cd tugdual
 ls -la
 cat .secret_note.txt
+cowsay "Hello there, curious visitor!"
 exit`,
     permissions: "-rw-------",
     owner: "visitor",
@@ -85,7 +86,7 @@ exit`,
   },
   "/home/visitor/.secret": {
     type: "file",
-    content: `There's a special command 'l33t' that doesn't appear in the help. It might be useful.`,
+    content: `There's a special command 'l33t' that doesn't appear in the help. It might be useful or not ;) .`,
     permissions: "-rw-------",
     owner: "visitor",
     group: "users",
@@ -146,12 +147,11 @@ This directory contains my main projects. Each subdirectory corresponds to a spe
 
 ## Notable Projects
 
-- webapp-security: Security audit for web applications
-- cloud-infra: Automated cloud infrastructure
-- data-analytics: Data analysis and visualization
-- terminal-portfolio: This interactive portfolio you're currently exploring
+TODO
 
-For more details on each project, explore the corresponding directories.`,
+For more details on each project, explore the corresponding directories.
+
+To get more details, try to find the backdoor in the system...`,
     permissions: "-rw-r-----",
     owner: "tugdual",
     group: "users",
@@ -170,29 +170,40 @@ For more details on each project, explore the corresponding directories.`,
     content: `# About Me
 
 ## Profile
-I am a full-stack developer passionate about cybersecurity and software architecture. My expertise covers web development, DevOps, and information security.
+I'm a final-year engineering student at ISEP 👋, specializing in cybersecurity and networks📡.
+Passionate about information systems security, I combine technical expertise and curiosity to meet the challenges of cybersecurity.
+Experience in web development and a strong interest in artificial intelligence🤖.
 
 ## Key Skills
-- Development: JavaScript/TypeScript, Python, Go
-- Front-end: React, Vue, Svelte
-- Back-end: Node.js, Express, Django, FastAPI
-- DevOps: Docker, Kubernetes, CI/CD
-- Cloud: AWS, GCP, Azure
-- Security: Penetration testing, OWASP Top 10, Vulnerability analysis
+- Languages: HTML, JavaScript, TypeScript, Python, Java, SQL, PHP
+- Front-end: React, Next.js, Remix.js, Tailwind CSS, HTML, CSS
+- Back-end: Node.js, Next.js, Flask, Spring Boot, Nest.js
+- Databases: PostgreSQL, MySQL, MariaDB
+- DevOps: Docker, LXC, CI/CD
+- Tools: Raspberry-pi, Arduino, SDR, ZimaBoard
+- Security: Penetration testing, OWASP Top 10
 
-## Experience
-- Senior Developer @ TechCorp (2020-present)
-- Cybersecurity Consultant @ SecureNet (2018-2020)
-- Full-Stack Developer @ StartupXYZ (2016-2018)
+## Professionnal Experiences
+- System, Network and Security Administrator @ Bilendi (2023 - present)
+- Cybersecurity intern @ Adamantia (2021)
+
+## Student associations Experiences
+- Technical Manager @ JuniorISEP (April 2023 - April 2024)
+- Developper @ IsepInvest (November 2021 - August 2024)
 
 ## Education
-- Master's in Information Security (2016)
-- Bachelor's in Computer Science (2014)
+- ISEP Paris (September 2020 - September 2025)
+- UWTSD Swansea (February 2025 - April 2025)
+- CVUT Prague (February 2022 - June 2022)
+- Lycée la Rochefoucauld Paris (September 2017 - July 2020)
+- Collège Stanislas Paris (September 2013 - July 2017)
 
 ## Contact
-Email: contact@example.com
-LinkedIn: linkedin.com/in/tugdual
-GitHub: github.com/tugdual`,
+Email: tugdualk@hotmail.com
+LinkedIn: linkedin.com/in/tugdual-de-kerdrel/
+GitHub: github.com/TugdualDek
+
+To get more details, try to find the backdoor in the system...`,
     permissions: "-rw-r--r--",
     owner: "tugdual",
     group: "users",
@@ -203,8 +214,8 @@ GitHub: github.com/tugdual`,
     type: "file",
     content: `Great, you found my secret note!
 You seem to have a good spirit of exploration. If you want to discover more about my confidential projects, look for the hidden password somewhere in the system.
-Hint: the password is base64 encoded and is in a hidden file. Use the 'find' command to locate it.
-Once found, use 'access-projects-vault [password]' to unlock my confidential projects.`,
+Hint: the password is base64 encoded and is in a hidden file. Use the 'grep' command to locate it.
+Once you get it, try to find the backddor in the systemto get more details on me...`,
     permissions: "-rw-------",
     owner: "tugdual",
     group: "users",
@@ -232,9 +243,9 @@ Once found, use 'access-projects-vault [password]' to unlock my confidential pro
 Feb 25 08:23:20 portfolio sshd[1234]: Failed password for tugdual from 192.168.1.105 port 58791 ssh2
 Feb 25 08:23:25 portfolio sshd[1234]: Accepted password for tugdual from 192.168.1.105 port 58792 ssh2
 Feb 25 08:23:25 portfolio sshd[1234]: pam_unix(sshd:session): session opened for user tugdual by (uid=0)
-Feb 25 08:24:10 portfolio sudo: tugdual : TTY=pts/0 ; PWD=/home/tugdual ; USER=root ; COMMAND=/bin/cat /etc/passwd
-Feb 25 08:25:05 portfolio sudo: tugdual : TTY=pts/0 ; PWD=/home/tugdual ; USER=root ; COMMAND=/usr/bin/find / -name "*.hidden" -type f
-Feb 25 08:30:12 portfolio sshd[1234]: Received disconnect from 192.168.1.105 port 58792:11: disconnected by user
+Feb 25 08:24:10 portfolio sudo: tugdual : TTY=pts/0 ; PWD=/home/tugdual ; USER=root ; COMMAND=cat /etc/passwd
+Feb 25 08:25:05 portfolio sudo: tugdual : TTY=pts/0 ; PWD=/home/tugdual ; USER=root ; COMMAND=grep -R pass /
+Feb 25 08:30:12 portfolio sshd[1234]: Received disconnect from 192.168.1.105 port 58792:11: disconnected by user 
 `,
     permissions: "-rw-r-----",
     owner: "syslog",

@@ -39,7 +39,7 @@ export const commands: Record<string, CommandDefinition> = {
   cd: {
     name: "cd",
     description: "Change directory",
-    usage: "cd [directory]",
+    usage: "cd [directory] (ex : 'cd .' keeps you on the same directory, 'cd ..' goes to the parent directory)",
     execute: (args, context) => {
       // Cette fonction sera implémentée dans le fichier commandFunctions.tsx
       return { output: null, isError: false };
