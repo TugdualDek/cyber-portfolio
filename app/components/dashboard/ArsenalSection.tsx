@@ -8,6 +8,7 @@ import {
   Computer,
   TicketCheck,
   Antenna,
+  ShieldHalf,
 } from "lucide-react";
 
 interface Skill {
@@ -30,6 +31,7 @@ const ICON_MAP = {
   Computer,
   TicketCheck,
   Antenna,
+  ShieldHalf,
 } as const;
 
 export default function ArsenalSection({

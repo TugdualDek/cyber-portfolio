@@ -33,6 +33,11 @@ export const ARSENAL_CATEGORIES = {
   ],
   certifications: [
     {
+      name: "TryHackMe : Jr Penetration Tester",
+      icon: "ShieldHalf",
+      tools: ["08 March 2025"],
+    },
+    {
       name: "Toeic",
       icon: "TicketCheck",
       tools: ["965 points", "June 2023"],
@@ -62,6 +67,12 @@ export const NAV_ITEMS = [
 ];
 
 export const TIMELINE_EVENTS = [
+  {
+    title: "TryHackMe - Jr Penetration Tester",
+    description: "Development of essential penetration testing skills, from methodology to operation, with practical exercises using industry-standard tools.",
+    date: "08 March 2025",
+    type: "certification"
+  },
   {
     title: "System, network and security administrator at Bilendi Technology",
     description: "Management of the company's information systems (Linux, LXC, etc.), IT support for employees",
