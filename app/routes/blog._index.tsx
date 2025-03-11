@@ -257,9 +257,10 @@ export default function BlogIndex() {
                 <span className="relative z-10">CLASSIFIED REPORTS</span>
                 <span className="absolute -bottom-1 left-0 w-1/3 h-1 bg-cyber-primary/50"></span>
               </h1>
-              <div className="text-cyber-primary/70 text-xs border border-cyber-primary/30 px-3 py-1 rounded">
-                {posts.length} DOCUMENT{posts.length !== 1 ? "S" : ""}
-              </div>
+              <div className="text-cyber-primary/70 text-xs border border-cyber-primary/30 px-3 py-1 rounded flex items-center justify-center space-x-1">
+  <span>{posts.length}</span>
+  <span>DOCUMENT{posts.length !== 1 ? "S" : ""}</span>
+</div>
             </div>
             
             {/* Composants optimisés */}
