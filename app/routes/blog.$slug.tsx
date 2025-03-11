@@ -52,29 +52,29 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 // Classification styles constants - extraction dans un objet pour éviter les recalculs
 const CLASSIFICATION_STYLES = {
   'TOP SECRET': {
-    banner: 'bg-red-600 text-white',
-    stamp: 'bg-red-600/80 border-red-400 text-white',
-    border: 'border-red-500/50'
+    banner: 'bg-red-900/80 text-red-200 border-b border-red-600/50',
+    stamp: 'bg-red-900/60 border-red-700 text-red-200',
+    border: 'border-red-700/50'
   },
   'SECRET': {
-    banner: 'bg-orange-600 text-white',
-    stamp: 'bg-orange-600/80 border-orange-400 text-white',
-    border: 'border-orange-500/50'
+    banner: 'bg-orange-900/80 text-orange-200 border-b border-orange-600/50',
+    stamp: 'bg-orange-900/60 border-orange-700 text-orange-200',
+    border: 'border-orange-700/50'
   },
   'CONFIDENTIAL': {
-    banner: 'bg-yellow-600 text-black',
-    stamp: 'bg-yellow-600/80 border-yellow-400 text-black',
-    border: 'border-yellow-500/50'
+    banner: 'bg-yellow-900/80 text-yellow-100 border-b border-yellow-600/50',
+    stamp: 'bg-yellow-900/60 border-yellow-700 text-yellow-100',
+    border: 'border-yellow-700/50'
   },
   'RESTRICTED': {
-    banner: 'bg-blue-600 text-white',
-    stamp: 'bg-blue-600/80 border-blue-400 text-white',
-    border: 'border-blue-500/50'
+    banner: 'bg-blue-900/80 text-blue-200 border-b border-blue-600/50',
+    stamp: 'bg-blue-900/60 border-blue-700 text-blue-200',
+    border: 'border-blue-700/50'
   },
   'DEFAULT': {
-    banner: 'bg-green-600 text-white',
-    stamp: 'bg-green-600/80 border-green-400 text-white',
-    border: 'border-green-500/50'
+    banner: 'bg-green-900/80 text-green-200 border-b border-green-600/50',
+    stamp: 'bg-green-900/60 border-green-700 text-green-200',
+    border: 'border-green-700/50'
   }
 };
 
@@ -167,7 +167,8 @@ const BackButton = memo(() => (
 const DocumentHeader = memo(({ meta, formattedPublishDate, formattedExecutionDate, classStyles }: 
   { meta: PostMeta, formattedPublishDate: string, formattedExecutionDate: string | null, classStyles: any }) => (
   <>
-    <div className={`w-full py-2 text-center font-bold tracking-[0.25em] text-lg ${classStyles.banner}`}>
+    {/* Bannière modifiée pour être plus subtile */}
+    <div className={`w-full py-1.5 text-center font-mono font-bold tracking-[0.25em] text-sm ${classStyles.banner}`}>
       {meta.classification}
     </div>
     
@@ -212,6 +213,13 @@ const DocumentHeader = memo(({ meta, formattedPublishDate, formattedExecutionDat
               <span className="ml-2 text-white/90">FRENCH</span>
             </div>
           )}
+        </div>
+        
+        {/* Badge de classification avec effet stamp dans le header */}
+        <div className="absolute top-20 right-8 hidden md:block">
+          <div className={`transform rotate-12 border-2 ${classStyles.stamp} px-4 py-2 text-xs font-mono font-bold opacity-80`}>
+            {meta.classification}
+          </div>
         </div>
       </div>
     </div>

@@ -250,7 +250,7 @@ export default function BlogIndex() {
       <div className="relative z-10">
         <Navbar />
         
-        <main className="container mx-auto px-4 md:px-8 py-16 mt-10">
+        <main className="container mx-auto px-4 md:px-8 py-16 md:py-24">
           <div className="bg-navy-800/30 backdrop-blur-sm border border-cyber-primary/20 p-6 rounded-lg">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-3xl font-bold tracking-wider text-cyber-primary relative">

@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { SOCIAL_LINKS } from "~/constants/constants";
-import { ServerTime } from "../ui/ServerTime";
 
 export function Footer() {
   const [systemStatus, setSystemStatus] = useState({

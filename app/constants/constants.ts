@@ -61,10 +61,9 @@ export const ARSENAL_CATEGORIES = {
 };
 
 export const NAV_ITEMS = [
-  { text: "Dashboard", href: "/dashboard" },
+  { text: "Home", href: "/dashboard" },
   { text: "Projects", href: "/projects" },
   { text: "Blog", href: "/blog" },
-  { text: "Terminal", href: "/terminal" },
   { text: "Contact", href: "/contact" },
 ];
 
@@ -262,10 +261,10 @@ export const SOCIAL_LINKS = {
     label: "EMAIL",
     status: "ACTIVE"
   },
-  EMAIL_2: {
-    url: "mailto:contact@tugdual.com",
-    label: "EMAIL",
-    status: "ACTIVE"
+  TERMINAL: {
+    url: "/terminal",
+    label: "TERMINAL",
+    status: "ONLINE"
   },
 };
 
