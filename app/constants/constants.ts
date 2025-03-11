@@ -48,12 +48,12 @@ export const ARSENAL_CATEGORIES = {
       tools: ["697 points", "December 2021"],
     },
     {
-      name: "ARRIS SSTV Award",
+      name: "ARRIS SSTV Award 2",
       icon: "Antenna",
       tools: ["Lunar Exploration Commemoration", "December 2021"],
     },
     {
-      name: "ARRIS SSTV Award",
+      name: "ARRIS SSTV Award 1",
       icon: "Antenna",
       tools: ["20 years of ARISS", "December 2020"],
     },
@@ -63,6 +63,8 @@ export const ARSENAL_CATEGORIES = {
 export const NAV_ITEMS = [
   { text: "Dashboard", href: "/dashboard" },
   { text: "Projects", href: "/projects" },
+  { text: "Blog", href: "/blog" },
+  { text: "Terminal", href: "/terminal" },
   { text: "Contact", href: "/contact" },
 ];
 

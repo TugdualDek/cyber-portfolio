@@ -814,7 +814,7 @@ export function executeEXIT(
       isError: false,
     };
   } else {
-    window.location.href = "/";
+    window.location.href = "/dashboard";
     return {
       output: (
         <div className="space-y-1">

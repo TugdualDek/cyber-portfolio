@@ -156,10 +156,6 @@ export function Footer() {
                   {"|".repeat(systemStatus.memory.level)}
                 </span>
               </div>
-              <div className="flex justify-between text-cyber-primary/60">
-                <span>UPTIME:</span>
-                <ServerTime />
-              </div>
             </div>
           </div>
 

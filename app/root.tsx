@@ -61,7 +61,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         </div>
         <ScrollRestoration />
         <Scripts />
-        <script async defer src="https://scripts.withcabin.com/hello.js"></script>
+        <script async data-domain="tugdual.com" defer src="https://scripts.withcabin.com/hello.js"></script>
       </body>
     </html>
   );
@@ -74,19 +74,37 @@ export default function App() {
 
 export function ErrorBoundary() {
   const error = useRouteError();
+
+  // Gestion du cas où l'erreur est liée au HMR de Vite
+  if (typeof window !== "undefined" && window.location.port === "5173" && 
+    (error instanceof DOMException || 
+     (error instanceof Error && error.message.includes("Node.insertBefore")))) {
+  console.warn("Vite HMR error intercepted, please wait or reload the page");
+  return (
+    <div className="p-4 bg-amber-100 text-amber-900 border border-amber-300 rounded">
+      <p>Hot reload error detected. Please wait a moment or reload the page manually.</p>
+    </div>
+  );
+}
   
-  // Déterminer le code d'erreur et le message
-  const errorCode = isRouteErrorResponse(error) ? error.status : "404";
+  const errorCode = isRouteErrorResponse(error) 
+    ? error.status 
+    : error instanceof Error 
+      ? 500 
+      : 404;
+      
   const errorMessage = isRouteErrorResponse(error) 
     ? error.statusText 
     : error instanceof Error 
       ? error.message 
-      : "Page Not Found";
+      : "Unknown page error";
+
+  const titleText = `Erreur ${errorCode} - System Error`;
   
   return (
     <html lang="en">
       <head>
-        <title>Error {errorCode} - System Error</title>
+        <title>{titleText}</title>
         <Meta />
         <Links />
       </head>
