@@ -3,6 +3,13 @@ import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import { vercelPreset } from '@vercel/remix/vite';
 
+// Types pour Remix
+declare module "@remix-run/node" {
+  interface Future {
+    v3_singleFetch: true;
+  }
+}
+
 export default defineConfig({
   plugins: [
     remix({
@@ -22,14 +29,38 @@ export default defineConfig({
     // Configuration simplifiée du bundling
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: [
-            'react', 
-            'react-dom', 
-            '@remix-run/react',
-            'lucide-react', 
-            '@radix-ui',
-          ],
+        manualChunks: (id) => {
+          // Regrouper les dépendances principales
+          if (id.includes('node_modules/react/') || 
+              id.includes('node_modules/react-dom/')) {
+            return 'react';
+          }
+          
+          // Regrouper les dépendances Remix
+          if (id.includes('node_modules/@remix-run/')) {
+            return 'remix';
+          }
+          
+          // Regrouper les composants Radix UI (correctement)
+          if (id.includes('node_modules/@radix-ui/')) {
+            return 'radix';
+          }
+          
+          // Autres dépendances node_modules
+          if (id.includes('node_modules/')) {
+            return 'vendor';
+          }
+          
+          // Composants de l'application par section
+          if (id.includes('/components/projects/')) return 'projects';
+          if (id.includes('/components/contact/')) return 'contact';
+          if (id.includes('/components/dashboard/')) return 'dashboard';
+          if (id.includes('/components/ui/')) return 'ui';
+          
+          // Routes
+          if (id.includes('/routes/')) {
+            return 'routes';
+          }
         },
       },
     },
@@ -40,15 +71,10 @@ export default defineConfig({
     sourcemap: true, // Activer les sourcemaps pour le débogage
   },
   
-  // Retirer les optimisations qui peuvent causer des problèmes
+  // Configuration esbuild
   esbuild: {
     legalComments: 'none',
     treeShaking: true,
-    // Désactivation des options problématiques
-    // minifyIdentifiers: true,
-    // minifySyntax: true,
-    // minifyWhitespace: true,
-    // drop: ['console', 'debugger'],
     target: 'esnext',
   },
 });
