@@ -68,7 +68,7 @@ export default defineConfig({
     target: 'esnext',
     minify: 'esbuild',
     cssMinify: true,
-    sourcemap: true, // Activer les sourcemaps pour le débogage
+    sourcemap: false
   },
   
   // Configuration esbuild
