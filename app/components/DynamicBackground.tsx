@@ -11,6 +11,8 @@ const GRID_SIZE = 30;
 const DETECTION_CHANCE = 0.01;
 const LIFE_DECREASE = 0.02;
 const DETECTION_ALPHA = 0.3;
+// Ajout d'une marge pour éviter les espaces blancs lors du scroll
+const OVERFLOW_MARGIN = 50; // en pixels
 
 const DynamicBackground = memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -23,8 +25,9 @@ const DynamicBackground = memo(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    // Ajout d'une marge supplémentaire à la taille du canvas
+    canvas.width = window.innerWidth + (OVERFLOW_MARGIN * 2);
+    canvas.height = window.innerHeight + (OVERFLOW_MARGIN * 2);
     
     contextRef.current = canvas.getContext('2d');
     if (!contextRef.current) return;
@@ -125,8 +128,12 @@ const DynamicBackground = memo(() => {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 w-full h-full"
-      style={{ zIndex: 0 }}
+      className="fixed w-[calc(100%+100px)] h-[calc(100%+100px)]"
+      style={{ 
+        zIndex: 0,
+        left: '-50px',
+        top: '-50px'
+      }}
     />
   );
 });
