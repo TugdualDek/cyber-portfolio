@@ -7,27 +7,32 @@
 
 
 <url>
-  <loc>https://tugdual.kerdrel.com/dashboard</loc>
+  <loc>https://tugdual.com/dashboard</loc>
   <lastmod>2024-02-08T15:05:35+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://tugdual.kerdrel.com/projects</loc>
+  <loc>https://tugdual.com/projects</loc>
   <lastmod>2024-02-08T15:05:35+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://tugdual.kerdrel.com/contact</loc>
+  <loc>https://tugdual.com/blog</loc>
   <lastmod>2024-02-08T15:05:35+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://tugdual.kerdrel.com/terminal</loc>
+  <loc>https://tugdual.com/contact</loc>
   <lastmod>2024-02-08T15:05:35+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://tugdual.kerdrel.com/</loc>
+  <loc>https://tugdual.com/terminal</loc>
+  <lastmod>2024-02-08T15:05:35+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://tugdual.com/</loc>
   <lastmod>2024-02-08T15:05:35+00:00</lastmod>
   <priority>1</priority>
 </url>
