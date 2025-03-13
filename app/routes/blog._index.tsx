@@ -118,7 +118,7 @@ const ClassifiedReportCard = memo(({ post }: { post: PostMeta }) => {
 
         {/* Cover image - chargement optimisé avec loading="lazy" */}
         {post.coverImage && (
-          <div className="w-full md:w-1/4 h-20 md:h-auto overflow-hidden border border-cyber-primary/20 flex-shrink-0">
+          <div className="w-full md:w-1/4 h-20 md:h-auto max-h-40 overflow-hidden border border-cyber-primary/20 flex-shrink-0">
             <img
               src={post.coverImage}
               alt={post.title}
@@ -128,7 +128,7 @@ const ClassifiedReportCard = memo(({ post }: { post: PostMeta }) => {
           </div>
         )}
 
-        <div className="flex-1">
+        <div className="flex-1 flex flex-col justify-center">
           {/* Meta info */}
           <div className="text-xs text-cyber-primary mb-1 flex flex-wrap gap-2">
             <span>CASE #{post.caseNumber || post.date.replace(/-/g, "")}</span>

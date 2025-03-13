@@ -178,10 +178,11 @@ const MDXComponents = {
 };
 
 // Technical image component optimisé avec memo
+// Technical image component optimisé avec memo et taille maximale limitée
 export const TechnicalImage = memo(
   ({ src, alt, caption }: { src: string; alt: string; caption?: string }) => {
     return (
-      <figure className="my-6 border border-yellow-500/40 bg-black/40">
+      <figure className="my-6 border border-yellow-500/40 bg-black/40 max-w-4xl mx-auto">
         <div className="px-3 py-1.5 border-b border-yellow-500/40 bg-black/60 flex justify-between items-center">
           <span className="text-xs text-cyber-primary uppercase tracking-wider">
             Technical Evidence
@@ -191,7 +192,14 @@ export const TechnicalImage = memo(
             <div className="w-2 h-2 rounded-full bg-yellow-500/40"></div>
           </div>
         </div>
-        <img src={src} alt={alt} className="w-full" loading="lazy" />
+        <div className="relative overflow-hidden">
+          <img 
+            src={src} 
+            alt={alt} 
+            className="w-full h-auto object-contain max-h-[500px]" 
+            loading="lazy" 
+          />
+        </div>
         {caption && (
           <figcaption className="px-3 py-2 text-sm text-white/80 border-t border-yellow-500/40 bg-black/60">
             {caption}
@@ -201,6 +209,7 @@ export const TechnicalImage = memo(
     );
   }
 );
+
 
 // Composants de l'article mémoïsés pour éviter les re-rendus inutiles
 const BackButton = memo(() => (
@@ -246,9 +255,21 @@ const DocumentHeader = memo(
         {meta.classification}
       </div>
 
-      <div className="relative border-b border-yellow-500/20">
-        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center opacity-5 pointer-events-none">
-          <span className="text-[200px] font-bold text-yellow-500">TK</span>
+      <div className="relative">
+        {/* Remplacer le TK par l'image de couverture centrée et entièrement visible */}
+        <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center pointer-events-none">
+          {meta.coverImage ? (
+            <div className="flex items-center justify-center w-full h-full">
+              <img 
+                src={meta.coverImage}
+                alt={meta.title}
+                className="max-w-[80%] max-h-[80%] object-contain opacity-15"
+                loading="lazy"
+              />
+            </div>
+          ) : (
+            <span className="text-[200px] font-bold text-yellow-500 opacity-5">TK</span>
+          )}
         </div>
 
         <div className="p-8 relative">
@@ -309,19 +330,21 @@ const DocumentHeader = memo(
   )
 );
 
+
+
 const DocumentCover = memo(
   ({ coverImage, title }: { coverImage?: string; title: string }) => {
     if (!coverImage) return null;
     return (
-      <div className="border-b border-yellow-500/20">
-        <div className="relative">
+      <div className="">
+        <div className="relative h-[400px] overflow-hidden flex justify-center items-center bg-black/80">
           <div className="absolute top-0 left-0 bg-black/60 text-cyber-primary px-3 py-1 text-xs z-10">
             PRIMARY EVIDENCE
           </div>
           <img
             src={coverImage}
             alt={title}
-            className="w-full object-cover max-h-[500px]"
+            className="w-full h-auto object-contain max-h-[400px]"
             loading="lazy"
             decoding="async"
           />
@@ -331,8 +354,10 @@ const DocumentCover = memo(
   }
 );
 
+
+
 const ExecutiveSummary = memo(({ excerpt }: { excerpt: string }) => (
-  <div className="p-8 border-b border-yellow-500/20 bg-black/20 py-[3rem]">
+  <div className="p-8 border-y border-yellow-500/20 bg-black/20 py-[3rem] mt-8">
     <h2 className="text-sm uppercase tracking-wider text-cyber-primary/80 mb-3">
       Executive Summary
     </h2>
@@ -412,7 +437,7 @@ export default function BlogPost() {
             {/* Ajouter un espace si une image de couverture existe */}
             {meta.coverImage && <div className="h-3"></div>}
 
-            <DocumentCover coverImage={meta.coverImage} title={meta.title} />
+            {/*<DocumentCover coverImage={meta.coverImage} title={meta.title} />*/}
 
             {/* Modifier le composant ExecutiveSummary pour ajouter des marges */}
             <ExecutiveSummary excerpt={meta.excerpt} />
