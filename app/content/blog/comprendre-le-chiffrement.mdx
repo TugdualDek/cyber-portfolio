@@ -1,0 +1,62 @@
+---
+title: "Le Chiffrement – De technologie militaire à protecteur de notre vie numérique"
+date: "2025-03-19"
+executionDate: "2025-03-19"
+excerpt: 'Comment une technologie autrefois classifiée comme "technologie militaire" est devenue essentielle pour protéger nos conversations WhatsApp, transactions bancaires et données personnelles au quotidien – et pourquoi comprendre ses principes fondamentaux est crucial pour tous les utilisateurs du numérique.'
+classification: "RESTRICTED"
+category: "Cybersecurity"
+caseNumber: "FR-CRYPTO-2025-001"
+language: "fr"
+coverImage: "/assets/blog/chiffrement/encryption.webp"
+---
+
+Le chiffrement protège vos conversations sur WhatsApp, vos transactions bancaires et vos données personnelles quotidiennement. Pourtant, cette technologie, omniprésente de nos jours, était classifiée comme "technologie militaire" dans les années 90 par les Américains. Mais qu’est-ce que c’est réellement et comment cela fonctionne-t-il ?
+
+# Qu'est ce que le chiffrement ?
+
+D’après [Wikipédia](https://fr.wikipedia.org/wiki/Chiffrement),  "le chiffrement est un procédé de cryptographie grâce auquel on souhaite rendre la compréhension d'un document impossible à toute personne qui n'a pas la clé de chiffrement". Concrètement, il s'agit de transformer des données en clair (lisibles naturellement) en un charabia incompréhensible pour quiconque n'a pas la clé pour les déchiffrer, protégeant ainsi vos informations des regards indiscrets.
+
+<Callout type="saviez-vous">
+Le chiffrement a joué un rôle crucial pendant la Seconde Guerre mondiale. La machine Enigma utilisée par l'Allemagne nazie semblait inviolable jusqu'à ce qu'Alan Turing et son équipe à Bletchley Park réussissent à la décrypter, ce qui a raccourci la guerre d'environ deux ans selon les historiens.
+</Callout>
+
+Prenons l’exemple d’un coffre-fort. Celui-ci ne peut s’ouvrir que par les bonnes personnes qui possèdent les clés. Le chiffrement est exactement la même chose, à la différence près que dans le monde numérique, le chiffrement se base sur des calculs mathématiques très compliqués. La clé de chiffrement, comme la clé physique d'un coffre, est en réalité une séquence numérique qui détermine comment transformer et retrouver les données.
+
+# Deux types de chiffrements les plus courants aujourd'hui
+
+**Le chiffrement symétrique** : ce chiffrement consiste à utiliser une clé secrète partagée entre tous les correspondants. Cette même clé est utilisée pour chiffrer et déchiffrer les informations. Cette méthode de chiffrement est plutôt rapide et facile à mettre en place. Cependant, l’un des défis majeurs de cette technique est la façon de distribuer la clé aux interlocuteurs de manière sécurisée.
+
+**Le chiffrement asymétrique** : ce chiffrement consiste à utiliser une paire de clés (deux clés), l'une publique et l'autre privée. Typiquement, la clé publique peut être librement partagée et sert à chiffrer les messages, tandis que seule la clé privée, qui doit rester strictement confidentielle, permet de les déchiffrer. C'est un peu comme une boite aux lettres, n'importe qui peut vous mettre un message dans votre boite, mais seulement vous, avec la bonne clé, pouvez y accéder. Cette méthode est la base des communications sécurisées modernes.
+
+<TechnicalImage src="/assets/blog/chiffrement/cle-asymetrique.webp" alt="Chiffrement asymétrique" caption="Explication du chiffrement asymétrique. Source: wikimedia.org" />
+
+# Le chiffrement dans votre quotidien
+
+Vous utilisez le chiffrement sans vous en rendre compte en permanence :
+- **Navigation web** : HTTPS avec le cadenas dans votre navigateur qui protège les données entre vous et le site internet
+- **Messageries** : Whatsapp, Signal qui chiffrent vos messages de bout en bout (signifiant que même les entreprises qui gèrent ces services ne peuvent pas lire vos messages)
+- **Services bancaires** : à chaque fois que vous utilisez votre carte de crédit, les communications avec votre banque sont chiffrées
+- **Stockage** : la plupart des ordinateurs modernes chiffrent par défaut leur disque dur
+
+# Quatre outils accessibles à tous
+
+1. **Signal** : messagerie de référence en matière de chiffrement. La fondation derrière la messagerie a développé le protocole utilisé par Signal et Whatsapp entre autre (lien : [Signal](https://signal.org/));
+2. **Mailvelope** : extension sur navigateur qui permet de gérer ses clés de chiffrement facilement afin de communiquer de manière sécurisée par mail (lien : [Mailvelope](https://mailvelope.com));
+3. **VPN** (Réseau Privé Virtuel) : permet de créer une connexion sécurisée et chiffrée entre votre appareil et un serveur distant. Cela protège vos données lors de leur transit sur internet et masque votre adresse IP réelle, mais n'assure pas nécessairement la sécurité du contenu une fois qu'il atteint sa destination finale ;
+4. **PicoCrypt**: application légère et open-source qui permet de chiffrer facilement vos fichiers sensibles avant de les stocker ou de les partager (lien : [Github](https://github.com/Picocrypt/Picocrypt)).
+
+# Le débat actuel
+
+Il y a un grand débat aujourd’hui sur l’utilisation de ces technologies de chiffrement.
+
+**Protection de la vie privée** : d'un côté, cela permet de protéger la vie privée des utilisateurs en faisant en sorte que personne ne puisse intercepter les données communiquées. Cela permet aussi de se protéger contre une surveillance de masse des gouvernements par exemple.
+
+**Sécurité nationale** :  d'un autre côté, cela complique la lutte contre la criminalité et le terrorisme sur internet car les données échangées ne sont pas visibles. Or ces données peuvent être nécessaires dans le cadre de certaines enquêtes.
+
+Il y a donc une discussion pour savoir s'il ne serait pas possible de mettre volontairement une « porte dérobée » dans ces systèmes de chiffrement afin que les personnes qualifiées puissent accéder à certaines informations en clair. Mais cette approche pose un problème : en faisant cela, n'allons-nous pas introduire des failles qui pourront être utilisées par des acteurs malveillants ?
+
+<TechnicalImage src="/assets/blog/chiffrement/messageries.webp" alt="Telephone avec applications de messageries sécurisées" caption="Messageries sécurisées. Source: Getty Image" />
+
+# Conclusion
+
+D'une technologie militaire à un outil quotidien, le chiffrement a parcouru un chemin remarquable. À l'heure où nos vies numériques contiennent nos données les plus sensibles, comprendre le chiffrement devient essentiel pour tous. Utilisez-vous déjà consciemment des outils de chiffrement ? Comment voyez-vous l'équilibre entre confidentialité et sécurité collective ?

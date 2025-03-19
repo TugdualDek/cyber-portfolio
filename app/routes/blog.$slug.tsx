@@ -5,6 +5,7 @@ import { getMDXComponent } from "mdx-bundler/client";
 import { getPostBySlug } from "~/utils/mdx.server";
 import { Footer } from "~/components/footer/Footer";
 import { Navbar } from "~/components/navbar/Navbar";
+import { Callout } from "~/components/blog/callout";
 
 // Types pour améliorer la sécurité de type
 interface PostMeta {
@@ -175,6 +176,7 @@ const MDXComponents = {
   hr: (props: any) => (
     <hr className="my-6 border-t border-yellow-500/30" {...props} />
   ),
+  Callout: Callout,
 };
 
 // Technical image component optimisé avec memo
