@@ -1,7 +1,7 @@
 ---
-title: "Mon Lab Personnel: Infrastructure Sécurisée avec Docker"
-date: "2025-03-30"
-executionDate: "2024-12-15"
+title: "Mon Lab Personnel - Infrastructure Sécurisée avec Docker"
+date: "2025-04-02"
+executionDate: "2023-11-15"
 excerpt: "Comment j'ai construit un environnement d'apprentissage pour expérimenter avec la sécurité informatique, Docker et l'auto-hébergement de services."
 classification: "CONFIDENTIAL"
 category: "Projects"
@@ -10,7 +10,7 @@ coverImage: "/assets/blog/lab/homelab-cover.webp"
 language: "fr"
 ---
 
-# Mon Lab Personnel: Infrastructure Cloud Sécurisée avec Docker
+# Mon Lab Personnel : Infrastructure Cloud Sécurisée avec Docker
 
 Il est 23h. La lueur bleue de mon écran est ma seule source de lumière. Sur mon ordinateur, je viens de lancer une commande qui va déployer tout un tas de services: un serveur git, un outil de prise de notes collaboratif, un gestionnaire de tâches... En quelques secondes, ces conteneurs Docker prennent vie sur mon serveur, orchestrés par quelques fichiers de configurations que j'ai écrits.
 
@@ -20,11 +20,11 @@ Bienvenue dans les coulisses de mon laboratoire personnel - un espace où j'exp�
 
 A l'heure ou les services "clouds" se multiplient, je voulai essayer de reprendre le controle sur certains outils numériques, et sur certaines données importantes.
 Pourquoi ai je fait cela me direz vous ? Pour ces 3 raisons :
-- **Apprendre par la pratique**: rien ne vaut l'expérience directe pour comprendre les défis de la sécurité informatique et de l'architecture
+- **Apprendre par la pratique** : rien ne vaut l'expérience directe pour comprendre les défis de la sécurité informatique et de l'architecture
 - **Avoir une plateforme d'expérimentation permanente** pour tester de nouvelles technologies
 - **Protéger certaines données** en les hébergeant moi-même sur mon serveur.
 
-# L'architecture: simplicité et apprentissage
+# L'architecture : simplicité et apprentissage
 
 Mon infrastructure repose sur quelques principes fondamentaux :
 1. **Sécurité par défaut** : mon serveur doit être le plus sécurisé possible (la perfection n'existe pas)
@@ -39,7 +39,7 @@ Pour ce faire, j'ai choisi d'utiliser un serveur de chez Scaleway, fournisseur c
   caption="Vue simplifiée de l'architecture de mon lab personnel sur Scaleway" 
 />
 
-# La sécurisation: une approche progressive
+# La sécurisation : une approche progressive
 
 J'ai commencé par mettre en place quelques protections essentielles, basiques, mais très importantes :
 
@@ -54,7 +54,7 @@ j'ai également mis en place quelques outils qui me semblaient importants :
 
 Cette approche multi-couches s'inspire du concept de "défense en profondeur": si une protection échoue, les autres restent en place.
 
-# Docker: l'isolation comme principe fondamental
+# Docker : l'isolation comme principe fondamental
 
 Toute mon infrastructure se base sur un outil d'orchestration, Docker, qui me permet de :
 - **Isoler chaque service** dans son propre conteneur
@@ -66,16 +66,16 @@ Pour illustrer cette isolation, imaginez chaque service comme une pièce sépar�
 
 # Les services que j'héberge
 
-Mon lab personnel héberge actuellement:
+Mon lab personnel héberge actuellement :
 
-- **OneDev**: Un serveur git complet pour mes projets personnels, alternative à Github et Gitlab
-- **Affine**: Un outil de prise de notes similaire à Notion
-- **Vikunja**: Gestionnaire de tâches pour organiser mes projets, une alternative à Trello
-- **Grafana & Prometheus**: Pour surveiller la santé et la performance de mon infrastructure
+- **OneDev** : Un serveur git complet pour mes projets personnels, alternative à Github et Gitlab
+- **Affine** : Un outil de prise de notes similaire à Notion
+- **Vikunja** : Gestionnaire de tâches pour organiser mes projets, une alternative à Trello
+- **Grafana & Prometheus** : Pour surveiller la santé et la performance de mon infrastructure
 
 J'ai également développé plusieurs projets personnels que j'hébèrge sur mon lab.
 
-# Tests de sécurité: appliquer pour apprendre
+# Tests de sécurité : appliquer pour apprendre
 
 L'une des choses les plus intéressantes de ce lab est qu'il me sert également en quelque sorte de terrain de jeu et d'entrainement en cybersécurité. En effet, j'essaie d'executer des "attaques controllées" dessus pour :
 - Identifier des configurations mal sécurisées et les corriger
@@ -96,17 +96,17 @@ La sécurité ne se limite pas à la prévention, la détection est aussi très 
 <TechnicalImage 
   src="/assets/blog/lab/homelab-grafana.webp" 
   alt="Dashboard Grafana avec monitoring Traefik" 
-  caption="Mon dashboard Grafana montrant les statistiques sur Traefik" 
+  caption="Mon dashboard Grafana montrant les statistiques de Traefik" 
 />
 
 # Les enseignements d'un débutant
 
 En faisant ce projet, j'ai appris énormément de choses :
 
-1. **L'importance de la simplicité**: plus un système est complexe, plus il est difficile à sécuriser, à sauvegarder et à remettre en place après un sinistre
-2. **La valeur des tests réguliers**: sans vérification constante, une fausse sensation de sécurité s'installe. C'est pourquoi il est important de tester régulièrement !
-3. **L'équilibre entre sécurité et usabilité**: La solution la plus sécurisée n'est pas toujours la plus pratique
-4. **L'apprentissage par l'erreur**: Chaque faille découverte est une leçon précieuse
+1. **L'importance de la simplicité** : plus un système est complexe, plus il est difficile à sécuriser, à sauvegarder et à remettre en place après un sinistre
+2. **La valeur des tests réguliers** : sans vérification constante, une fausse sensation de sécurité s'installe. C'est pourquoi il est important de tester régulièrement !
+3. **L'équilibre entre sécurité et usabilité** : La solution la plus sécurisée n'est pas toujours la plus pratique
+4. **L'apprentissage par l'erreur** : Chaque faille découverte est une leçon précieuse
 
 # La prochaine étape
 
@@ -124,6 +124,6 @@ J'ai quelques pistes d'améliorations que je peux mettre en place comme :
 
 Créer son propre lab technique est un voyage sans fin, mais incroyablement formateur. C'est une façon concrète d'apprendre la sécurité, l'administration système et les technologies informatiques modernes.
 
-Je ne prétends pas avoir créé un système parfait - mon infrastructure contient certainement encore des failles et des problèmes que n'ai pas repéré. Mais c'est précisément ce qui rend ce projet génial: chaque découverte est une opportunité d'apprentissage !
+Je ne prétends pas avoir créé un système parfait - mon infrastructure contient certainement encore des failles et des problèmes que n'ai pas repéré. Mais c'est précisément ce qui rend ce projet génial : chaque découverte est une opportunité d'apprentissage !
 
 N'hésitez pas si vous avez des suggestions 😉
