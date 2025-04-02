@@ -1,0 +1,129 @@
+---
+title: "Mon Lab Personnel - Infrastructure Sécurisée avec Docker"
+date: "2025-04-02"
+executionDate: "2023-11-15"
+excerpt: "Comment j'ai construit un environnement d'apprentissage pour expérimenter avec la sécurité informatique, Docker et l'auto-hébergement de services."
+classification: "CONFIDENTIAL"
+category: "Projects"
+caseNumber: "HOMELAB-2025-001"
+coverImage: "/assets/blog/lab/homelab-cover.webp"
+language: "fr"
+---
+
+# Mon Lab Personnel : Infrastructure Cloud Sécurisée avec Docker
+
+Il est 23h. La lueur bleue de mon écran est ma seule source de lumière. Sur mon ordinateur, je viens de lancer une commande qui va déployer tout un tas de services: un serveur git, un outil de prise de notes collaboratif, un gestionnaire de tâches... En quelques secondes, ces conteneurs Docker prennent vie sur mon serveur, orchestrés par quelques fichiers de configurations que j'ai écrits.
+
+Bienvenue dans les coulisses de mon laboratoire personnel - un espace où j'expérimente, j'apprends, et je contrôle mes données.
+
+# Pourquoi créer son propre lab?
+
+A l'heure ou les services "clouds" se multiplient, je voulai essayer de reprendre le controle sur certains outils numériques, et sur certaines données importantes.
+Pourquoi ai je fait cela me direz vous ? Pour ces 3 raisons :
+- **Apprendre par la pratique :** rien ne vaut l'expérience directe pour comprendre les défis de la sécurité informatique et de l'architecture
+- **Avoir une plateforme d'expérimentation permanente** pour tester de nouvelles technologies
+- **Protéger certaines données** en les hébergeant moi-même sur mon serveur.
+
+# L'architecture : simplicité et apprentissage
+
+Mon infrastructure repose sur quelques principes fondamentaux :
+1. **Sécurité par défaut :** mon serveur doit être le plus sécurisé possible (la perfection n'existe pas)
+2. **Isolation des services :** tous les services que j'héberge doivent être isolés les uns des autres
+3. **Facilité d'entretien :** il faut que ce soit facile de mettre à jour certains composants
+
+Pour ce faire, j'ai choisi d'utiliser un serveur de chez [Scaleway](https://www.scaleway.com), fournisseur cloud français qui ont un excellent rapport qualité/prix. Mon serveur tourne avec une distribution Linux Debian minimaliste, utilisée pour sa simplicité et sa stabilité, avec une grande communauté sur internet, ce qui ets idéal pour un débutant.
+
+<TechnicalImage 
+  src="/assets/blog/lab/homelab-architecture.webp" 
+  alt="Architecture de mon lab personnel" 
+  caption="Vue simplifiée de l'architecture de mon lab personnel sur Scaleway" 
+/>
+
+# La sécurisation : une approche progressive
+
+J'ai commencé par mettre en place quelques protections essentielles, basiques, mais très importantes :
+
+- **Accès SSH restreint :** connexion uniquement par clé de chiffrement avec un utilisateur dédié, sans possibilité de connexion directe avec le super utilisateur.
+- **Pare-feu minimaliste :** seuls les ports essentiels sont ouverts, tous les autres sont fermés
+- **CrowdSec :** outil français, communautaire, qui est un IDPS (système de détéction et de prévention d'intrusions) et un WAF (firewall web applicatif) ([Site](https://www.crowdsec.net/))
+- **Traefik :** Reverse proxy qui protège mes services avec des fonctionnalités comme le géoblocage et l'intégration avec CrowdSec ([site](https://traefik.io/traefik/))
+
+j'ai également mis en place quelques outils qui me semblaient importants :
+- un scan antivirus toutes les nuits
+- un système de sauvegardes automatiques
+
+Cette approche multi-couches s'inspire du concept de "défense en profondeur" : si une protection échoue, les autres restent en place.
+
+# Docker : l'isolation comme principe fondamental
+
+Toute mon infrastructure se base sur un outil d'orchestration, [Docker](https://www.docker.com/), qui me permet de :
+- **Isoler chaque service** dans son propre conteneur
+- **Standardiser les déploiements** avec des images bien maintenues
+- **Faciliter les mises à jour** sans risquer de casser l'ensemble du système
+- **Définir toute mon infrastructure comme du code** avec docker-compose
+
+Pour illustrer cette isolation, imaginez chaque service comme une pièce séparée dans un bâtiment : même si un cambrioleur parvient à entrer dans une pièce, les autres restent verrouillées. Même si un incendie se déclare dans l'une d'elles, les voisines restent à l'abri. De la même façon, si un service est compromis, les autres restent protégés.
+
+# Les services que j'héberge
+
+Mon lab personnel héberge actuellement :
+
+- **OneDev** : Un serveur git complet pour mes projets personnels, alternative à Github et Gitlab
+- **Affine** : Un outil de prise de notes similaire à Notion
+- **Vikunja** : Gestionnaire de tâches pour organiser mes projets, une alternative à Trello
+- **Grafana & Prometheus** : Pour surveiller la santé et la performance de mon infrastructure
+
+J'ai également développé plusieurs projets personnels que j'hébèrge sur mon lab.
+
+# Tests de sécurité : appliquer pour apprendre
+
+L'une des choses les plus intéressantes de ce lab est qu'il me sert également en quelque sorte de terrain de jeu et d'entrainement en cybersécurité. En effet, j'essaie d'executer des "attaques controllées" dessus pour :
+- Identifier des configurations mal sécurisées et les corriger
+- Tester les limites de mes protections
+- Comprendre les vecteurs d'attaque potentiels et comment je peux faire pour réduire ma surface d'attaque
+- Mettre en pratique les concepts appris théoriquement en cours
+
+Ceci est très important. C'est comme si une entreprise demandait à une boite de cybersécurité d'effectuer un audit de ses systèmes, sauf que l'entreprise c'est moi et la boite de cybersécurité, c'est moi aussi.
+
+# Surveillance et monitoring
+
+La sécurité ne se limite pas à la prévention, la détection est aussi très importante. Il faut savoir qui nous attaque, quand, et comment pour réagir rapidement. C'est pourquoi, j'ai mis en place :
+
+- **Grafana** avec des dashboards pour visualiser l'activité du serveur, de CrowdSec, et de Traefik
+- **Intégration Slack** qui m'envoie un message quand CrowdSec bloque quelque chose
+- **Monitoring des logs** pour identifier rapidement toute anomalie
+
+<TechnicalImage 
+  src="/assets/blog/lab/homelab-grafana.webp" 
+  alt="Dashboard Grafana avec monitoring Traefik" 
+  caption="Mon dashboard Grafana montrant les statistiques de Traefik" 
+/>
+
+# Les enseignements d'un débutant
+
+En faisant ce projet, j'ai appris énormément de choses :
+
+1. **L'importance de la simplicité** : plus un système est complexe, plus il est difficile à sécuriser, à sauvegarder et à remettre en place après un sinistre
+2. **La valeur des tests réguliers** : sans vérification constante, une fausse sensation de sécurité s'installe. C'est pourquoi il est important de tester régulièrement !
+3. **L'équilibre entre sécurité et usabilité** : La solution la plus sécurisée n'est pas toujours la plus pratique
+4. **L'apprentissage par l'erreur** : Chaque faille découverte est une leçon précieuse
+
+# La prochaine étape
+
+Je ne considère pas mon lab comme terminé. C'est un projet en constante évolution.
+Ce lab me permet de tester de nouveaux projets, de découvrir et d'essayer de nouvelles technologies. C'est vraiment un terrain de jeu unique qui me permet de tester ce que je veux !
+
+Si j'ai envie de changer de reverse proxy, c'est possible, je peux le changer ! Si je veux rajouter un nouveau service, c'est possible, il me suffit de créer un nouveau conteneur Docker, ....
+
+J'ai quelques pistes d'améliorations que je peux mettre en place comme :
+- Renforcer mes sauvegardes avec une copie hors-site
+- Mettre en place des analyses de vulnérabilités automatisées avec des outils comme OpenVAS
+- Améliorer la documentation de mon infrastructure pour faciliter sa reconstruction en cas de problèmes.
+
+# Conclusion
+
+Créer son propre lab technique est un voyage sans fin, mais incroyablement formateur. C'est une façon concrète d'apprendre la sécurité, l'administration système et les technologies informatiques modernes.
+
+Je ne prétends pas avoir créé un système parfait - mon infrastructure contient certainement encore des failles et des problèmes que n'ai pas repéré. Mais c'est précisément ce qui rend ce projet génial : chaque découverte est une opportunité d'apprentissage !
+
+N'hésitez pas si vous avez des suggestions 😉
