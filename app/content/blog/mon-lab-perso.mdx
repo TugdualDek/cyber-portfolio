@@ -12,14 +12,14 @@ language: "fr"
 
 # Mon Lab Personnel : Infrastructure Cloud Sécurisée avec Docker
 
-Il est 23h. La lueur bleue de mon écran est ma seule source de lumière. Sur mon ordinateur, je viens de lancer une commande qui va déployer tout un tas de services: un serveur git, un outil de prise de notes collaboratif, un gestionnaire de tâches... En quelques secondes, ces conteneurs Docker prennent vie sur mon serveur, orchestrés par quelques fichiers de configurations que j'ai écrits.
+Il est 23 h. La lueur bleue de mon écran est ma seule source de lumière. Sur mon ordinateur, je viens de lancer une commande qui va déployer tout un tas de services : un serveur git, un outil de prise de notes collaboratif, un gestionnaire de tâches... En quelques secondes, ces conteneurs Docker prennent vie sur mon serveur, orchestrés par quelques fichiers de configuration que j'ai écrits.
 
-Bienvenue dans les coulisses de mon laboratoire personnel - un espace où j'expérimente, j'apprends, et je contrôle mes données.
+Bienvenue dans les coulisses de mon laboratoire personnel - un espace avec lequel j'expérimente, j'apprends et je contrôle mes données.
 
 # Pourquoi créer son propre lab?
 
-A l'heure ou les services "clouds" se multiplient, je voulai essayer de reprendre le controle sur certains outils numériques, et sur certaines données importantes.
-Pourquoi ai je fait cela me direz vous ? Pour ces 3 raisons :
+À l'heure où les services "cloud" se multiplient, je voulais essayer de reprendre le contrôle sur certains outils numériques, et sur certaines données importantes.
+Pourquoi ai-je fait cela, me direz-vous ? Pour ces 3 raisons :
 - **Apprendre par la pratique :** rien ne vaut l'expérience directe pour comprendre les défis de la sécurité informatique et de l'architecture
 - **Avoir une plateforme d'expérimentation permanente** pour tester de nouvelles technologies
 - **Protéger certaines données** en les hébergeant moi-même sur mon serveur.
@@ -31,7 +31,7 @@ Mon infrastructure repose sur quelques principes fondamentaux :
 2. **Isolation des services :** tous les services que j'héberge doivent être isolés les uns des autres
 3. **Facilité d'entretien :** il faut que ce soit facile de mettre à jour certains composants
 
-Pour ce faire, j'ai choisi d'utiliser un serveur de chez [Scaleway](https://www.scaleway.com), fournisseur cloud français qui ont un excellent rapport qualité/prix. Mon serveur tourne avec une distribution Linux Debian minimaliste, utilisée pour sa simplicité et sa stabilité, avec une grande communauté sur internet, ce qui ets idéal pour un débutant.
+Pour ce faire, j'ai choisi d'utiliser un serveur de chez [Scaleway](https://www.scaleway.com), fournisseur cloud français qui a un excellent rapport qualité/prix. Mon serveur tourne avec une distribution Linux Debian minimaliste, utilisée pour sa simplicité et sa stabilité, avec une grande communauté sur internet, ce qui est idéal pour un débutant.
 
 <TechnicalImage 
   src="/assets/blog/lab/homelab-architecture.webp" 
@@ -48,11 +48,11 @@ J'ai commencé par mettre en place quelques protections essentielles, basiques, 
 - **CrowdSec :** outil français, communautaire, qui est un IDPS (système de détéction et de prévention d'intrusions) et un WAF (firewall web applicatif) ([Site](https://www.crowdsec.net/))
 - **Traefik :** Reverse proxy qui protège mes services avec des fonctionnalités comme le géoblocage et l'intégration avec CrowdSec ([site](https://traefik.io/traefik/))
 
-j'ai également mis en place quelques outils qui me semblaient importants :
+J'ai également mis en place quelques outils qui me semblaient importants :
 - un scan antivirus toutes les nuits
 - un système de sauvegardes automatiques
 
-Cette approche multi-couches s'inspire du concept de "défense en profondeur" : si une protection échoue, les autres restent en place.
+Cette approche multicouches s'inspire du concept de "défense en profondeur" : si une protection échoue, les autres restent en place.
 
 # Docker : l'isolation comme principe fondamental
 
@@ -68,26 +68,26 @@ Pour illustrer cette isolation, imaginez chaque service comme une pièce sépar�
 
 Mon lab personnel héberge actuellement :
 
-- **OneDev** : Un serveur git complet pour mes projets personnels, alternative à Github et Gitlab
-- **Affine** : Un outil de prise de notes similaire à Notion
-- **Vikunja** : Gestionnaire de tâches pour organiser mes projets, une alternative à Trello
-- **Grafana & Prometheus** : Pour surveiller la santé et la performance de mon infrastructure
+- **OneDev** : un serveur git complet pour mes projets personnels, alternative à Github et Gitlab
+- **Affine** : un outil de prise de notes similaire à Notion
+- **Vikunja** : gestionnaire de tâches pour organiser mes projets, une alternative à Trello
+- **Grafana & Prometheus** : pour surveiller la santé et la performance de mon infrastructure
 
-J'ai également développé plusieurs projets personnels que j'hébèrge sur mon lab.
+J'ai également développé plusieurs projets personnels que j'héberge sur mon lab.
 
 # Tests de sécurité : appliquer pour apprendre
 
-L'une des choses les plus intéressantes de ce lab est qu'il me sert également en quelque sorte de terrain de jeu et d'entrainement en cybersécurité. En effet, j'essaie d'executer des "attaques controllées" dessus pour :
+L'une des choses les plus intéressantes de ce lab est qu'il me sert également en quelque sorte de terrain de jeu et d'entrainement en cybersécurité. En effet, j'essaie d'exécuter des "attaques contrôlées" dessus pour :
 - Identifier des configurations mal sécurisées et les corriger
 - Tester les limites de mes protections
 - Comprendre les vecteurs d'attaque potentiels et comment je peux faire pour réduire ma surface d'attaque
 - Mettre en pratique les concepts appris théoriquement en cours
 
-Ceci est très important. C'est comme si une entreprise demandait à une boite de cybersécurité d'effectuer un audit de ses systèmes, sauf que l'entreprise c'est moi et la boite de cybersécurité, c'est moi aussi.
+Ceci est très important. C'est comme si une entreprise demandait à une boite de cybersécurité d'effectuer un audit de ses systèmes, sauf que l'entreprise, c'est moi et la boite de cybersécurité, c'est moi aussi.
 
 # Surveillance et monitoring
 
-La sécurité ne se limite pas à la prévention, la détection est aussi très importante. Il faut savoir qui nous attaque, quand, et comment pour réagir rapidement. C'est pourquoi, j'ai mis en place :
+La sécurité ne se limite pas à la prévention, la détection est aussi très importante. Il faut savoir qui nous attaque, quand et comment pour réagir rapidement. C'est pourquoi, j'ai mis en place :
 
 - **Grafana** avec des dashboards pour visualiser l'activité du serveur, de CrowdSec, et de Traefik
 - **Intégration Slack** qui m'envoie un message quand CrowdSec bloque quelque chose
@@ -105,18 +105,18 @@ En faisant ce projet, j'ai appris énormément de choses :
 
 1. **L'importance de la simplicité** : plus un système est complexe, plus il est difficile à sécuriser, à sauvegarder et à remettre en place après un sinistre
 2. **La valeur des tests réguliers** : sans vérification constante, une fausse sensation de sécurité s'installe. C'est pourquoi il est important de tester régulièrement !
-3. **L'équilibre entre sécurité et usabilité** : La solution la plus sécurisée n'est pas toujours la plus pratique
-4. **L'apprentissage par l'erreur** : Chaque faille découverte est une leçon précieuse
+3. **L'équilibre entre sécurité et usabilité** : la solution la plus sécurisée n'est pas toujours la plus pratique
+4. **L'apprentissage par l'erreur** : chaque faille découverte est une leçon précieuse
 
 # La prochaine étape
 
 Je ne considère pas mon lab comme terminé. C'est un projet en constante évolution.
 Ce lab me permet de tester de nouveaux projets, de découvrir et d'essayer de nouvelles technologies. C'est vraiment un terrain de jeu unique qui me permet de tester ce que je veux !
 
-Si j'ai envie de changer de reverse proxy, c'est possible, je peux le changer ! Si je veux rajouter un nouveau service, c'est possible, il me suffit de créer un nouveau conteneur Docker, ....
+Si j'ai envie de changer de reverse proxy, c'est possible, je peux le changer ! Si je veux rajouter un nouveau service, c'est possible, il me suffit de créer un nouveau conteneur Docker…
 
 J'ai quelques pistes d'améliorations que je peux mettre en place comme :
-- Renforcer mes sauvegardes avec une copie hors-site
+- Renforcer mes sauvegardes avec une copie hors site
 - Mettre en place des analyses de vulnérabilités automatisées avec des outils comme OpenVAS
 - Améliorer la documentation de mon infrastructure pour faciliter sa reconstruction en cas de problèmes.
 
@@ -124,6 +124,6 @@ J'ai quelques pistes d'améliorations que je peux mettre en place comme :
 
 Créer son propre lab technique est un voyage sans fin, mais incroyablement formateur. C'est une façon concrète d'apprendre la sécurité, l'administration système et les technologies informatiques modernes.
 
-Je ne prétends pas avoir créé un système parfait - mon infrastructure contient certainement encore des failles et des problèmes que n'ai pas repéré. Mais c'est précisément ce qui rend ce projet génial : chaque découverte est une opportunité d'apprentissage !
+Je ne prétends pas avoir créé un système parfait - mon infrastructure contient certainement encore des failles et des problèmes que je n'ai pas repérés. Mais c'est précisément ce qui rend ce projet génial : chaque découverte est une opportunité d'apprentissage !
 
 N'hésitez pas si vous avez des suggestions 😉
