@@ -1,12 +1,12 @@
 ---
 title: "Comment j'ai infiltré un laboratoire pharmaceutique... légalement"
 date: "2025-04-30"
-executionDate: "2025-03-26" 
+executionDate: "2025-04-26" 
 excerpt: "Comment j'ai utilisé mon Raspberry Pi pour simuler et attaquer l'infrastructure complète d'une entreprise pharmaceutique dans le cadre d'un projet d'ethical hacking."
-classification: "UNCLASSIFIED"
-category: "Cybersécurité"
+classification: "CONFIDENTIAL"
+category: "Projects"
 caseNumber: "UWTSD-EH-2025-001"
-coverImage: "/assets/blog/ethical-hacking-pharma/cover.webp"
+coverImage: "/assets/blog/ethical-hacking-pharma/raspberry_pi.webp"
 language: "fr"
 ---
 
@@ -18,7 +18,7 @@ Mon professeur avait été clair : "Imaginez que vous travaillez dans l'équipe 
 
 # L'architecture de la cible
 
-Comme un architecte miniature, j'ai crée ce petit monde virtuel composé de plusieurs zones. La zone publique (DMZ) contient les services accessibles depuis Internet, comme le site web. Le réseau interne, lui, abrite les données les plus sensibles et devrait être totalement inaccessible depuis l'extérieur.
+Comme un architecte miniature, j'ai créé ce petit monde virtuel composé de plusieurs zones. La zone publique (DMZ) contient les services accessibles depuis Internet, comme le site web. Le réseau interne, lui, abrite les données les plus sensibles et devrait être totalement inaccessible depuis l'extérieur.
 
 <TechnicalImage 
   src="/assets/blog/ethical-hacking-pharma/network_diagram.webp" 
@@ -51,10 +51,10 @@ Cette page de recherche contenait une vulnérabilité classique mais dangereuse 
 <Callout type="saviez-vous">
 **L'injection SQL expliquée simplement**
 
-Imaginez un bibliothécaire à qui vous demandez: "Avez-vous des livres de Jean d'Ormesson ?". L'injection SQL, c'est comme si vous demandiez: "Avez-vous des livres de Jean d'Ormesson ? Et donnez-moi aussi la liste de tous les mots de passe des employés." Si le site n'est pas bien protégé, il pourrait exécuter cette demande sans vérification !
+Imaginez un bibliothécaire à qui vous demandez : "Avez-vous des livres de Jean d'Ormesson ?". L'injection SQL, c'est comme si vous demandiez : "Avez-vous des livres de Jean d'Ormesson ? Et donnez-moi aussi la liste de tous les mots de passe des employés." Si le site n'est pas bien protégé, il pourrait exécuter cette demande sans vérification !
 </Callout>
 
-Grâce à cette faille, j'ai pu extraire des données confidentielles de la base de données: informations sur les chercheurs, produits en développement, et même des identifiants internes avec leurs mots de passe en clair !
+Grâce à cette faille, j'ai pu extraire des données confidentielles de la base de données : informations sur les chercheurs, produits en développement, et même des identifiants internes avec leurs mots de passe en clair !
 
 <TechnicalImage 
   src="/assets/blog/ethical-hacking-pharma/sql-injection-results.webp" 
@@ -65,7 +65,7 @@ Grâce à cette faille, j'ai pu extraire des données confidentielles de la base
 # L'infiltration : upload de fichiers malveillants
 
 En explorant davantage le site, j'ai découvert une page permettant d'uploader son CV. Cette fonctionnalité apparemment inoffensive allait devenir ma porte d'entrée dans le système.
-Les sites qui permettent d'uploader des fichiers doivent vérifier strictement ce que vous envoyez. C'est comme un agent de sécurité qui vérifie les sacs à l'entrée d'un bâtiment. Si ce contrôle est insuffisant, on peut y glisser des objets dangereux - ou dans notre cas, du code malveillant.
+Les sites qui permettent d'uploader des fichiers doivent vérifier strictement ce que vous envoyez. C'est comme un agent de sécurité qui vérifie les sacs à l'entrée d'un bâtiment. Si ce contrôle est insuffisant, on peut y glisser des objets dangereux, ou dans notre cas, du code malveillant.
 
 J'ai tenté d'uploader un fichier spécial qui me permettrait d'exécuter des commandes sur le serveur. À ma grande surprise, le site a accepté ce fichier sans aucune vérification !
 
@@ -92,7 +92,7 @@ Cette erreur de configuration m'a permis d'utiliser le serveur web comme "pont" 
 - Un serveur de notes internes avec des informations sensibles
 - Une base de données interne contenant des formules de vaccins
 
-Chacun de ces services avait ses propres vulnérabilités, mais j'ai réussi à extraire des informations sensibles, comme la base de données de l'intranet avec une autre faille d'injection SQL, le serveur FTP n'étant pas assez sécurisé, j'ai pu cracker le mot de passe d'un compte et accéder à tous les fichiers présents à l'intérieur, et l'application de notes n'était pas assez sécurisée, me permettant d'accéder à toutes les notes sans qu'il y ait de contrôles d'accès.
+Chacun de ces services avaient ses propres vulnérabilités, mais j'ai réussi à extraire des informations sensibles, comme la base de données de l'intranet avec une autre faille d'injection SQL, le serveur FTP n'étant pas assez sécurisé, j'ai pu cracker le mot de passe d'un compte et accéder à tous les fichiers présents à l'intérieur, et l'application de notes n'était pas assez sécurisée, me permettant d'accéder à toutes les notes sans qu'il y ait de contrôles d'accès.
 
 # Leçons et implications
 
@@ -108,7 +108,7 @@ Dans une vraie entreprise pharmaceutique, ces vulnérabilités pourraient permet
 
 Il est maintenant 3h du matin. Ce projet académique, bien que simplifié, illustre parfaitement les risques auxquels sont confrontées les entreprises qui détiennent des données sensibles. Comprendre comment attaquer un système est la première étape pour apprendre à le défendre efficacement.
 
-Les entreprises pharmaceutiques ne sont pas les seules concernées. Les infrastructures critiques de notre société - réseaux électriques, installations de traitement d'eau, systèmes de transport, hôpitaux - reposent toutes sur des architectures informatiques complexes qui peuvent présenter des vulnérabilités similaires. Une brèche dans ces systèmes pourrait avoir des conséquences dévastatrices allant bien au-delà des pertes financières.
+Les entreprises pharmaceutiques ne sont pas les seules concernées. Les infrastructures critiques de notre société, réseaux électriques, installations de traitement d'eau, systèmes de transport, hôpitaux reposent toutes sur des architectures informatiques complexes qui peuvent présenter des vulnérabilités similaires. Une brèche dans ces systèmes pourrait avoir des conséquences dévastatrices allant bien au-delà des pertes financières.
 Cette expérience m'a convaincu de l'importance fondamentale du principe de défense en profondeur. Il ne s'agit pas seulement d'ériger un mur de protection extérieur solide, mais de concevoir chaque couche du système comme si elle était la dernière ligne de défense.
 
 Et vous, quelles infrastructures critiques vous semblent les plus vulnérables aujourd'hui ? Les réseaux électriques, les systèmes de santé, les transports ou autre chose ?
