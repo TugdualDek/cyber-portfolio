@@ -1,0 +1,114 @@
+---
+title: "Comment j'ai infiltré un laboratoire pharmaceutique... légalement"
+date: "2025-04-30"
+executionDate: "2025-04-26" 
+excerpt: "Comment j'ai utilisé mon Raspberry Pi pour simuler et attaquer l'infrastructure complète d'une entreprise pharmaceutique dans le cadre d'un projet d'ethical hacking."
+classification: "CONFIDENTIAL"
+category: "Projects"
+caseNumber: "UWTSD-EH-2025-001"
+coverImage: "/assets/blog/ethical-hacking-pharma/raspberry_pi.webp"
+language: "fr"
+---
+
+# Introduction
+
+Il est 23h. La lueur bleue de mon écran est la seule source de lumière dans mon appartement. Sur mon bureau, un petit ordinateur pas plus grand qu'une boîte d'allumettes clignote silencieusement - mon Raspberry Pi. Aujourd'hui, il n'est pas là pour contrôler des LED ou servir de media center. Il abrite un monde entier - une réplique miniature de l'infrastructure informatique d'une entreprise pharmaceutique fictive que j'ai créée pour mon projet universitaire. Et mon rôle ? Celui d'un hacker éthique chargé de trouver ses failles avant que les vrais malveillants ne le fassent.
+
+Mon professeur avait été clair : "Imaginez que vous travaillez dans l'équipe de sécurité offensive d'un géant pharmaceutique. Votre mission : simuler des attaques pour identifier les vulnérabilités avant qu'elles ne soient exploitées." Un défi passionnant, mais comment reproduire toute une infrastructure d'entreprise avec mes moyens limités d'étudiant ? C'est là que Docker et mon fidèle Raspberry Pi sont entrés en scène...
+
+# L'architecture de la cible
+
+Comme un architecte miniature, j'ai créé ce petit monde virtuel composé de plusieurs zones. La zone publique (DMZ) contient les services accessibles depuis Internet, comme le site web. Le réseau interne, lui, abrite les données les plus sensibles et devrait être totalement inaccessible depuis l'extérieur.
+
+<TechnicalImage 
+  src="/assets/blog/ethical-hacking-pharma/network_diagram.webp" 
+  alt="Architecture réseau de l'infrastructure pharmaceutique" 
+  caption="Diagramme de l'infrastructure réseau simulée" 
+/>
+
+<Callout type="saviez-vous">
+**Qu'est-ce qu'une DMZ?**
+
+Dans le monde de la cybersécurité, une DMZ (Zone Démilitarisée) est une partie du réseau située entre Internet et le réseau interne protégé d'une entreprise. C'est comme le hall d'accueil d'un immeuble sécurisé : les visiteurs peuvent y entrer, mais des portes verrouillées les empêchent d'accéder autre part.
+</Callout>
+
+# La reconnaissance : cartographier le terrain avant l'attaquer
+
+Première étape de toute opération : la reconnaissance. Comme un détective, j'ai commencé par scanner l'infrastructure pour identifier les services accessibles ainsi que les technologies utilisées par l’entreprise.
+
+<TechnicalImage 
+  src="/assets/blog/ethical-hacking-pharma/nmap-scan.webp" 
+  alt="Résultat du scan Nmap" 
+  caption="Résultats du scan de reconnaissance sur l'infrastructure" 
+/>
+
+Ce scan m'a permis de découvrir que l'entreprise exposait un serveur web sur Internet. En visitant ce site, j'ai trouvé plusieurs pages, dont une particulièrement intéressante : une page de recherche des chercheurs de l'entreprise.
+
+# La première faille : injection SQL
+
+Cette page de recherche contenait une vulnérabilité classique mais dangereuse : une injection SQL.
+
+<Callout type="saviez-vous">
+**L'injection SQL expliquée simplement**
+
+Imaginez un bibliothécaire à qui vous demandez : "Avez-vous des livres de Jean d'Ormesson ?". L'injection SQL, c'est comme si vous demandiez : "Avez-vous des livres de Jean d'Ormesson ? Et donnez-moi aussi la liste de tous les mots de passe des employés." Si le site n'est pas bien protégé, il pourrait exécuter cette demande sans vérification !
+</Callout>
+
+Grâce à cette faille, j'ai pu extraire des données confidentielles de la base de données : informations sur les chercheurs, produits en développement, et même des identifiants internes avec leurs mots de passe en clair !
+
+<TechnicalImage 
+  src="/assets/blog/ethical-hacking-pharma/sql-injection-results.webp" 
+  alt="Résultats de l'injection SQL" 
+  caption="Données extraites via l'injection SQL, incluant des identifiants sensibles" 
+/>
+
+# L'infiltration : upload de fichiers malveillants
+
+En explorant davantage le site, j'ai découvert une page permettant d'uploader son CV. Cette fonctionnalité apparemment inoffensive allait devenir ma porte d'entrée dans le système.
+Les sites qui permettent d'uploader des fichiers doivent vérifier strictement ce que vous envoyez. C'est comme un agent de sécurité qui vérifie les sacs à l'entrée d'un bâtiment. Si ce contrôle est insuffisant, on peut y glisser des objets dangereux, ou dans notre cas, du code malveillant.
+
+J'ai tenté d'uploader un fichier spécial qui me permettrait d'exécuter des commandes sur le serveur. À ma grande surprise, le site a accepté ce fichier sans aucune vérification !
+
+<TechnicalImage 
+  src="/assets/blog/ethical-hacking-pharma/shell-access.webp" 
+  alt="Accès shell sur le serveur" 
+  caption="Accès obtenu au serveur web grâce au fichier malveillant uploadé" 
+/>
+
+# La découverte importante : le pont entre deux zones
+
+En analysant la configuration réseau du serveur compromis, j'ai fait une découverte importante : ce serveur web public avait accès au réseau interne supposé être complètement isolé ! C'est comme si vous découvriez qu'une porte d'entrée d'un immeuble permettait non seulement d'accéder au hall public, mais aussi directement aux appartements privés censés être sécurisés !
+
+<TechnicalImage 
+  src="/assets/blog/ethical-hacking-pharma/network-config.webp" 
+  alt="Configuration réseau du serveur" 
+  caption="Configuration réseau révélant la double connexion aux réseaux public et interne" 
+/>
+
+# À la découverte du réseau interne
+
+Cette erreur de configuration m'a permis d'utiliser le serveur web comme "pont" vers le réseau interne normalement inaccessible. J'ai pu ainsi découvrir plusieurs serveurs internes :
+- Un serveur FTP contenant des fichiers de recherche confidentiels
+- Un serveur de notes internes avec des informations sensibles
+- Une base de données interne contenant des formules de vaccins
+
+Chacun de ces services avaient ses propres vulnérabilités, mais j'ai réussi à extraire des informations sensibles, comme la base de données de l'intranet avec une autre faille d'injection SQL, le serveur FTP n'étant pas assez sécurisé, j'ai pu cracker le mot de passe d'un compte et accéder à tous les fichiers présents à l'intérieur, et l'application de notes n'était pas assez sécurisée, me permettant d'accéder à toutes les notes sans qu'il y ait de contrôles d'accès.
+
+# Leçons et implications
+
+Cette simulation d'attaque démontre comment une série de vulnérabilités apparemment mineures peut, lorsqu'elles sont exploitées ensemble, compromettre totalement l'infrastructure d'une entreprise pharmaceutique :
+- Une injection SQL a révélé des identifiants internes
+- Une validation insuffisante des fichiers uploadés a permis d'exécuter du code malveillant
+- Une erreur de segmentation réseau a donné accès au réseau interne depuis Internet
+- Des mots de passe faibles et stockés en clair ont facilité l'accès à des données sensibles
+
+Dans une vraie entreprise pharmaceutique, ces vulnérabilités pourraient permettre à des attaquants mal intentionnés d'accéder à des formules de vaccins confidentielles, des données d'essais cliniques, ou même de saboter des recherches critiques.
+
+# Conclusion
+
+Il est maintenant 3h du matin. Ce projet académique, bien que simplifié, illustre parfaitement les risques auxquels sont confrontées les entreprises qui détiennent des données sensibles. Comprendre comment attaquer un système est la première étape pour apprendre à le défendre efficacement.
+
+Les entreprises pharmaceutiques ne sont pas les seules concernées. Les infrastructures critiques de notre société, réseaux électriques, installations de traitement d'eau, systèmes de transport, hôpitaux reposent toutes sur des architectures informatiques complexes qui peuvent présenter des vulnérabilités similaires. Une brèche dans ces systèmes pourrait avoir des conséquences dévastatrices allant bien au-delà des pertes financières.
+Cette expérience m'a convaincu de l'importance fondamentale du principe de défense en profondeur. Il ne s'agit pas seulement d'ériger un mur de protection extérieur solide, mais de concevoir chaque couche du système comme si elle était la dernière ligne de défense.
+
+Et vous, quelles infrastructures critiques vous semblent les plus vulnérables aujourd'hui ? Les réseaux électriques, les systèmes de santé, les transports ou autre chose ?
