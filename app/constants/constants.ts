@@ -156,6 +156,21 @@ export const TIMELINE_EVENTS = [
 
 export const PROJECTS = [
   {
+    id: "project-7",
+    title: "Red Team attack simulation on pharmaceutical infrastructure",
+    description: `Design and implementation of a complete attack simulation against a fictitious pharmaceutical company's infrastructure on Raspberry Pi, as part of a university ethical hacking project.
+    - Docker virtualized infrastructure including DMZ and internal network
+    - Exploitation of SQL injections, malicious file uploads and network segmentation errors
+    - Network pivot to access confidential data (vaccine formulas)
+    - Full vulnerability analysis report with patching recommendations`,
+    date: "March 2025 - April 2025",
+    technologies: ["Docker", "Raspberry Pi", "Metasploit", "SQLmap", "OWASP Top 10", "Ethical Hacking"],
+    image: "/assets/blog/ethical-hacking-pharma/raspberry_pi.webp",
+    links: {
+    },
+    status: "completed"
+  },
+  {
     id: "project-6",
     title: "Web Application Attacks Tester",
     description: `Application that was created to test the security of Web Application with different attacks scenarios.
