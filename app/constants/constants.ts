@@ -158,13 +158,13 @@ export const PROJECTS = [
   {
     id: "project-7",
     title: "Red Team attack simulation on pharmaceutical infrastructure",
-    description: `Design and implementation of a complete attack simulation against a fictitious pharmaceutical company's infrastructure on Raspberry Pi, as part of a university ethical hacking project.
-    - Docker virtualized infrastructure including DMZ and internal network
-    - Exploitation of SQL injections, malicious file uploads and network segmentation errors
-    - Network pivot to access confidential data (vaccine formulas)
-    - Full vulnerability analysis report with patching recommendations`,
+    description: `Design and implementation of a complete attack simulation against a fictitious pharmaceutical company's infrastructure.
+    - Docker virtualized infrastructure with DMZ and internal network
+    - Exploitation of different vulnerabilities
+    - Network pivot to access confidential data
+    - Full vulnerability analysis report`,
     date: "March 2025 - April 2025",
-    technologies: ["Docker", "Raspberry Pi", "Metasploit", "SQLmap", "OWASP Top 10", "Ethical Hacking"],
+    technologies: ["Docker", "Raspberry Pi", "PHP", "Python", "SQL"],
     image: "/assets/blog/ethical-hacking-pharma/raspberry_pi.webp",
     links: {
     },
