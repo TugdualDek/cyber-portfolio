@@ -167,6 +167,7 @@ export const PROJECTS = [
     technologies: ["Docker", "Raspberry Pi", "PHP", "Python", "SQL"],
     image: "/assets/blog/ethical-hacking-pharma/raspberry_pi.webp",
     links: {
+      github: "https://github.com/TugdualDek/ethical-hacking-assignement"
     },
     status: "completed"
   },
