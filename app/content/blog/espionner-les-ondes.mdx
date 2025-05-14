@@ -1,0 +1,144 @@
+---
+title: "Un univers invisible: ce que révèlent les ondes qui nous entourent"
+date: "2025-05-15"
+executionDate: "2020-06-10"
+excerpt: "Comment un simple récepteur radio peut intercepter des données sensibles qui circulent autour de nous: avions, bateaux, objets connectés et réseaux WiFi."
+classification: "RESTRICTED"
+category: "Experiences"
+coverImage: "/assets/blog/sdr/sdr_spectrum.webp"
+language: "fr"
+---
+
+L'air qui vous entoure est rempli de secrets.
+
+Votre système d'alarme émet des signaux non chiffrés.
+Votre voiture annonce sa présence à quiconque sait écouter.
+Votre routeur WiFi révèle vos habitudes quotidiennes.
+Votre station météo partage la température de votre salon avec tout le quartier.
+
+Non, je ne suis pas un espion. Je suis simplement un futur ingénieur curieux, avec un récepteur SDR, une antenne et quelques logiciels open source.
+
+Ce que j'ai découvert devrait nous faire réfléchir sur notre conception de la vie privée à l'ère numérique. Et si moi, avec mon équipement modeste et mes connaissances limitées, je peux intercepter toutes ces données... imaginez les capacités des organisations disposant de ressources illimitées.
+
+Bienvenue dans l'univers invisible qui nous entoure.
+
+# Mon setup et le spectre radioélectrique
+
+Avec quelques outils accessibles, je peux observer l'univers invisible qui nous entoure :
+
+- Un récepteur SDR : ce petit dongle USB de 30€ capte les signaux entre 25MHz et 2GHz
+- Quelques antennes : simples antennes omnidirectionnelles
+- Un Flipper Zero : le "couteau suisse" des communications sans fil
+
+<TechnicalImage
+  src="/assets/blog/sdr/gqrx_spectrum.webp"
+  alt="Visualisation du spectre radioélectrique avec GQRX"
+  caption="Le spectre radio capté par mon récepteur SDR, montrant plusieurs transmissions en temps réel"
+/>
+
+L'image que vous voyez est une capture de GQRX, mon logiciel d'écoute radio. Ce n'est pas un simple lecteur audio, mais une représentation en temps réel des ondes électromagnétiques qui nous traversent :
+
+- Le graphique du haut montre l'intensité des signaux sur une plage de fréquences
+- Le "waterfall" coloré représente l'évolution temporelle de ces signaux
+- La fréquence d'écoute me permet de naviguer dans ce spectre
+
+Chaque pic, chaque ligne colorée correspond à une transmission distincte - des communications privées, des informations techniques qui circulent autour de nous, la radio,... GQRX peut démoduler pratiquement tout ce qui émet entre 25MHz et 2GHz, me permettant non seulement de voir ces signaux, mais aussi de les traduire en sons.
+
+Nous vivons dans cet océan d'ondes électromagnétiques. Et comme vous allez le découvrir, beaucoup d'appareils qui nous entourent sont étonnamment bavards...
+
+# Traquons les avions : le ciel comme livre ouvert
+
+Saviez-vous que chaque avion dans notre ciel diffuse constamment sa position ? L'ADS-B (Automatic Dependent Surveillance-Broadcast) est un système révolutionnaire qui a transformé la surveillance aérienne mondiale. Contrairement aux radars traditionnels qui "cherchent" activement les aéronefs, l'ADS-B inverse la logique : c'est l'avion lui-même qui annonce sa présence. Sur la fréquence 1090 MHz, chaque appareil émet toutes les secondes un message contenant plusieurs données comme un identifiant, sa position, son altitude, sa vitesse, son cap...
+
+Ces données sont émises par un petit émetteur appelé transpondeur Mode-S équipant aujourd'hui la quasi-totalité des aéronefs commerciaux.
+
+<TechnicalImage
+  src="/assets/blog/sdr/dump1090_aircraft.webp"
+  alt="Visualisation des avions captés avec dump1090"
+  caption="Capture d'écran montrant les avions interceptés en temps réel au-dessus de Paris"
+/>
+
+L'image ci-dessus est le résultat de quelques minutes d'attente à Paris. À l'heure où j'ai « écouté » les avions, il y en avait deux dans le ciel que j'ai pu suivre un peu. Pour chaque point sur cette carte, je peux connaître :
+
+- L'identité précise de l'appareil
+- Sa compagnie et son numéro de vol
+- Sa provenance et sa destination
+- Son altitude et sa vitesse exactes
+
+Ce qui est fascinant avec l'ADS-B, c'est que cette transparence est intentionnelle : ces transmissions sont délibérément non chiffrées pour des raisons de sécurité aérienne. Le système a progressivement remplacé les radars secondaires traditionnels, offrant une précision et une fiabilité supérieures à moindre coût. C'est par ailleurs grâce à cela que des sites comme FlightRadar24 peuvent exister.
+
+# Sur les mers et océans : le traffic maritime dévoilé
+
+Après avoir exploré le ciel, dirigeons notre attention vers l'eau. Le système AIS (Automatic Identification System) est l'équivalent maritime de l'ADS-B. Il utilise les fréquences VHF marines pour permettre aux navires de s'identifier automatiquement.
+
+Chaque navire équipé émet régulièrement son "CV numérique" à intervalle variable (entre 2 secondes et 3 minutes selon sa vitesse) :
+
+- Numéro MMSI : l'identifiant unique du navire (comme l'immatriculation pour une voiture)
+- Position GPS exacte (latitude/longitude)
+- Cap et vitesse instantanés
+- Type de navire (cargo, pétrolier, passagers...)
+
+<TechnicalImage
+  src="/assets/blog/sdr/ais_nmea.webp"
+  alt="Trames NMEA du système AIS"
+  caption="Données brutes AIS interceptées: chaque ligne contient les informations complètes d'un navire"
+/>
+
+Même à Paris, loin des grandes routes maritimes, j'ai pu intercepter plusieurs émissions AIS. Ce que vous voyez ci-dessus n'est pas une jolie carte avec des icônes de bateaux, mais les données brutes qui alimentent ces systèmes : les trames NMEA. Chaque ligne commençant par "!AIVDM" contient, sous forme codée, toutes les informations d'un navire.
+
+Si mon expérience à Paris se limite à quelques embarcations fluviales, imaginez ce qu'un observateur situé au Havre, à Marseille ou à Rotterdam pourrait capter : des centaines de cargos, pétroliers et porte-conteneurs, avec leurs cargaisons et destinations, tous visibles à quiconque sait écouter.
+
+# Les objets du quotidien bavards : le 433MHz
+
+Après l'exploration des communications officielles d'avions et de navires, plongeons dans un domaine plus personnel : la bande ISM 433 MHz. Cette fréquence peu réglementée révèle une quantité surprenante d'informations privées. La bande 433 MHz est un véritable carrefour d'objets connectés avant l'heure : stations météo, capteurs de portes/fenêtres, alarmes domestiques, capteurs de pression des pneus et télécommandes diverses. Contrairement aux technologies modernes, ces appareils utilisent des modulations élémentaires :
+
+- OOK (On-Off Keying) : présence/absence de signal pour les 0 et 1
+- FSK (Frequency-Shift Keying) : décalages de fréquence pour différentes valeurs
+
+La plupart de ces dispositifs, conçus dans les années 90-2000, intègrent des protocoles rudimentaires avec :
+
+- Un identifiant fixe, jamais modifié
+- Des données brutes non protégées
+- Parfois, un simple checksum comme unique vérification
+
+<TechnicalImage
+  src="/assets/blog/sdr/rtl433_signals.webp"
+  alt="Données captées sur la bande 433MHz"
+  caption="Stations météo et capteurs d'alarme interceptés dans mon voisinage"
+/>
+
+Sur cette photo, il est possible de voir 2 choses :
+
+- Un capteur de température
+- Un capteur d'alarme sur une fenêtre qui communique des informations
+
+La prochaine fois que vous utiliserez votre station météo, souvenez-vous que ces signaux traversent vos murs pour être captés bien au-delà de votre propriété.
+
+# Les réseaux WiFi comme livre ouvert
+
+Après avoir exploré les communications radio traditionnelles, intéressons-nous à la technologie sans fil la plus répandue au quotidien : le WiFi. Le protocole 802.11 (WiFi) impose à tout point d'accès d'émettre des "beacons" toutes les 100ms pour signaler sa présence. Ces trames de gestion contiennent :
+
+- Le SSID (nom du réseau)
+- L'adresse MAC du routeur (BSSID)
+- Les capacités techniques (vitesse, sécurité)
+- Dans certains cas, des informations sur les clients connectés
+
+<TechnicalImage
+  src="/assets/blog/sdr/wifi_packets.webp"
+  alt="Paquets WiFi interceptés"
+  caption="Analyse de trafic WiFi révélant les métadonnées des communications (données sensibles masquées)"
+/>
+
+Pour illustrer ce concept, j'ai développé un script Python qui analyse les paquets WiFi circulant autour de moi. Les graphiques ci-dessus montrent le volume de trafic par minute et la répartition des types de paquets sur une période de 20 minutes. On distingue clairement les pics d'activité et la prédominance des trames de gestion.
+
+Les appareils mobiles sont particulièrement bavards : ils émettent constamment des "probe requests" cherchant les réseaux auxquels ils se sont déjà connectés, révélant ainsi leur historique de connexions (domicile, travail, hôtels visités...). Cette transparence du trafic permet à un observateur passif de déterminer facilement les habitudes des utilisateurs : périodes d'activité intense le matin et le soir, ou au contraire, absence prolongée du domicile.
+
+Bien que le contenu de vos communications reste protégé, les métadonnées racontent souvent une histoire tout aussi révélatrice sur vos habitudes quotidiennes.
+
+# En conclusion
+
+Dans ce voyage à travers le spectre radioélectrique, nous avons vu que l'invisibilité des ondes ne garantit pas la confidentialité des données qu'elles transportent. Du ciel à nos maisons, des océans à nos appareils personnels, une multitude d'informations circule librement autour de nous.
+
+Avec un équipement modeste et des connaissances de base, j'ai pu intercepter des communications qui révèlent bien plus que leurs émetteurs ne l'imaginent. La question n'est plus de savoir si nos données sont exposées, mais plutôt qui les écoute.
+
+Et vous, quelles mesures prenez-vous pour protéger vos communications sans fil au quotidien ? Aviez-vous conscience de toutes ces informations qui circulent autour de vous ?
