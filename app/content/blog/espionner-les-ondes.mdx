@@ -26,9 +26,9 @@ Bienvenue dans l'univers invisible qui nous entoure.
 
 Avec quelques outils accessibles, je peux observer l'univers invisible qui nous entoure :
 
-- Un récepteur SDR : Ce petit dongle USB de 30€ capte les signaux entre 25MHz et 2GHz
-- Quelques antennes : Simples antennes omnidirectionnelles
-- Un Flipper Zero : Le "couteau suisse" des communications sans fil
+- Un récepteur SDR : ce petit dongle USB de 30€ capte les signaux entre 25MHz et 2GHz
+- Quelques antennes : simples antennes omnidirectionnelles
+- Un Flipper Zero : le "couteau suisse" des communications sans fil
 
 <TechnicalImage
   src="/assets/blog/sdr/gqrx_spectrum.webp"
@@ -42,13 +42,13 @@ L'image que vous voyez est une capture de GQRX, mon logiciel d'écoute radio. Ce
 - Le "waterfall" coloré représente l'évolution temporelle de ces signaux
 - La fréquence d'écoute me permet de naviguer dans ce spectre
 
-Chaque pic, chaque ligne colorée correspond à une transmission distincte - des communications privées, des informations techniques qui circulent autour de nous, la radio,... GQRX peut démoduler pratiquement tout ce qui émet entre 25MHz et 2GHz, me permettant non seulement de voir ces signaux mais aussi de les traduire en sons.
+Chaque pic, chaque ligne colorée correspond à une transmission distincte - des communications privées, des informations techniques qui circulent autour de nous, la radio,... GQRX peut démoduler pratiquement tout ce qui émet entre 25MHz et 2GHz, me permettant non seulement de voir ces signaux, mais aussi de les traduire en sons.
 
-Nous vivons dans cet océan d'ondes électromagnétiques. Et comme vous allez le découvrir, beaucoup des appareils qui nous entourent sont étonnamment bavards...
+Nous vivons dans cet océan d'ondes électromagnétiques. Et comme vous allez le découvrir, beaucoup d'appareils qui nous entourent sont étonnamment bavards...
 
 # Traquons les avions : le ciel comme livre ouvert
 
-Saviez-vous que chaque avion dans notre ciel diffuse constamment sa position ? L'ADS-B (Automatic Dependent Surveillance-Broadcast) est un système révolutionnaire qui a transformé la surveillance aérienne mondiale. Contrairement aux radars traditionnels qui "cherchent" activement les aéronefs, l'ADS-B inverse la logique : c'est l'avion lui-même qui annonce sa présence. Sur la fréquence 1090 MHz, chaque appareil émet toutes les secondes un message contenant plusieurs données comme un identifiant, sa position, son altitude, sa vitesse, son cap,...
+Saviez-vous que chaque avion dans notre ciel diffuse constamment sa position ? L'ADS-B (Automatic Dependent Surveillance-Broadcast) est un système révolutionnaire qui a transformé la surveillance aérienne mondiale. Contrairement aux radars traditionnels qui "cherchent" activement les aéronefs, l'ADS-B inverse la logique : c'est l'avion lui-même qui annonce sa présence. Sur la fréquence 1090 MHz, chaque appareil émet toutes les secondes un message contenant plusieurs données comme un identifiant, sa position, son altitude, sa vitesse, son cap...
 
 Ces données sont émises par un petit émetteur appelé transpondeur Mode-S équipant aujourd'hui la quasi-totalité des aéronefs commerciaux.
 
@@ -58,7 +58,7 @@ Ces données sont émises par un petit émetteur appelé transpondeur Mode-S éq
   caption="Capture d'écran montrant les avions interceptés en temps réel au-dessus de Paris"
 />
 
-L'image ci-dessus est le résultat de quelques minutes d'attentes à Paris. A l'heure où j'ai « écouté » les avions, il y en avait 2 dans le ciel que j'ai pu suivre un peu. Pour chaque point sur cette carte, je peux connaître :
+L'image ci-dessus est le résultat de quelques minutes d'attente à Paris. À l'heure où j'ai « écouté » les avions, il y en avait deux dans le ciel que j'ai pu suivre un peu. Pour chaque point sur cette carte, je peux connaître :
 
 - L'identité précise de l'appareil
 - Sa compagnie et son numéro de vol
@@ -97,9 +97,9 @@ Après l'exploration des communications officielles d'avions et de navires, plon
 
 La plupart de ces dispositifs, conçus dans les années 90-2000, intègrent des protocoles rudimentaires avec :
 
-- Un identifiant fixe jamais modifié
+- Un identifiant fixe, jamais modifié
 - Des données brutes non protégées
-- Parfois un simple checksum comme unique vérification
+- Parfois, un simple checksum comme unique vérification
 
 <TechnicalImage
   src="/assets/blog/sdr/rtl433_signals.webp"
@@ -107,7 +107,7 @@ La plupart de ces dispositifs, conçus dans les années 90-2000, intègrent des 
   caption="Stations météo et capteurs d'alarme interceptés dans mon voisinage"
 />
 
-Sur cette photo il est possible de voir 2 choses :
+Sur cette photo, il est possible de voir 2 choses :
 
 - Un capteur de température
 - Un capteur d'alarme sur une fenêtre qui communique des informations
@@ -124,24 +124,22 @@ Après avoir exploré les communications radio traditionnelles, intéressons-nou
 - Dans certains cas, des informations sur les clients connectés
 
 <TechnicalImage
-  src="/assets/blog/sdr/wifi-packets.webp"
+  src="/assets/blog/sdr/wifi_packets.webp"
   alt="Paquets WiFi interceptés avec Scapy"
   caption="Analyse de trafic WiFi révélant les métadonnées des communications (données sensibles masquées)"
 />
 
-Bien que le contenu des communications soit généralement chiffré, les métadonnées de ces communications restent visibles. Comme on peut le voir sur cette capture, il est possible d'observer :
+Pour illustrer ce concept, j'ai développé un script Python qui analyse les paquets WiFi circulant autour de moi. Les graphiques ci-dessus montrent le volume de trafic par minute et la répartition des types de paquets sur une période de 20 minutes. On distingue clairement les pics d'activité et la prédominance des trames de gestion.
 
-- L'identité des appareils connectés
-- Les volumes et schémas de trafic
-- Les tentatives de connexion
-
-Les appareils mobiles sont particulièrement bavards : ils émettent constamment des "probe requests" cherchant les réseaux auxquels ils se sont déjà connectés, révélant ainsi votre historique de connexions (domicile, travail, hôtels visités...). Cette transparence du trafic permet à un observateur passif de déterminer facilement les habitudes des utilisateurs : périodes d'activité intense le matin et le soir, ou au contraire, absence prolongée du domicile.
+Les appareils mobiles sont particulièrement bavards : ils émettent constamment des "probe requests" cherchant les réseaux auxquels ils se sont déjà connectés, révélant ainsi leur historique de connexions (domicile, travail, hôtels visités...). Cette transparence du trafic permet à un observateur passif de déterminer facilement les habitudes des utilisateurs : périodes d'activité intense le matin et le soir, ou au contraire, absence prolongée du domicile.
 
 Bien que le contenu de vos communications reste protégé, les métadonnées racontent souvent une histoire tout aussi révélatrice sur vos habitudes quotidiennes.
 
 # En conclusion
 
 Dans ce voyage à travers le spectre radioélectrique, nous avons vu que l'invisibilité des ondes ne garantit pas la confidentialité des données qu'elles transportent. Du ciel à nos maisons, des océans à nos appareils personnels, une multitude d'informations circule librement autour de nous.
+
+Avec un équipement modeste, j'ai intercepté des communications révélant bien plus que prévu. Ces exemples - avions, navires, capteurs 433MHz et WiFi - ne sont qu'un aperçu. Des explorations similaires seraient possibles sur d'autres fréquences.
 
 Avec un équipement modeste et des connaissances de base, j'ai pu intercepter des communications qui révèlent bien plus que leurs émetteurs ne l'imaginent. La question n'est plus de savoir si nos données sont exposées, mais plutôt qui les écoute.
 
