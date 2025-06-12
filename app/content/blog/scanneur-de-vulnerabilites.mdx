@@ -1,9 +1,9 @@
 ---
 title: "Comment créer un scanneur de vulnérabilités web : de l'idée à l'architecture distribuée"
-date: "2025-06-05"
-executionDate: "2025-06-05"
+date: "2025-06-12"
+executionDate: "2025-01-10"
 excerpt: "Retour d'expérience sur le développement d'un scanneur de vulnérabilités web avec une architecture distribuée Redis. Un projet étudiant qui mêle théorie accessible et pratique technique."
-classification: "PUBLIC"
+classification: "RESTRICTED"
 category: "Cybersecurity"
 caseNumber: "FR-VULN-SCANNER-2025-001"
 language: "fr"
@@ -44,11 +44,15 @@ Au début, on voulait créer des "recettes d'attaques" automatiques. Comme Ansib
 <Callout type="saviez-vous">
 **Qu'est-ce qu'Ansible ?**
 
-Ansible est un outil qui automatise la gestion d'infrastructures. Il lit des "recettes" écrites en YAML pour configurer des serveurs. Notre idée : appliquer ce concept aux tests de sécurité.
+Ansible est un outil qui automatise la gestion d'infrastructures. Il lit des "recettes" écrites en YAML pour configurer des serveurs.
+
+Notre idée : appliquer ce concept aux tests de sécurité.
 
 </Callout>
 
-**Le problème qu'on a vite découvert :** Les tests de sécurité peuvent durer un certains temps en fonction de leur implémentation. Comment permettre plusieurs scans simultanés sans planter l'interface ?
+**Le problème qu'on a vite découvert :** Les tests de sécurité peuvent durer un certains temps en fonction de leur implémentation.
+
+Comment permettre plusieurs scans simultanés sans planter l'interface ?
 
 ## Notre architecture distribuée
 
@@ -181,10 +185,13 @@ def run(self, context):
 # 🤝 Éthique et responsabilité
 
 <Callout type="attention">
-  **Usage éthique uniquement** Notre projet inclut des disclaimers clairs :
-  usage éducatif et tests autorisés uniquement. En cybersécurité, la frontière
-  entre recherche légitime et activité malveillante est mince. Il faut toujours
-  agir dans un cadre légal et éthique.
+**Usage éthique uniquement !**
+
+Notre projet inclut des disclaimers clairs :
+usage éducatif et tests autorisés uniquement. En cybersécurité, la frontière
+entre recherche légitime et activité malveillante est mince. Il faut toujours
+agir dans un cadre légal et éthique.
+
 </Callout>
 
 # Pour conclure
