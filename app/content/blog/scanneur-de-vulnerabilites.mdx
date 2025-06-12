@@ -1,0 +1,198 @@
+---
+title: "Comment créer un scanneur de vulnérabilités web : de l'idée à l'architecture distribuée"
+date: "2025-06-05"
+executionDate: "2025-06-05"
+excerpt: "Retour d'expérience sur le développement d'un scanneur de vulnérabilités web avec une architecture distribuée Redis. Un projet étudiant qui mêle théorie accessible et pratique technique."
+classification: "PUBLIC"
+category: "Cybersecurity"
+caseNumber: "FR-VULN-SCANNER-2025-001"
+language: "fr"
+coverImage: "/assets/blog/scanneur/architecture.webp"
+---
+
+_"La cybersécurité ressemble à une partie d'échecs sans fin : pour chaque attaque, une défense doit être trouvée."_
+
+Dans le cadre de notre cours de sécurité logicielle, nous avons développé en équipe de 6 personnes un scanneur de vulnérabilités pour applications web. Ce projet n'a pas la prétention d'être révolutionnaire, mais notre démarche et les défis techniques surmontés pourraient intéresser ceux qui veulent comprendre comment automatiser la sécurité web.
+
+# 🛡️ Les vulnérabilités web expliquées simplement
+
+## Le problème : des failles partout
+
+Votre site web, c'est comme une maison avec des dizaines de portes et fenêtres. Une vulnérabilité, c'est une serrure défectueuse qui permet à un intrus d'entrer. Le souci ? Un site moderne peut avoir **des centaines de points d'entrée** à vérifier.
+
+<Callout type="saviez-vous">
+**L'OWASP Top 10 : le guide de référence**
+
+L'OWASP est une communauté mondiale qui publie chaque année le "Top 10" des vulnérabilités web les plus dangereuses. C'est la référence internationale que tout développeur devrait connaître pour sécuriser ses applications.
+
+</Callout>
+
+**Les 3 failles les plus courantes :**
+
+🔹 **Injection SQL** : Un attaquant peut "parler" directement à votre base de données  
+🔹 **Authentification cassée** : Les mots de passe ou sessions mal protégés  
+🔹 **Données exposées** : Des informations sensibles visibles par tous
+
+**Pourquoi automatiser ?** Tester manuellement des centaines de paramètres prendrait des semaines. De nouvelles vulnérabilités apparaissent chaque jour. Même les experts peuvent oublier un détail.
+
+# ⚙️ Notre solution : de l'idée simple à l'architecture complexe
+
+## L'inspiration : "l'Ansible des attaques"
+
+Au début, on voulait créer des "recettes d'attaques" automatiques. Comme Ansible automatise la configuration de serveurs, on voulait automatiser les tests de sécurité avec des fichiers YAML simples.
+
+<Callout type="saviez-vous">
+**Qu'est-ce qu'Ansible ?**
+
+Ansible est un outil qui automatise la gestion d'infrastructures. Il lit des "recettes" écrites en YAML pour configurer des serveurs. Notre idée : appliquer ce concept aux tests de sécurité.
+
+</Callout>
+
+**Le problème qu'on a vite découvert :** Les tests de sécurité peuvent durer un certains temps en fonction de leur implémentation. Comment permettre plusieurs scans simultanés sans planter l'interface ?
+
+## Notre architecture distribuée
+
+**La solution :** Séparer l'interface utilisateur de l'exécution des tests avec une architecture distribuée.
+
+<TechnicalImage
+  src="/assets/blog/scanneur/architecture2.webp"
+  alt="Architecture générale de notre solution"
+  caption="Architecture générale de notre solution"
+/>
+
+<TechnicalImage
+  src="/assets/blog/scanneur/architecture.webp"
+  alt="Schéma de notre architecture distribuée"
+  caption="Architecture de notre scanneur : interface React, API Flask, Redis et workers Python"
+/>
+
+**Les 4 composants clés :**
+
+1. **Interface React** : Pour configurer et suivre les scans en temps réel
+2. **API Flask** : Le chef d'orchestre qui coordonne tout
+3. **Redis** : La file d'attente ultra-rapide qui stocke les tâches
+4. **Workers Python** : Les "ouvriers" qui exécutent les tests en parallèle
+
+<Callout type="saviez-vous">
+**Pourquoi Redis comme file d'attente ?**
+
+Redis est une base de données en mémoire ultra-rapide. Pour notre usage, c'est comme un tableau d'affichage digital : les tâches y sont postées instantanément et les workers les récupèrent à la vitesse de l'éclair. Parfait pour coordonner des processus distribués.
+
+</Callout>
+
+## Le système modulaire : la magie du YAML
+
+**L'idée :** Chaque test de sécurité est décomposé en "modules" réutilisables, orchestrés par des fichiers YAML.
+
+```yaml
+name: test_securite_complete
+description: Analyse complète des vulnérabilités web
+steps:
+  - module: http_request
+    params:
+      url: "{{ target }}"
+      timeout: 10
+  - module: analyze_headers
+  - module: test_sql_injection
+  - module: test_xss
+```
+
+L'avantage : N'importe qui peut créer un nouveau test sans programmer !
+
+<TechnicalImage
+  src="/assets/blog/scanneur/gui.webp"
+  alt="Interface utilisateur du scanneur"
+  caption="Interface d'accueil de notre scanneur"
+/>
+
+<TechnicalImage
+  src="/assets/blog/scanneur/results.webp"
+  alt="Exemple de résultat du scanneur"
+  caption="Exemple de résultat du scanneur"
+/>
+
+# 🔍 Exemple concret : détecter une faille XSS
+
+<Callout type="saviez-vous">
+**Qu'est-ce qu'une faille XSS ?**
+
+XSS (Cross-Site Scripting) permet d'injecter du code malveillant dans une page web. C'est comme coller un post-it piégé qui s'activerait sur l'écran de chaque visiteur : vol de données, redirections malveillantes, etc.
+
+</Callout>
+
+**Notre approche :** Le scanneur teste automatiquement différents "payloads" malveillants pour voir si le site les filtre correctement.
+
+```yaml
+name: detection_xss
+description: Test automatisé de vulnérabilités XSS
+steps:
+  - module: http_request
+    params:
+      url: "{{ target }}"
+  - module: xss_tester
+    params:
+      payloads:
+        - "<script>alert('Faille détectée!')</script>"
+        - '''"><img src=x onerror=alert(''XSS'')>'
+```
+
+**Le processus :**
+
+1. Requête HTTP normale vers la cible
+2. Test de différents codes malveillants
+3. Analyse de la réponse : le site a-t-il exécuté notre code ?
+4. Rapport automatique avec niveau de risque
+
+# 🚧 Les 3 défis techniques majeurs
+
+## 1. La synchronisation distribuée
+
+**Le défi :** Comment coordonner plusieurs workers sans qu'ils se marchent dessus ?
+
+**Notre solution :** Redis gère la file d'attente. Chaque worker prend une tâche, la traite, renvoie le résultat. Simple et efficace.
+
+## 2. Le système de contexte partagé
+
+**Le défi :** Comment partager des infos entre les différents modules d'un test ?
+
+**Notre solution :** Un "contexte" (dictionnaire Python) qui voyage de module en module, s'enrichissant à chaque étape.
+
+```python
+# Exemple : un module enrichit le contexte
+def run(self, context):
+    response = requests.get(context['url'])
+    context['response_headers'] = response.headers
+    context['response_time'] = response.elapsed.total_seconds()
+    return context
+```
+
+## 3. L'interface utilisateur
+
+**Le défi :** Présenter des résultats techniques de façon compréhensible.
+
+**Notre apprentissage :** Un bon outil de sécurité doit être accessible aux non-experts. Nous ne sommes pas très bon en design, nous avons essayé de présenter nos résultats de façon clair (peut etre trop simplement)
+
+<Callout type="attention">
+  La technique ne suffit pas. Si votre outil n'est pas utilisable par les
+  équipes qui en ont besoin, même le meilleur code ne sert à rien.
+  L'accessibilité est aussi importante que la performance.
+</Callout>
+
+# 🤝 Éthique et responsabilité
+
+<Callout type="attention">
+  **Usage éthique uniquement** Notre projet inclut des disclaimers clairs :
+  usage éducatif et tests autorisés uniquement. En cybersécurité, la frontière
+  entre recherche légitime et activité malveillante est mince. Il faut toujours
+  agir dans un cadre légal et éthique.
+</Callout>
+
+# Pour conclure
+
+Ce projet n'est pas parfait, mais il nous a énormément appris sur la sécurité web moderne et les architectures distribuées.
+
+Et vous avez-vous déjà développé des outils de sécurité ? Quelles fonctionnalités considéreriez-vous comme prioritaires ?
+
+---
+
+Le code source est disponible à cette adresse : https://github.com/TugdualDek/projet-secu-logicielle
