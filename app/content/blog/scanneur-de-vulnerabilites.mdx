@@ -29,9 +29,9 @@ L'OWASP est une communauté mondiale qui publie chaque année le "Top 10" des vu
 
 **Les 3 failles les plus courantes :**
 
-🔹 **Injection SQL** : Un attaquant peut "parler" directement à votre base de données  
-🔹 **Authentification cassée** : Les mots de passe ou sessions mal protégés  
-🔹 **Données exposées** : Des informations sensibles visibles par tous
+🔹 **Injection SQL** : un attaquant peut "parler" directement à votre base de données  
+🔹 **Authentification cassée** : les mots de passe ou sessions mal protégés  
+🔹 **Données exposées** : des informations sensibles visibles par tous
 
 **Pourquoi automatiser ?** Tester manuellement des centaines de paramètres prendrait des semaines. De nouvelles vulnérabilités apparaissent chaque jour. Même les experts peuvent oublier un détail.
 
@@ -50,13 +50,13 @@ Notre idée : appliquer ce concept aux tests de sécurité.
 
 </Callout>
 
-**Le problème qu'on a vite découvert :** Les tests de sécurité peuvent durer un certains temps en fonction de leur implémentation.
+**Le problème qu'on a vite découvert :** les tests de sécurité peuvent durer un certain temps en fonction de leur implémentation.
 
 Comment permettre plusieurs scans simultanés sans planter l'interface ?
 
 ## Notre architecture distribuée
 
-**La solution :** Séparer l'interface utilisateur de l'exécution des tests avec une architecture distribuée.
+**La solution :** séparer l'interface utilisateur de l'exécution des tests avec une architecture distribuée.
 
 <TechnicalImage
   src="/assets/blog/scanneur/architecture2.webp"
@@ -72,10 +72,10 @@ Comment permettre plusieurs scans simultanés sans planter l'interface ?
 
 **Les 4 composants clés :**
 
-1. **Interface React** : Pour configurer et suivre les scans en temps réel
-2. **API Flask** : Le chef d'orchestre qui coordonne tout
-3. **Redis** : La file d'attente ultra-rapide qui stocke les tâches
-4. **Workers Python** : Les "ouvriers" qui exécutent les tests en parallèle
+1. **Interface React** : pour configurer et suivre les scans en temps réel
+2. **API Flask** : le chef d'orchestre qui coordonne tout
+3. **Redis** : la file d'attente ultra-rapide qui stocke les tâches
+4. **Workers Python** : les "ouvriers" qui exécutent les tests en parallèle
 
 <Callout type="saviez-vous">
 **Pourquoi Redis comme file d'attente ?**
@@ -124,7 +124,7 @@ XSS (Cross-Site Scripting) permet d'injecter du code malveillant dans une page w
 
 </Callout>
 
-**Notre approche :** Le scanneur teste automatiquement différents "payloads" malveillants pour voir si le site les filtre correctement.
+**Notre approche :** le scanneur teste automatiquement différents "payloads" malveillants pour voir si le site les filtre correctement.
 
 ```yaml
 name: detection_xss
@@ -151,15 +151,15 @@ steps:
 
 ## 1. La synchronisation distribuée
 
-**Le défi :** Comment coordonner plusieurs workers sans qu'ils se marchent dessus ?
+**Le défi :** comment coordonner plusieurs workers sans qu'ils se marchent dessus ?
 
-**Notre solution :** Redis gère la file d'attente. Chaque worker prend une tâche, la traite, renvoie le résultat. Simple et efficace.
+**Notre solution :** redis gère la file d'attente. Chaque worker prend une tâche, la traite, renvoie le résultat. Simple et efficace.
 
 ## 2. Le système de contexte partagé
 
-**Le défi :** Comment partager des infos entre les différents modules d'un test ?
+**Le défi :** comment partager des infos entre les différents modules d'un test ?
 
-**Notre solution :** Un "contexte" (dictionnaire Python) qui voyage de module en module, s'enrichissant à chaque étape.
+**Notre solution :** un "contexte" (dictionnaire Python) qui voyage de module en module, s'enrichissant à chaque étape.
 
 ```python
 # Exemple : un module enrichit le contexte
