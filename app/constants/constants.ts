@@ -1,9 +1,9 @@
 export const COMMANDER_INFO = {
   name: "TUGDUAL AUDREN DE KERDREL",
   rank: "SYSTEM ADMINISTRATOR AT BILENDI",
-  status: "ONLINE",
+  status: "#OpenToWork",
   experience: "2 YEARS",
-  clearanceLevel: "LEVEL 5",
+  clearanceLevel: "LEVEL 3",
   biography:
     "I'm a final-year engineering student at ISEP, specializing in cybersecurity and networks. Passionate about information systems security, I combine technical expertise and curiosity to meet the challenges of cybersecurity. Experience in web development and a strong interest in artificial intelligence.",
 };
@@ -70,87 +70,95 @@ export const NAV_ITEMS = [
 export const TIMELINE_EVENTS = [
   {
     title: "TryHackMe - Jr Penetration Tester",
-    description: "Development of essential penetration testing skills, from methodology to operation, with practical exercises using industry-standard tools.",
+    description:
+      "Development of essential penetration testing skills, from methodology to operation, with practical exercises using industry-standard tools.",
     date: "08 March 2025",
-    type: "certification"
+    type: "certification",
   },
   {
     title: "System, network and security administrator at Bilendi Technology",
-    description: "Management of the company's information systems (Linux, LXC, etc.), IT support for employees",
+    description:
+      "Management of the company's information systems (Linux, LXC, etc.), IT support for employees",
     date: "September 2023 - present",
-    type: "experience"
+    type: "experience",
   },
   {
     title: "Technical manager at JuniorISEP",
-    description: "Manage and maintain infrastructure and tools, technical monitoring of assignments, technical training for students, technology intelligence",
+    description:
+      "Manage and maintain infrastructure and tools, technical monitoring of assignments, technical training for students, technology intelligence",
     date: "May 2023 - May 2024",
-    type: "association"
+    type: "association",
   },
   {
     title: "Toeic - 965/990",
     description: "English language certification",
     date: "2023",
-    type: "certification"
+    type: "certification",
   },
   {
     title: "Developper at IsepInvest",
     description: "Web and DIscord bot development",
     date: "October 2021 - July 2024",
-    type: "association"
+    type: "association",
   },
   {
     title: "Student at ISEP - School of engineering",
-    description: "International Integrated Cycle, Last year of Engineering Cycle with a specialization in Cybersecurity and Networks",
+    description:
+      "International Integrated Cycle, Last year of Engineering Cycle with a specialization in Cybersecurity and Networks",
     date: "2020 - 2025",
-    type: "education"
+    type: "education",
   },
   {
     title: "Student at CVUT - Czech Technical University in Prague",
     description: "Erasmus exchange at Czech Technical University in Prague",
     date: "February 2022 - June 2022",
-    type: "education"
+    type: "education",
   },
   {
     title: "ARISS SSTV Award",
-    description: "Received SSTV images from the ISS commemorating Lunar exploration using Software Defined Radio",
+    description:
+      "Received SSTV images from the ISS commemorating Lunar exploration using Software Defined Radio",
     date: "December 2021",
-    type: "certification"
+    type: "certification",
   },
   {
     title: "Voltaire Certificate - 697/1000",
     description: "Certification in French language",
     date: "December 2021",
-    type: "certification"
+    type: "certification",
   },
   {
     title: "Internship at Adamantia",
-    description: "Information system audit, IT awareness and process optimization",
+    description:
+      "Information system audit, IT awareness and process optimization",
     date: "June 2021 - July 2021",
-    type: "experience"
+    type: "experience",
   },
   {
     title: "Toeic - 895/990",
     description: "English language certification",
     date: "2021",
-    type: "certification"
+    type: "certification",
   },
   {
     title: "ARISS SSTV Award",
-    description: "Received images on the occasion of the 20 years of amateur radio on the ISS using Software Defined Radio",
+    description:
+      "Received images on the occasion of the 20 years of amateur radio on the ISS using Software Defined Radio",
     date: "December 2020",
-    type: "certification"
+    type: "certification",
   },
   {
     title: "Lycée la Rochefoucauld - Paris",
     description: "Scientific Baccalaureate, specialty in Physics-Chemistry",
     date: "September 2017 - July 2020",
-    type: "education"
+    type: "education",
   },
   {
     title: "St Catharine's College - Summer School",
-    description: "Summer School in Cambridge with international courses on computer science",
+    description:
+      "Summer School in Cambridge with international courses on computer science",
     date: "July 2019",
-    type: "education"
+    type: "education",
   },
 ];
 
@@ -167,9 +175,9 @@ export const PROJECTS = [
     technologies: ["Docker", "Raspberry Pi", "PHP", "Python", "SQL"],
     image: "/assets/blog/ethical-hacking-pharma/raspberry_pi.webp",
     links: {
-      github: "https://github.com/TugdualDek/ethical-hacking-assignement"
+      github: "https://github.com/TugdualDek/ethical-hacking-assignement",
     },
-    status: "completed"
+    status: "completed",
   },
   {
     id: "project-6",
@@ -184,7 +192,7 @@ export const PROJECTS = [
     links: {
       github: "https://github.com/TugdualDek/projet-secu-logicielle",
     },
-    status: "completed" // Assurez-vous d'utiliser une des trois valeurs autorisées
+    status: "completed", // Assurez-vous d'utiliser une des trois valeurs autorisées
   },
   {
     id: "project-1",
@@ -197,9 +205,8 @@ export const PROJECTS = [
     date: "September 2024",
     technologies: ["NextJS", "Prisma", "PostgreSQL", "Docker"],
     image: "/assets/choralesgp.webp",
-    links: {
-    },
-    status: "completed" // Assurez-vous d'utiliser une des trois valeurs autorisées
+    links: {},
+    status: "completed", // Assurez-vous d'utiliser une des trois valeurs autorisées
   },
   {
     id: "project-2",
@@ -214,7 +221,7 @@ export const PROJECTS = [
     links: {
       github: "https://github.com/TugdualDek/InvestDay",
     },
-    status: "completed" // "completed" | "in-progress" | "planned"
+    status: "completed", // "completed" | "in-progress" | "planned"
   },
   {
     id: "project-3",
@@ -229,7 +236,7 @@ export const PROJECTS = [
     links: {
       github: "https://github.com/naro92/Carmen",
     },
-    status: "completed"
+    status: "completed",
   },
   {
     id: "project-4",
@@ -241,9 +248,9 @@ export const PROJECTS = [
     technologies: ["Flutter", "Python", "Arduino", "RaspberryPi"],
     image: "/assets/weather.webp",
     links: {
-      github: "https://github.com/Sh0lf/IT-Project-Weather-App"
+      github: "https://github.com/Sh0lf/IT-Project-Weather-App",
     },
-    status: "completed"
+    status: "completed",
   },
   {
     id: "project-5",
@@ -255,9 +262,9 @@ export const PROJECTS = [
     technologies: ["Python"],
     image: "/assets/hero.webp",
     links: {
-      github: "https://github.com/arcreane/jeu-de-role-rasputin"
+      github: "https://github.com/arcreane/jeu-de-role-rasputin",
     },
-    status: "completed"
+    status: "completed",
   },
 ];
 
@@ -265,31 +272,31 @@ export const SOCIAL_LINKS = {
   GITHUB: {
     url: "https://github.com/TugdualDek",
     label: "GITHUB",
-    status: "ONLINE"
+    status: "ONLINE",
   },
   LINKEDIN: {
     url: "https://linkedin.com/in/tugdual-de-kerdrel",
     label: "LINKEDIN",
-    status: "ONLINE"
+    status: "ONLINE",
   },
   EMAIL: {
     url: "mailto:tugdualk@hotmail.com",
     label: "EMAIL",
-    status: "ACTIVE"
+    status: "ACTIVE",
   },
   TERMINAL: {
     url: "/terminal",
     label: "TERMINAL",
-    status: "ONLINE"
+    status: "ONLINE",
   },
 };
 
 export const PROJECT_IMAGES = [
-  '/assets/hero.webp',
-  '/assets/carmen.webp',
-  '/assets/choralesgp.webp',
-  '/assets/carmen.webp',
-  '/assets/trade.webp',
-  '/assets/weather.webp',
-  '/assets/scanner.webp',
+  "/assets/hero.webp",
+  "/assets/carmen.webp",
+  "/assets/choralesgp.webp",
+  "/assets/carmen.webp",
+  "/assets/trade.webp",
+  "/assets/weather.webp",
+  "/assets/scanner.webp",
 ];
